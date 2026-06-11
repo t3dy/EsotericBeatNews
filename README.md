@@ -5,10 +5,12 @@
 A dark-academic static site that gathers the **complete back catalogues** of a
 handful of esoteric-studies podcasts and YouTube channels into one place:
 
-- **Emanations** — a single news feed of *every* episode from every source, in
-  chronological order, as scrollable cards (paginated).
-- **Curated currents** — cross-channel topic sections: Neoplatonism, Grimoires,
-  Kabbalah, Renaissance Magic, Ancient Magic, Medieval Magic, Agrippa, Ficino.
+- **Latest Emanations** — the marquee landing feed: *every* episode from every
+  source, in chronological order, as scrollable cards (paginated). It sits in
+  the main **site-features toolbar**, set off from the other features.
+- **Topics toolbar** — its own bar of curated cross-channel currents:
+  Neoplatonism, Grimoires, Kabbalah, Renaissance Magic, Ancient Magic, Medieval
+  Magic, Agrippa, Ficino.
 - **Curated Playlists** — a section for each of Esoterica's own 28 thematic
   playlists (Kabbalah, Solomonic Magic, Ancient Near East, Gnosticism, …).
 
@@ -23,6 +25,14 @@ content belongs to its makers; please subscribe to and support them directly.
 | [Esoterica](https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ) (Dr. Justin Sledge) | YouTube | ~373 + 28 playlists |
 | [The Modern Hermeticist](https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA) | YouTube | ~249 |
 | [Seekers of Unity](https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ) | YouTube | ~225 |
+| [Esoteric Beat](https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk) (Ted Hand) | YouTube playlist | ~8 |
+| [Tarot for the Soulless Materialist](https://soundcloud.com/faderanger93) (Ted Hand) | YouTube + SoundCloud | ~5 |
+
+YouTube channels are pulled in full via `yt-dlp`; **playlist** sources (Esoteric
+Beat) pull one playlist; **composite** sources (Tarot for the Soulless
+Materialist) merge a title-filtered slice of a channel's uploads with SoundCloud
+tracks, de-duplicating the same episode across platforms. SoundCloud is also
+fetched via `yt-dlp` (install `curl_cffi` for full listings).
 
 ## Tech stack
 

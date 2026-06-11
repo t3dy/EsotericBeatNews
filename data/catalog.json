@@ -1,6 +1,6 @@
 {
- "generated": "2026-06-11T07:25:09.530469+00:00",
- "count": 1065,
+ "generated": "2026-06-11T07:42:21.127360+00:00",
+ "count": 1078,
  "playlist_count": 28,
  "items": [
   {
@@ -2552,6 +2552,18 @@
    "duration": 2296
   },
   {
+   "source": "tarotsoulless",
+   "source_name": "Tarot for the Soulless Materialist",
+   "kind": "youtube",
+   "title": "Tarot for the Soulless Materialist episode 16 The Tower with Reverend Erik Arneson of Arnemancy",
+   "url": "https://www.youtube.com/watch?v=HMjViLOVJ1Q",
+   "video_id": "HMjViLOVJ1Q",
+   "published_iso": "2022-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/HMjViLOVJ1Q/hqdefault.jpg",
+   "duration": 2143
+  },
+  {
    "source": "shwep",
    "source_name": "SHWEP",
    "kind": "podcast",
@@ -3101,6 +3113,138 @@
    "duration": 3639
   },
   {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "The Esoteric Beat Book Review - Conciatore",
+   "url": "https://www.youtube.com/watch?v=nbzGjY1O2bE",
+   "video_id": "nbzGjY1O2bE",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/nbzGjY1O2bE/hqdefault.jpg",
+   "duration": 401
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat #2 Alchemy and Comics",
+   "url": "https://www.youtube.com/watch?v=kyPHsSbTw04",
+   "video_id": "kyPHsSbTw04",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/kyPHsSbTw04/hqdefault.jpg",
+   "duration": 604
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat 3 Hypnerotomachia Polyphili and Instruction",
+   "url": "https://www.youtube.com/watch?v=_WZjg6OKqiE",
+   "video_id": "_WZjg6OKqiE",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/_WZjg6OKqiE/hqdefault.jpg",
+   "duration": 302
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat 4 Tarot Learning and Signs",
+   "url": "https://www.youtube.com/watch?v=IYy-jWB2xw0",
+   "video_id": "IYy-jWB2xw0",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/IYy-jWB2xw0/hqdefault.jpg",
+   "duration": 633
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat 5 -- Ilanot",
+   "url": "https://www.youtube.com/watch?v=0TCNrmAdbsg",
+   "video_id": "0TCNrmAdbsg",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/0TCNrmAdbsg/hqdefault.jpg",
+   "duration": 262
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat Synthesizer Interlude: Programming a Chiptune Jam in C",
+   "url": "https://www.youtube.com/watch?v=cxxcslPKzuQ",
+   "video_id": "cxxcslPKzuQ",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/cxxcslPKzuQ/hqdefault.jpg",
+   "duration": 457
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat Synthesizer Interlude part 2: Afterthought",
+   "url": "https://www.youtube.com/watch?v=yaK0G-rug_A",
+   "video_id": "yaK0G-rug_A",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/yaK0G-rug_A/hqdefault.jpg",
+   "duration": 47
+  },
+  {
+   "source": "esotericbeat",
+   "source_name": "Esoteric Beat",
+   "kind": "youtube",
+   "title": "Esoteric Beat Synthesizer Interlude Part 3 - Metroidey",
+   "url": "https://www.youtube.com/watch?v=y3A925UgVa4",
+   "video_id": "y3A925UgVa4",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/y3A925UgVa4/hqdefault.jpg",
+   "duration": 79
+  },
+  {
+   "source": "tarotsoulless",
+   "source_name": "Tarot for the Soulless Materialist",
+   "kind": "youtube",
+   "title": "Tarot for the Soulless Materialist with Dr Amy Hale part 2",
+   "url": "https://www.youtube.com/watch?v=IQN5nn40648",
+   "video_id": "IQN5nn40648",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/IQN5nn40648/hqdefault.jpg",
+   "duration": 1665
+  },
+  {
+   "source": "tarotsoulless",
+   "source_name": "Tarot for the Soulless Materialist",
+   "kind": "youtube",
+   "title": "Tarot for the Soulless Materialist Episode 6 The Lovers: Dr Amy Hale on Archival Research Part One",
+   "url": "https://www.youtube.com/watch?v=HJsaO8X6vNs",
+   "video_id": "HJsaO8X6vNs",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/HJsaO8X6vNs/hqdefault.jpg",
+   "duration": 2270
+  },
+  {
+   "source": "tarotsoulless",
+   "source_name": "Tarot for the Soulless Materialist",
+   "kind": "youtube",
+   "title": "Tarot for the Soulless Materialist Episode 10 Wheel of Fortune: Precarity with Dr Karen Gregory",
+   "url": "https://www.youtube.com/watch?v=xkvSxQQ9NCs",
+   "video_id": "xkvSxQQ9NCs",
+   "published_iso": "2021-06-11T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/xkvSxQQ9NCs/hqdefault.jpg",
+   "duration": 2056
+  },
+  {
    "source": "shwep",
    "source_name": "SHWEP",
    "kind": "podcast",
@@ -3112,6 +3256,18 @@
    "thumb": "https://shwep.net/wp-content/themes/shwep/assets/i/itunes-podcast.jpg",
    "audio": "https://media.shwep.net/wp-content/uploads/2021/06/09151822/SHWEP-Episode-120-Mysteries-of-the-Rock-Born-God.mp3",
    "duration": null
+  },
+  {
+   "source": "tarotsoulless",
+   "source_name": "Tarot for the Soulless Materialist",
+   "kind": "soundcloud",
+   "title": "Tarot For The Soulless Materialist Episode 23 Ace Of Disks: Richard Kaczynski Returns",
+   "url": "https://soundcloud.com/faderanger93/tarot-for-the-soulless-materialist-episode-23-ace-of-disks-richard-kaczynski-on-aleister-crowleys-tarot-practice",
+   "video_id": "",
+   "published_iso": "2021-05-18T22:52:38+00:00",
+   "summary": "",
+   "thumb": "https://i1.sndcdn.com/artworks-VklgaN4dJRIVjwpM-ckBKug-original.jpg",
+   "duration": 2225
   },
   {
    "source": "shwep",

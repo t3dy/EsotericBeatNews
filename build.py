@@ -218,7 +218,8 @@ def card(it, now, colors, depth):
     prefix = "../" * depth
     color = colors.get(it["source"], "#cf2e2e")
     thumb = it.get("thumb") or ""
-    kind_label = "Video" if it["kind"] == "youtube" else "Podcast"
+    kind_label = {"youtube": "Video", "podcast": "Podcast",
+                  "soundcloud": "SoundCloud"}.get(it["kind"], "")
     dur = fmt_duration(it.get("duration"))
     thumb_html = (
         f'<img class="card__thumb" src="{esc(thumb)}" alt="" loading="lazy">'
@@ -275,23 +276,33 @@ def pagination(base, page, total_pages):
 
 def header_block(site, topics, depth, active=""):
     prefix = "../" * depth
+    fname = site.get("feed_name", "Latest Emanations")
+
+    def feat(label, href, key, primary=False):
+        cls = "feature feature--primary" if primary else "feature"
+        if active == key:
+            cls += " feature--active"
+        return f'<a class="{cls}" href="{prefix}{href}">{esc(label)}</a>'
+
+    # main site-features toolbar — "Latest Emanations" set off as the marquee landing
+    features = (
+        feat(f"✶ {fname}", "index.html", "feed", primary=True)
+        + feat("Playlists", "playlists.html", "playlists")
+        + feat("About", "about.html", "about")
+    )
+    # topics toolbar — the thematic currents, their own bar
     chips = "".join(
         f'<a class="chip{" chip--active" if active==t["id"] else ""}" '
         f'href="{prefix}topics/{t["id"]}.html">{esc(t.get("nav", t["title"]))}</a>'
         for t in topics
     )
-    nav = (
-        f'<a class="nav__link{" nav__link--active" if active=="feed" else ""}" href="{prefix}index.html">Feed</a>'
-        f'<a class="nav__link{" nav__link--active" if active=="playlists" else ""}" href="{prefix}playlists.html">Playlists</a>'
-        f'<a class="nav__link{" nav__link--active" if active=="about" else ""}" href="{prefix}about.html">About</a>'
-    )
     return f"""
 <header class="site-header">
   <div class="header__container">
     <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
-    <nav class="header__nav">{nav}</nav>
+    <nav class="feature-bar" aria-label="Site features">{features}</nav>
   </div>
-  <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Currents</span>{chips}</div></div>
+  <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Topics</span>{chips}</div></div>
 </header>"""
 
 

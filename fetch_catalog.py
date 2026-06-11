@@ -49,11 +49,21 @@ YDL_OPTS = {
     "skip_download": True,
     "extractor_args": {"youtubetab": {"approximate_date": ["1"]}},
 }
+YDL_FULL = {"quiet": True, "no_warnings": True, "skip_download": True}
 
 
 def ydl_json(url: str) -> dict:
     with yt_dlp.YoutubeDL(YDL_OPTS) as ydl:
         return ydl.sanitize_info(ydl.extract_info(url, download=False))
+
+
+def ydl_full(url: str) -> dict:
+    with yt_dlp.YoutubeDL(YDL_FULL) as ydl:
+        return ydl.sanitize_info(ydl.extract_info(url, download=False))
+
+
+def _norm(s: str) -> str:
+    return "".join(ch for ch in (s or "").lower() if ch.isalnum())[:45]
 
 
 def iso(ts) -> str:
@@ -138,6 +148,108 @@ def fetch_playlists(source: dict, use_cache: bool) -> list[dict]:
     return playlists
 
 
+def fetch_youtube_playlist(source: dict, use_cache: bool) -> list[dict]:
+    cache = RAW / f"ytpl_{source['id']}.json"
+    if use_cache and cache.exists():
+        raw = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        url = f"https://www.youtube.com/playlist?list={source['playlist_id']}"
+        print(f"  [yt-dlp] {source['name']} playlist ...", flush=True)
+        raw = ydl_json(url)
+        cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    items = [entry_to_item(e, source) for e in raw.get("entries", []) if e.get("id")]
+    items = [i for i in items if i["title"] and i["url"]]
+    print(f"           -> {len(items)} videos")
+    return items
+
+
+def _feed_youtube_channel(feed: dict, source: dict, use_cache: bool) -> list[dict]:
+    cache = RAW / f"ytch_{source['id']}.json"
+    if use_cache and cache.exists():
+        raw = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        url = f"https://www.youtube.com/channel/{feed['channel_id']}/videos"
+        print(f"  [yt-dlp] {source['name']} (YouTube uploads filter) ...", flush=True)
+        raw = ydl_json(url)
+        cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    want = (feed.get("title_contains") or "").lower()
+    items = []
+    for e in raw.get("entries", []):
+        if not e.get("id"):
+            continue
+        if want and want not in (e.get("title") or "").lower():
+            continue
+        items.append(entry_to_item(e, source))
+    return [i for i in items if i["title"] and i["url"]]
+
+
+def _feed_soundcloud(feed: dict, source: dict, use_cache: bool) -> list[dict]:
+    cache = RAW / f"sc_{source['id']}.json"
+    if use_cache and cache.exists():
+        raw = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        print(f"  [yt-dlp] {source['name']} (SoundCloud) ...", flush=True)
+        flat = ydl_json(feed["url"])
+        want = (feed.get("title_contains") or "").lower()
+        entries = []
+        for e in flat.get("entries", []):
+            if not e.get("url"):
+                continue
+            if want and want not in (e.get("title") or "").lower():
+                continue
+            # SoundCloud flat entries lack date/art; a full extract is cheap (few tracks)
+            try:
+                info = ydl_full(e["url"])
+            except Exception as exc:  # noqa: BLE001
+                print(f"           !! {e.get('title')} full-extract failed ({exc})")
+                info = e
+            entries.append(info)
+        raw = {"entries": entries}
+        cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    items = []
+    for info in raw.get("entries", []):
+        items.append({
+            "source": source["id"], "source_name": source["name"], "kind": "soundcloud",
+            "title": (info.get("title") or "").strip(),
+            "url": info.get("webpage_url") or info.get("url", ""),
+            "video_id": "",
+            "published_iso": iso(info.get("timestamp")),
+            "summary": _clip(info.get("description", "")),
+            "thumb": info.get("thumbnail", ""),
+            "duration": int(info["duration"]) if info.get("duration") else None,
+        })
+    return [i for i in items if i["title"] and i["url"]]
+
+
+def _clip(raw: str, limit: int = 320) -> str:
+    txt = " ".join((raw or "").split())
+    return (txt[:limit].rsplit(" ", 1)[0] + "…") if len(txt) > limit else txt
+
+
+def fetch_composite(source: dict, use_cache: bool) -> list[dict]:
+    gathered: list[dict] = []
+    for feed in source.get("feeds", []):
+        if feed["type"] == "youtube_channel":
+            gathered += _feed_youtube_channel(feed, source, use_cache)
+        elif feed["type"] == "youtube_playlist":
+            sub = dict(source, playlist_id=feed["playlist_id"])
+            gathered += fetch_youtube_playlist(sub, use_cache)
+        elif feed["type"] == "soundcloud":
+            gathered += _feed_soundcloud(feed, source, use_cache)
+    # de-dupe the same episode appearing on both YouTube and SoundCloud;
+    # prefer the copy with the richer metadata (date + thumbnail = YouTube)
+    best: dict[str, dict] = {}
+    for it in gathered:
+        key = _norm(it["title"])
+        score = (1 if it["published_iso"] else 0) + (1 if it.get("thumb") else 0)
+        prev = best.get(key)
+        if prev is None or score > prev[0]:
+            best[key] = (score, it)
+    items = [v[1] for v in best.values()]
+    print(f"           -> {len(items)} episodes (deduped from {len(gathered)})")
+    return items
+
+
 def fetch_shwep(source: dict, use_cache: bool) -> list[dict]:
     cache = RAW / f"rss_{source['id']}.xml"
     if use_cache and cache.exists():
@@ -173,12 +285,19 @@ def main() -> None:
     all_playlists: list[dict] = []
     print("Fetching full catalog (this is the slow, network half)\n")
     for src in cfg["sources"]:
-        if src["kind"] == "youtube":
+        kind = src["kind"]
+        if kind == "youtube":
             all_items += fetch_youtube_channel(src, args.cache)
             if src.get("fetch_playlists"):
                 all_playlists += fetch_playlists(src, args.cache)
-        else:
+        elif kind == "youtube_playlist":
+            all_items += fetch_youtube_playlist(src, args.cache)
+        elif kind == "composite":
+            all_items += fetch_composite(src, args.cache)
+        elif kind == "podcast":
             all_items += fetch_shwep(src, args.cache)
+        else:
+            print(f"  ?? unknown source kind {kind!r} for {src['id']}")
 
     # de-dup by url, keep the richest (longest summary) copy
     by_url: dict[str, dict] = {}

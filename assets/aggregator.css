@@ -136,7 +136,44 @@
 
 .empty { color: var(--text-muted); font-style: italic; padding: 2rem 0; }
 
-/* === Sub-nav (curated currents) === */
+/* === Main site-features toolbar === */
+.feature-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 2rem;
+  flex-wrap: wrap;
+}
+.feature {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  padding: 0.35rem 0.75rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.feature:hover { color: var(--text-heading); background: var(--bg-hover); }
+.feature--active { border-color: var(--border-subtle); color: var(--text-heading); }
+
+/* "Latest Emanations" — the marquee landing, visually set off from other features */
+.feature--primary {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-primary), #8e1d1d);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px rgba(207,46,46,0.25), 0 2px 10px rgba(207,46,46,0.25);
+}
+.feature--primary:hover {
+  background: linear-gradient(135deg, var(--accent-hover), #a02525);
+  color: #fff;
+}
+.feature--primary.feature--active {
+  box-shadow: 0 0 0 2px var(--accent-gold), 0 2px 12px rgba(196,164,74,0.35);
+}
+
+/* === Topics toolbar === */
 .subnav {
   border-top: 1px solid var(--border-subtle);
   background: #161616;

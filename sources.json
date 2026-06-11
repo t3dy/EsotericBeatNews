@@ -3,7 +3,7 @@
     "title": "Esoteric Beat News",
     "short_title": "EBN",
     "tagline": "A confluence of esoteric studies media — every episode, in order, plus curated currents.",
-    "feed_name": "Emanations",
+    "feed_name": "Latest Emanations",
     "feed_blurb": "Every episode from every source, newest first — the living outflow.",
     "url": "https://t3dy.github.io/EsotericBeatNews/",
     "repo": "https://github.com/t3dy/EsotericBeatNews"
@@ -45,6 +45,29 @@
       "channel_id": "UCL9A83sJIYNAovCA92uaTRQ",
       "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ",
       "color": "#3ec7c2"
+    },
+    {
+      "id": "esotericbeat",
+      "name": "Esoteric Beat",
+      "long_name": "Esoteric Beat — the podcast (Ted Hand)",
+      "kind": "youtube_playlist",
+      "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
+      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
+      "color": "#e0902f",
+      "house": true
+    },
+    {
+      "id": "tarotsoulless",
+      "name": "Tarot for the Soulless Materialist",
+      "long_name": "Tarot for the Soulless Materialist (Ted Hand)",
+      "kind": "composite",
+      "link": "https://soundcloud.com/faderanger93",
+      "color": "#b05fd0",
+      "house": true,
+      "feeds": [
+        {"type": "youtube_channel", "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg", "title_contains": "soulless materialist"},
+        {"type": "soundcloud", "url": "https://soundcloud.com/faderanger93/tracks", "title_contains": "soulless materialist"}
+      ]
     }
   ],
   "topics": [
