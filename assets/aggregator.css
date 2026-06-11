@@ -173,6 +173,48 @@
   box-shadow: 0 0 0 2px var(--accent-gold), 0 2px 12px rgba(196,164,74,0.35);
 }
 
+/* === Featured Podcasts toolbar === */
+.podbar {
+  border-top: 1px solid var(--border-subtle);
+  background: #1d1d1d;
+}
+.podbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.podbar__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-right: 0.5rem;
+}
+.podtab {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  border-bottom: 2px solid var(--src);
+  transition: background 0.2s, color 0.2s;
+}
+.podtab:hover { background: var(--bg-hover); color: var(--text-heading); }
+.podtab--active {
+  background: var(--src);
+  color: #fff;
+  border-color: var(--src);
+  font-weight: 600;
+}
+
+/* source landing hero accent */
+.hero--source { border-bottom-color: var(--src); }
+.hero--source h1 { color: var(--src); }
+
 /* === Topics toolbar === */
 .subnav {
   border-top: 1px solid var(--border-subtle);

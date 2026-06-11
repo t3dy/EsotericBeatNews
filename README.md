@@ -8,6 +8,8 @@ handful of esoteric-studies podcasts and YouTube channels into one place:
 - **Latest Emanations** — the marquee landing feed: *every* episode from every
   source, in chronological order, as scrollable cards (paginated). It sits in
   the main **site-features toolbar**, set off from the other features.
+- **Featured Podcasts toolbar** — a tab per show; each opens a landing page with
+  only that podcast's episodes.
 - **Topics toolbar** — its own bar of curated cross-channel currents:
   Neoplatonism, Grimoires, Kabbalah, Renaissance Magic, Ancient Magic, Medieval
   Magic, Agrippa, Ficino.

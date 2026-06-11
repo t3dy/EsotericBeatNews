@@ -274,7 +274,11 @@ def pagination(base, page, total_pages):
     return f'<nav class="pagination">{"".join(parts)}</nav>'
 
 
-def header_block(site, topics, depth, active=""):
+def featured_sources(sources):
+    return [s for s in sources if s.get("featured", True)]
+
+
+def header_block(site, sources, topics, depth, active=""):
     prefix = "../" * depth
     fname = site.get("feed_name", "Latest Emanations")
 
@@ -290,6 +294,15 @@ def header_block(site, topics, depth, active=""):
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
+    # featured-podcasts toolbar — a tab per show, each to its own landing page
+    def podtab(s):
+        cls = "podtab podtab--active" if active == "src:" + s["id"] else "podtab"
+        color = s.get("color", "#cf2e2e")
+        label = esc(s.get("tab", s["name"]))
+        return (f'<a class="{cls}" style="--src:{color}" '
+                f'href="{prefix}sources/{s["id"]}.html">{label}</a>')
+
+    tabs = "".join(podtab(s) for s in featured_sources(sources))
     # topics toolbar — the thematic currents, their own bar
     chips = "".join(
         f'<a class="chip{" chip--active" if active==t["id"] else ""}" '
@@ -302,11 +315,12 @@ def header_block(site, topics, depth, active=""):
     <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
     <nav class="feature-bar" aria-label="Site features">{features}</nav>
   </div>
+  <div class="podbar"><div class="podbar__inner"><span class="podbar__label">Featured Podcasts</span>{tabs}</div></div>
   <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Topics</span>{chips}</div></div>
 </header>"""
 
 
-def shell(title, body, site, topics, depth, active=""):
+def shell(title, body, site, sources, topics, depth, active=""):
     prefix = "../" * depth
     return f"""<!doctype html>
 <html lang="en">
@@ -319,7 +333,7 @@ def shell(title, body, site, topics, depth, active=""):
 <link rel="stylesheet" href="{prefix}assets/aggregator.css">
 </head>
 <body>
-{header_block(site, topics, depth, active)}
+{header_block(site, sources, topics, depth, active)}
 <main class="container">
 {body}
 </main>
@@ -339,7 +353,7 @@ def shell(title, body, site, topics, depth, active=""):
 """
 
 
-def write_paginated(items, base, hero_html, page_title, site, topics, now, colors, depth, active):
+def write_paginated(items, base, hero_html, page_title, site, sources, topics, now, colors, depth, active):
     total_pages = max(1, ceil(len(items) / PER_PAGE))
     for page in range(1, total_pages + 1):
         chunk = items[(page - 1) * PER_PAGE: page * PER_PAGE]
@@ -351,7 +365,8 @@ def write_paginated(items, base, hero_html, page_title, site, topics, now, color
         body = f"{hero}\n<section class=\"timeline-section\"><div class=\"card-list\">{cards}</div>" \
                f"{pagination(base.split('/')[-1], page, total_pages)}</section>"
         fname = f"{base}.html" if page == 1 else f"{base}-{page}.html"
-        (SITE / fname).write_text(shell(page_title, body, site, topics, depth, active), encoding="utf-8")
+        (SITE / fname).write_text(
+            shell(page_title, body, site, sources, topics, depth, active), encoding="utf-8")
     return total_pages
 
 
@@ -378,7 +393,25 @@ def render(catalog, cfg, now):
     <p class="count">{len(items)} episodes &nbsp;·&nbsp; {stat}</p>
   </section>"""
     feed_pages = write_paginated(items, "index", feed_hero, site["feed_name"],
-                                 site, topics, now, colors, depth=0, active="feed")
+                                 site, sources, topics, now, colors, depth=0, active="feed")
+
+    # ---- Featured-podcast landing pages (one per source) ----
+    (SITE / "sources").mkdir(parents=True, exist_ok=True)
+    kind_word = {"podcast": "podcast", "youtube": "YouTube channel",
+                 "youtube_playlist": "YouTube series", "composite": "podcast"}
+    for s in featured_sources(sources):
+        s_items = [i for i in items if i["source"] == s["id"]]
+        where = kind_word.get(s["kind"], "series")
+        hero = f"""
+  <section class="hero hero--source" style="--src:{s.get('color','#cf2e2e')}">
+    <p class="crumb"><a href="../index.html">{esc(site['feed_name'])}</a> / Featured Podcasts</p>
+    <h1>{esc(s.get('long_name', s['name']))}</h1>
+    <p class="hero__tagline">Every episode of {esc(s['name'])} we track — this {esc(where)} in one place.
+      <a href="{esc(s.get('link','#'))}" target="_blank" rel="noopener">Visit the source ›</a></p>
+    <p class="count">{len(s_items)} episode{'s' if len(s_items)!=1 else ''}</p>
+  </section>"""
+        write_paginated(s_items, f"sources/{s['id']}", hero, s["name"],
+                        site, sources, topics, now, colors, depth=1, active="src:" + s["id"])
 
     # ---- Curated topic pages ----
     for t in topics:
@@ -391,7 +424,7 @@ def render(catalog, cfg, now):
     <p class="count">{len(t_items)} episode{'s' if len(t_items)!=1 else ''}</p>
   </section>"""
         write_paginated(t_items, f"topics/{t['id']}", hero, t["title"],
-                        site, topics, now, colors, depth=1, active=t["id"])
+                        site, sources, topics, now, colors, depth=1, active=t["id"])
 
     # ---- Playlist pages + index (Esoterica's own curation) ----
     playlists = sorted(catalog.get("playlists", []), key=lambda p: -len(p.get("video_ids", [])))
@@ -420,7 +453,7 @@ def render(catalog, cfg, now):
   </section>
   <section class="timeline-section"><div class="card-list">{''.join(rows)}</div></section>"""
         (SITE / "playlists" / f"{slug}.html").write_text(
-            shell(f"{pl['title']} — {site['title']}", body, site, topics, depth=1, active="playlists"),
+            shell(f"{pl['title']} — {site['title']}", body, site, sources, topics, depth=1, active="playlists"),
             encoding="utf-8")
         pl_cards.append(f"""
       <a class="pl-card" href="playlists/{esc(slug)}.html">
@@ -437,7 +470,7 @@ def render(catalog, cfg, now):
   </section>
   <section class="pl-grid">{''.join(pl_cards)}</section>"""
     (SITE / "playlists.html").write_text(
-        shell(f"Curated Playlists — {site['title']}", pl_index_body, site, topics, 0, "playlists"),
+        shell(f"Curated Playlists — {site['title']}", pl_index_body, site, sources, topics, 0, "playlists"),
         encoding="utf-8")
 
     # ---- About ----
@@ -463,7 +496,7 @@ def render(catalog, cfg, now):
     its makers — please subscribe to and support them directly.</p>
   </section>"""
     (SITE / "about.html").write_text(
-        shell(f"About — {site['title']}", about_body, site, topics, 0, "about"), encoding="utf-8")
+        shell(f"About — {site['title']}", about_body, site, sources, topics, 0, "about"), encoding="utf-8")
 
     # ---- data.json ----
     (SITE / "data.json").write_text(json.dumps({
