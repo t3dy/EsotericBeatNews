@@ -1,0 +1,114 @@
+{
+  "site": {
+    "title": "Esoteric Beat News",
+    "short_title": "EBN",
+    "tagline": "A confluence of esoteric studies media — every episode, in order, plus curated currents.",
+    "feed_name": "Emanations",
+    "feed_blurb": "Every episode from every source, newest first — the living outflow.",
+    "url": "https://t3dy.github.io/EsotericBeatNews/",
+    "repo": "https://github.com/t3dy/EsotericBeatNews"
+  },
+  "sources": [
+    {
+      "id": "shwep",
+      "name": "SHWEP",
+      "long_name": "The Secret History of Western Esotericism Podcast",
+      "kind": "podcast",
+      "feed": "https://shwep.net/podcast/feed",
+      "link": "https://shwep.net",
+      "color": "#c4a44a"
+    },
+    {
+      "id": "esoterica",
+      "name": "Esoterica",
+      "long_name": "Esoterica (Dr. Justin Sledge)",
+      "kind": "youtube",
+      "channel_id": "UCoydhtfFSk1fZXNRnkGnneQ",
+      "link": "https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ",
+      "color": "#cf2e2e",
+      "fetch_playlists": true
+    },
+    {
+      "id": "modernhermeticist",
+      "name": "The Modern Hermeticist",
+      "long_name": "The Modern Hermeticist",
+      "kind": "youtube",
+      "channel_id": "UCcluftdk1tuDU71ZdGNpHTA",
+      "link": "https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA",
+      "color": "#6b3fa0"
+    },
+    {
+      "id": "seekers",
+      "name": "Seekers of Unity",
+      "long_name": "Seekers of Unity",
+      "kind": "youtube",
+      "channel_id": "UCL9A83sJIYNAovCA92uaTRQ",
+      "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ",
+      "color": "#3ec7c2"
+    }
+  ],
+  "topics": [
+    {
+      "id": "neoplatonism",
+      "title": "Neoplatonism",
+      "nav": "Neoplatonism",
+      "blurb": "Plotinus, Iamblichus, Proclus, and the ascent of the soul toward the One.",
+      "keywords": ["neoplaton", "plotinus", "iamblichus", "proclus", "porphyry", "theurgy", "theurgic", "enneads", "henosis", "the one", "middle-platon", "middle platon", "platonism", "plato ", "chaldean oracles", "plethon", "damascius"]
+    },
+    {
+      "id": "grimoires",
+      "title": "Grimoires",
+      "nav": "Grimoires",
+      "blurb": "The handbooks of practical magic — Picatrix, the Key of Solomon, the Goetia.",
+      "keywords": ["grimoire", "key of solomon", "lesser key", "lemegeton", "picatrix", "necronomicon", "abramelin", "sworn book", "honorius", "goetia", "heptameron", "ars notoria", "book of magic", "books of magic", "magical book", "clavicula"],
+      "playlists": ["books of magic", "solomonic magic"]
+    },
+    {
+      "id": "kabbalah",
+      "title": "Kabbalah",
+      "nav": "Kabbalah",
+      "blurb": "The Tree of Life, the Zohar, Merkavah ascent, and the currents of Jewish mysticism.",
+      "keywords": ["kabbalah", "kabbalist", "kabbalistic", "qabalah", "cabala", "zohar", "sefirot", "sephirot", "tree of life", "jewish mysticism", "jewish magic", "merkavah", "merkabah", "hekhalot", "lurianic", "luria", "ein sof", "gematria", "bahir", "scholem", "yanuka"],
+      "playlists": ["introduction to kabbalah and jewish mysticism - lecture series", "merkavah mysticism seminar", "live zohar text study and analysis - yanuka", "jewish magic and occultism", "kabbalah - cabala - hermetic qabbalah"]
+    },
+    {
+      "id": "renaissance",
+      "title": "Renaissance Magic",
+      "nav": "Renaissance",
+      "blurb": "Ficino, Pico, Agrippa, Bruno, Dee — the magic of the Renaissance synthesis.",
+      "keywords": ["ficino", "pico", "agrippa", "giordano bruno", "john dee", "enochian", "renaissance", "paracelsus", "trithemius", "della porta", "campanella", "occult philosophy", "de occulta", "mirandola", "reuchlin"],
+      "playlists": ["the occult philosophy of agrippa", "the occult philosophy of agrippa seminar", "agrippa", "john dee and enochian"]
+    },
+    {
+      "id": "ancient",
+      "title": "Ancient Magic",
+      "nav": "Ancient",
+      "blurb": "Greco-Egyptian papyri, curse tablets, and the magic of the ancient Near East.",
+      "keywords": ["ancient near east", "greek magical papyri", "pgm", "defixiones", "curse tablet", "ancient magic", "greco-egyptian", "graeco-egyptian", "egyptian magic", "mesopotam", "babylonian", "assyrian", "hellenistic magic", "sumerian", "akkadian", "papyri", "antiquity"],
+      "playlists": ["magic and esotericism in the ancient near east"]
+    },
+    {
+      "id": "medieval",
+      "title": "Medieval Magic",
+      "nav": "Medieval",
+      "blurb": "Solomonic magic, necromancy, image magic, and the medieval grimoire tradition.",
+      "keywords": ["medieval", "ars notoria", "solomonic", "necromancy", "munich manual", "scholastic magic", "image magic", "astral magic", "picatrix", "middle ages", "thirteenth century", "fourteenth century", "fifteenth century"],
+      "playlists": ["solomonic magic", "books of magic", "magic, the occult, and christianity"]
+    },
+    {
+      "id": "agrippa",
+      "title": "Agrippa",
+      "nav": "Agrippa",
+      "blurb": "Heinrich Cornelius Agrippa and the Three Books of Occult Philosophy.",
+      "keywords": ["agrippa", "occult philosophy", "three books of occult", "de occulta", "fourth book"],
+      "playlists": ["agrippa", "the occult philosophy of agrippa", "the occult philosophy of agrippa seminar"]
+    },
+    {
+      "id": "ficino",
+      "title": "Ficino",
+      "nav": "Ficino",
+      "blurb": "Marsilio Ficino, the Platonic Academy of Florence, and natural magic.",
+      "keywords": ["ficino", "marsilio", "three books on life", "de vita", "platonic theology", "florentine academy", "de amore"]
+    }
+  ]
+}

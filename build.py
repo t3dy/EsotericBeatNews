@@ -1,0 +1,495 @@
+#!/usr/bin/env python3
+"""
+ESOFEED renderer.
+
+Reads data/catalog.json (produced by fetch_catalog.py) and renders the static
+SHWEP-styled site. This half is OFFLINE — no network — so it runs reliably in
+CI even though the catalog itself is gathered by yt-dlp elsewhere.
+
+    python build.py            # render site/ from data/catalog.json
+
+Outputs:
+    site/index.html, site/index-N.html   -- "Emanations" news feed (paginated)
+    site/topics/<id>.html (+ -N.html)     -- 8 curated cross-channel topics
+    site/playlists.html                   -- index of Esoterica's curated playlists
+    site/playlists/<id>.html              -- one page per playlist
+    site/about.html
+    site/data.json                        -- machine-readable snapshot
+    site/assets/                          -- CSS
+
+A small RSS/Atom fetch helper (fetch / parse_rss / parse_youtube) is kept here
+because fetch_catalog.py imports it.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import html
+import json
+import re
+import shutil
+import sys
+import urllib.request
+import xml.etree.ElementTree as ET
+from email.utils import parsedate_to_datetime
+from math import ceil
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+SITE = ROOT / "site"
+SOURCES_FILE = ROOT / "sources.json"
+TAGS_FILE = ROOT / "tags.json"
+CATALOG = ROOT / "data" / "catalog.json"
+
+PER_PAGE = 60
+NS = {
+    "atom": "http://www.w3.org/2005/Atom",
+    "yt": "http://www.youtube.com/xml/schemas/2015",
+    "media": "http://search.yahoo.com/mrss/",
+    "itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd",
+}
+USER_AGENT = "ESOFEED/1.0 feed aggregator"
+EPOCH = dt.datetime.min.replace(tzinfo=dt.timezone.utc)
+
+
+# --------------------------------------------------------------------------- #
+# Feed helpers (used by fetch_catalog.py for the SHWEP RSS path)
+# --------------------------------------------------------------------------- #
+def fetch(url: str, timeout: int = 30) -> bytes:
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return resp.read()
+
+
+def _text(el) -> str:
+    return (el.text or "").strip() if el is not None else ""
+
+
+def _parse_date(raw: str):
+    raw = (raw or "").strip()
+    if not raw:
+        return None
+    try:
+        d = parsedate_to_datetime(raw)
+        return (d if d.tzinfo else d.replace(tzinfo=dt.timezone.utc)).astimezone(dt.timezone.utc)
+    except (TypeError, ValueError):
+        pass
+    try:
+        d = dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        return (d if d.tzinfo else d.replace(tzinfo=dt.timezone.utc)).astimezone(dt.timezone.utc)
+    except ValueError:
+        return None
+
+
+def _clean_summary(raw: str, limit: int = 320) -> str:
+    txt = re.sub(r"<[^>]+>", " ", raw or "")
+    txt = html.unescape(txt)
+    txt = re.sub(r"\s+", " ", txt).strip()
+    if len(txt) > limit:
+        txt = txt[:limit].rsplit(" ", 1)[0] + "…"
+    return txt
+
+
+def parse_rss(xml_bytes: bytes, source: dict) -> list[dict]:
+    root = ET.fromstring(xml_bytes)
+    channel = root.find("channel")
+    if channel is None:
+        return []
+    chan_img = ""
+    itimg = channel.find("itunes:image", NS)
+    if itimg is not None:
+        chan_img = itimg.get("href", "")
+    out = []
+    for it in channel.findall("item"):
+        summary = _text(it.find("description")) or _text(it.find("itunes:summary", NS))
+        thumb = ""
+        iimg = it.find("itunes:image", NS)
+        if iimg is not None:
+            thumb = iimg.get("href", "")
+        enc = it.find("enclosure")
+        out.append({
+            "source": source["id"], "source_name": source["name"], "kind": "podcast",
+            "title": _text(it.find("title")), "url": _text(it.find("link")),
+            "audio": enc.get("url") if enc is not None else "",
+            "published": _parse_date(_text(it.find("pubDate"))),
+            "summary": _clean_summary(summary), "thumb": thumb or chan_img,
+        })
+    return out
+
+
+def parse_youtube(xml_bytes: bytes, source: dict) -> list[dict]:
+    root = ET.fromstring(xml_bytes)
+    out = []
+    for entry in root.findall("atom:entry", NS):
+        vid = _text(entry.find("yt:videoId", NS))
+        link_el = entry.find("atom:link", NS)
+        url = link_el.get("href") if link_el is not None else (
+            f"https://www.youtube.com/watch?v={vid}" if vid else "")
+        group = entry.find("media:group", NS)
+        summary = thumb = ""
+        if group is not None:
+            summary = _text(group.find("media:description", NS))
+            th = group.find("media:thumbnail", NS)
+            if th is not None:
+                thumb = th.get("url", "")
+        if not thumb and vid:
+            thumb = f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
+        out.append({
+            "source": source["id"], "source_name": source["name"], "kind": "youtube",
+            "title": _text(entry.find("atom:title", NS)), "url": url, "video_id": vid,
+            "published": _parse_date(_text(entry.find("atom:published", NS))),
+            "summary": _clean_summary(summary), "thumb": thumb,
+        })
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# Tagging
+# --------------------------------------------------------------------------- #
+def build_membership_topics(playlists, topics):
+    """video_id -> set(topic_id) implied by Esoterica's own playlist curation."""
+    title_to_topics: dict[str, set] = {}
+    for t in topics:
+        for pl_title in t.get("playlists", []):
+            title_to_topics.setdefault(pl_title.lower(), set()).add(t["id"])
+    vid_topics: dict[str, set] = {}
+    for pl in playlists:
+        extra = title_to_topics.get(pl["title"].lower())
+        if not extra:
+            continue
+        for vid in pl.get("video_ids", []):
+            vid_topics.setdefault(vid, set()).update(extra)
+    return vid_topics
+
+
+def auto_tag(items, topics, overrides, vid_topics):
+    for it in items:
+        hay = f"{it['title']} {it.get('summary','')}".lower()
+        tags = set()
+        for topic in topics:
+            if topic.get("sources") and it["source"] not in topic["sources"]:
+                continue
+            if any(kw in hay for kw in topic["keywords"]):
+                tags.add(topic["id"])
+        if it.get("video_id"):
+            tags.update(vid_topics.get(it["video_id"], set()))
+        ov = overrides.get(it["url"])
+        if ov:
+            tags.update(ov.get("add", []))
+            tags.difference_update(ov.get("remove", []))
+        it["topics"] = sorted(tags)
+
+
+# --------------------------------------------------------------------------- #
+# Rendering
+# --------------------------------------------------------------------------- #
+def esc(s: str) -> str:
+    return html.escape(s or "", quote=True)
+
+
+def human_date(d):
+    return d.strftime("%d %b %Y") if d else ""
+
+
+def rel_date(d, now):
+    if not d:
+        return ""
+    days = (now - d).days
+    if days <= 0:
+        return "today"
+    if days == 1:
+        return "yesterday"
+    if days < 30:
+        return f"{days} days ago"
+    if days < 365:
+        return f"{days // 30} mo ago"
+    return f"{days // 365} yr ago"
+
+
+def fmt_duration(sec):
+    if not sec:
+        return ""
+    sec = int(sec)
+    h, m = sec // 3600, (sec % 3600) // 60
+    return f"{h}:{m:02d}h" if h else f"{m} min"
+
+
+def card(it, now, colors, depth):
+    prefix = "../" * depth
+    color = colors.get(it["source"], "#cf2e2e")
+    thumb = it.get("thumb") or ""
+    kind_label = "Video" if it["kind"] == "youtube" else "Podcast"
+    dur = fmt_duration(it.get("duration"))
+    thumb_html = (
+        f'<img class="card__thumb" src="{esc(thumb)}" alt="" loading="lazy">'
+        if thumb else
+        f'<div class="card__thumb card__thumb--blank" style="--src:{color}">{esc(it["source_name"][:1])}</div>'
+    )
+    dur_html = f'<span class="card__dur">{esc(dur)}</span>' if dur else ""
+    excerpt = f'<p class="card__excerpt">{esc(it["summary"])}</p>' if it.get("summary") else ""
+    pills = "".join(
+        f'<a class="pill" href="{prefix}topics/{esc(t)}.html">{esc(t)}</a>'
+        for t in it.get("topics", [])
+    )
+    return f"""
+    <article class="card">
+      <a class="card__media" href="{esc(it['url'])}" target="_blank" rel="noopener">{thumb_html}{dur_html}</a>
+      <div class="card__body">
+        <div class="card__meta">
+          <span class="card__source" style="--src:{color}">{esc(it['source_name'])}</span>
+          <span class="card__kind">{kind_label}</span>
+          <span class="card__date" title="{esc(human_date(it['published']))}">{esc(rel_date(it['published'], now))}</span>
+        </div>
+        <h3 class="card__title"><a href="{esc(it['url'])}" target="_blank" rel="noopener">{esc(it['title'])}</a></h3>
+        {excerpt}
+        <div class="card__pills">{pills}</div>
+      </div>
+    </article>"""
+
+
+def pagination(base, page, total_pages):
+    if total_pages <= 1:
+        return ""
+    def name(p):
+        return f"{base}.html" if p == 1 else f"{base}-{p}.html"
+    parts = []
+    if page > 1:
+        parts.append(f'<a class="pg" href="{name(page-1)}">‹ prev</a>')
+    # windowed page numbers
+    lo, hi = max(1, page - 3), min(total_pages, page + 3)
+    if lo > 1:
+        parts.append(f'<a class="pg" href="{name(1)}">1</a>')
+        if lo > 2:
+            parts.append('<span class="pg pg--gap">…</span>')
+    for p in range(lo, hi + 1):
+        cls = "pg pg--cur" if p == page else "pg"
+        parts.append(f'<a class="{cls}" href="{name(p)}">{p}</a>')
+    if hi < total_pages:
+        if hi < total_pages - 1:
+            parts.append('<span class="pg pg--gap">…</span>')
+        parts.append(f'<a class="pg" href="{name(total_pages)}">{total_pages}</a>')
+    if page < total_pages:
+        parts.append(f'<a class="pg" href="{name(page+1)}">next ›</a>')
+    return f'<nav class="pagination">{"".join(parts)}</nav>'
+
+
+def header_block(site, topics, depth, active=""):
+    prefix = "../" * depth
+    chips = "".join(
+        f'<a class="chip{" chip--active" if active==t["id"] else ""}" '
+        f'href="{prefix}topics/{t["id"]}.html">{esc(t.get("nav", t["title"]))}</a>'
+        for t in topics
+    )
+    nav = (
+        f'<a class="nav__link{" nav__link--active" if active=="feed" else ""}" href="{prefix}index.html">Feed</a>'
+        f'<a class="nav__link{" nav__link--active" if active=="playlists" else ""}" href="{prefix}playlists.html">Playlists</a>'
+        f'<a class="nav__link{" nav__link--active" if active=="about" else ""}" href="{prefix}about.html">About</a>'
+    )
+    return f"""
+<header class="site-header">
+  <div class="header__container">
+    <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
+    <nav class="header__nav">{nav}</nav>
+  </div>
+  <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Currents</span>{chips}</div></div>
+</header>"""
+
+
+def shell(title, body, site, topics, depth, active=""):
+    prefix = "../" * depth
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(site['tagline'])}">
+<link rel="stylesheet" href="{prefix}assets/style.css">
+<link rel="stylesheet" href="{prefix}assets/aggregator.css">
+</head>
+<body>
+{header_block(site, topics, depth, active)}
+<main class="container">
+{body}
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>{esc(site['title'])} aggregates public RSS/Atom feeds. Every card links to the
+    creator's own page — all content belongs to its makers. Sources:
+    <a href="https://shwep.net" target="_blank" rel="noopener">SHWEP</a>,
+    <a href="https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ" target="_blank" rel="noopener">Esoterica</a>,
+    <a href="https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA" target="_blank" rel="noopener">The Modern Hermeticist</a>,
+    <a href="https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ" target="_blank" rel="noopener">Seekers of Unity</a>.
+    <a href="{esc(site.get('repo',''))}" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+  </div>
+</footer>
+</body>
+</html>
+"""
+
+
+def write_paginated(items, base, hero_html, page_title, site, topics, now, colors, depth, active):
+    total_pages = max(1, ceil(len(items) / PER_PAGE))
+    for page in range(1, total_pages + 1):
+        chunk = items[(page - 1) * PER_PAGE: page * PER_PAGE]
+        cards = "".join(card(i, now, colors, depth) for i in chunk) or \
+            '<p class="empty">Nothing here yet.</p>'
+        hero = hero_html if page == 1 else \
+            f'<section class="hero hero--slim"><h1>{esc(page_title)}</h1>' \
+            f'<p class="count">page {page} of {total_pages}</p></section>'
+        body = f"{hero}\n<section class=\"timeline-section\"><div class=\"card-list\">{cards}</div>" \
+               f"{pagination(base.split('/')[-1], page, total_pages)}</section>"
+        fname = f"{base}.html" if page == 1 else f"{base}-{page}.html"
+        (SITE / fname).write_text(shell(page_title, body, site, topics, depth, active), encoding="utf-8")
+    return total_pages
+
+
+def render(catalog, cfg, now):
+    site, sources, topics = cfg["site"], cfg["sources"], cfg["topics"]
+    colors = {s["id"]: s.get("color", "#cf2e2e") for s in sources}
+    src_by_id = {s["id"]: s for s in sources}
+    items = catalog["items"]
+    for it in items:
+        it["published"] = _parse_date(it.get("published_iso", ""))
+    items.sort(key=lambda x: x["published"] or EPOCH, reverse=True)
+    by_vid = {i["video_id"]: i for i in items if i.get("video_id")}
+
+    (SITE / "topics").mkdir(parents=True, exist_ok=True)
+    (SITE / "playlists").mkdir(parents=True, exist_ok=True)
+
+    # ---- News feed (index) ----
+    counts = {s["id"]: sum(1 for i in items if i["source"] == s["id"]) for s in sources}
+    stat = " · ".join(f'{esc(src_by_id[sid]["name"])} {n}' for sid, n in counts.items())
+    feed_hero = f"""
+  <section class="hero">
+    <h1>{esc(site['feed_name'])}</h1>
+    <p class="hero__tagline">{esc(site['feed_blurb'])}</p>
+    <p class="count">{len(items)} episodes &nbsp;·&nbsp; {stat}</p>
+  </section>"""
+    feed_pages = write_paginated(items, "index", feed_hero, site["feed_name"],
+                                 site, topics, now, colors, depth=0, active="feed")
+
+    # ---- Curated topic pages ----
+    for t in topics:
+        t_items = [i for i in items if t["id"] in i.get("topics", [])]
+        hero = f"""
+  <section class="hero hero--topic">
+    <p class="crumb"><a href="../index.html">{esc(site['feed_name'])}</a> / Curated</p>
+    <h1>{esc(t['title'])}</h1>
+    <p class="hero__tagline">{esc(t.get('blurb',''))}</p>
+    <p class="count">{len(t_items)} episode{'s' if len(t_items)!=1 else ''}</p>
+  </section>"""
+        write_paginated(t_items, f"topics/{t['id']}", hero, t["title"],
+                        site, topics, now, colors, depth=1, active=t["id"])
+
+    # ---- Playlist pages + index (Esoterica's own curation) ----
+    playlists = sorted(catalog.get("playlists", []), key=lambda p: -len(p.get("video_ids", [])))
+    pl_cards = []
+    for pl in playlists:
+        slug = pl["id"]
+        src = src_by_id.get(pl["source"], {})
+        rows = []
+        for v in pl.get("videos", []):
+            it = by_vid.get(v["id"])
+            if it is None:  # video not in uploads list (e.g. cross-posted) — build a stub
+                it = {
+                    "source": pl["source"], "source_name": src.get("name", ""), "kind": "youtube",
+                    "title": v.get("title", ""), "url": v.get("url", ""),
+                    "published": None, "summary": "",
+                    "thumb": f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg", "topics": [],
+                }
+            rows.append(card(it, now, colors, depth=1))
+        body = f"""
+  <section class="hero hero--topic">
+    <p class="crumb"><a href="../playlists.html">Playlists</a> / {esc(src.get('name',''))}</p>
+    <h1>{esc(pl['title'])}</h1>
+    <p class="hero__tagline">A curated playlist by {esc(src.get('name',''))}.
+      <a href="{esc(pl['url'])}" target="_blank" rel="noopener">Open on YouTube ›</a></p>
+    <p class="count">{len(pl.get('video_ids', []))} videos</p>
+  </section>
+  <section class="timeline-section"><div class="card-list">{''.join(rows)}</div></section>"""
+        (SITE / "playlists" / f"{slug}.html").write_text(
+            shell(f"{pl['title']} — {site['title']}", body, site, topics, depth=1, active="playlists"),
+            encoding="utf-8")
+        pl_cards.append(f"""
+      <a class="pl-card" href="playlists/{esc(slug)}.html">
+        <span class="pl-card__count">{len(pl.get('video_ids', []))}</span>
+        <span class="pl-card__title">{esc(pl['title'])}</span>
+        <span class="pl-card__src" style="--src:{colors.get(pl['source'],'#cf2e2e')}">{esc(src.get('name',''))}</span>
+      </a>""")
+
+    pl_index_body = f"""
+  <section class="hero">
+    <h1>Curated Playlists</h1>
+    <p class="hero__tagline">Esoterica's own thematic playlists — {len(playlists)} curated series,
+      from the Ancient Near East to Renaissance occult philosophy.</p>
+  </section>
+  <section class="pl-grid">{''.join(pl_cards)}</section>"""
+    (SITE / "playlists.html").write_text(
+        shell(f"Curated Playlists — {site['title']}", pl_index_body, site, topics, 0, "playlists"),
+        encoding="utf-8")
+
+    # ---- About ----
+    src_rows = "".join(
+        f'<li><a href="{esc(s["link"])}" target="_blank" rel="noopener">{esc(s.get("long_name", s["name"]))}</a>'
+        f' — {counts.get(s["id"],0)} episodes</li>' for s in sources)
+    about_body = f"""
+  <section class="hero"><h1>About {esc(site['title'])}</h1>
+    <p class="hero__tagline">{esc(site['tagline'])}</p></section>
+  <section class="prose content-narrow">
+    <p>{esc(site['title'])} gathers the complete back catalogues of a handful of
+    esoteric-studies podcasts and YouTube channels into one place — a single
+    <a href="index.html">news feed</a> of every episode in order, curated
+    cross-channel <em>currents</em> (Neoplatonism, Grimoires, Kabbalah, and more),
+    and a section for each of Esoterica's own <a href="playlists.html">curated playlists</a>.</p>
+    <h2>Sources</h2>
+    <ul>{src_rows}</ul>
+    <h2>How it works</h2>
+    <p>Episode data is gathered from public RSS/Atom feeds and (for full YouTube
+    back catalogues) <code>yt-dlp</code> — no API keys. The site is static HTML,
+    rebuilt by a Python pipeline and deployed via GitHub Pages. Every card links
+    out to the creator's own page; nothing is rehosted. All content belongs to
+    its makers — please subscribe to and support them directly.</p>
+  </section>"""
+    (SITE / "about.html").write_text(
+        shell(f"About — {site['title']}", about_body, site, topics, 0, "about"), encoding="utf-8")
+
+    # ---- data.json ----
+    (SITE / "data.json").write_text(json.dumps({
+        "generated": now.isoformat(), "count": len(items),
+        "items": [{k: v for k, v in i.items() if k != "published"} for i in items],
+    }, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    return len(items), len(topics), len(playlists), feed_pages
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--catalog", default=str(CATALOG))
+    args = ap.parse_args()
+
+    cat_path = Path(args.catalog)
+    if not cat_path.exists():
+        sys.exit(f"{cat_path} not found. Run: python fetch_catalog.py")
+    catalog = json.loads(cat_path.read_text(encoding="utf-8"))
+    cfg = json.loads(SOURCES_FILE.read_text(encoding="utf-8"))
+    overrides = {}
+    if TAGS_FILE.exists():
+        overrides = json.loads(TAGS_FILE.read_text(encoding="utf-8")).get("overrides", {})
+
+    SITE.mkdir(exist_ok=True)
+    dst = SITE / "assets"
+    dst.mkdir(exist_ok=True)
+    for css in (ROOT / "assets").glob("*.css"):
+        shutil.copy2(css, dst / css.name)
+
+    vid_topics = build_membership_topics(catalog.get("playlists", []), cfg["topics"])
+    auto_tag(catalog["items"], cfg["topics"], overrides, vid_topics)
+    now = dt.datetime.now(dt.timezone.utc)
+    n, nt, npl, fp = render(catalog, cfg, now)
+    print(f"Rendered {n} items · {nt} topic pages · {npl} playlist pages · "
+          f"{fp}-page feed -> {SITE}\\index.html")
+
+
+if __name__ == "__main__":
+    main()

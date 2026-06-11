@@ -1,0 +1,9 @@
+{
+  "_comment": "Manual hand-tuning of auto-tagging. Key = the item's exact URL (copy it from site/data.json). 'add' forces a topic on; 'remove' forces a topic off. Auto-tags from keyword matching apply first, then these overrides. Example below — delete or replace it.",
+  "overrides": {
+    "https://www.youtube.com/watch?v=EXAMPLE": {
+      "add": ["kabbalah"],
+      "remove": ["alchemy"]
+    }
+  }
+}
