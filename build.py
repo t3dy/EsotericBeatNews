@@ -292,6 +292,7 @@ def header_block(site, sources, topics, depth, active=""):
     features = (
         feat(f"✶ {fname}", "index.html", "feed", primary=True)
         + feat("Search", "search.html", "search")
+        + feat("Browse", "browse.html", "browse")
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
@@ -354,8 +355,47 @@ def shell(title, body, site, sources, topics, depth, active=""):
 """
 
 
-def write_paginated(items, base, hero_html, page_title, site, sources, topics, now, colors, depth, active):
+def write_paginated(items, base, hero_html, page_title, site, sources, topics, now, colors, depth, active, sort_controls=False):
     total_pages = max(1, ceil(len(items) / PER_PAGE))
+    sort_html = ""
+    if sort_controls:
+        sort_html = """
+  <div class="sort-controls">
+    <label for="sort-select">Sort by:</label>
+    <select id="sort-select" class="sort-select">
+      <option value="date-desc">Newest first</option>
+      <option value="date-asc">Oldest first</option>
+      <option value="source">Source</option>
+      <option value="title">Title</option>
+    </select>
+  </div>
+  <script>
+  const sortSelect = document.getElementById('sort-select');
+  const cardList = document.querySelector('.card-list');
+  if (sortSelect && cardList) {
+    sortSelect.addEventListener('change', (e) => {
+      const cards = Array.from(cardList.querySelectorAll('.card'));
+      cards.sort((a, b) => {
+        const aTitle = a.querySelector('.card__title').textContent;
+        const aSource = a.querySelector('.card__source').textContent;
+        const aDate = a.querySelector('.card__date').getAttribute('title') || '';
+        const bTitle = b.querySelector('.card__title').textContent;
+        const bSource = b.querySelector('.card__source').textContent;
+        const bDate = b.querySelector('.card__date').getAttribute('title') || '';
+
+        switch(e.target.value) {
+          case 'date-asc': return aDate.localeCompare(bDate);
+          case 'date-desc': return bDate.localeCompare(aDate);
+          case 'source': return aSource.localeCompare(bSource) || aTitle.localeCompare(bTitle);
+          case 'title': return aTitle.localeCompare(bTitle);
+          default: return 0;
+        }
+      });
+      cards.forEach(c => cardList.appendChild(c));
+    });
+  }
+  </script>"""
+
     for page in range(1, total_pages + 1):
         chunk = items[(page - 1) * PER_PAGE: page * PER_PAGE]
         cards = "".join(card(i, now, colors, depth) for i in chunk) or \
@@ -363,7 +403,7 @@ def write_paginated(items, base, hero_html, page_title, site, sources, topics, n
         hero = hero_html if page == 1 else \
             f'<section class="hero hero--slim"><h1>{esc(page_title)}</h1>' \
             f'<p class="count">page {page} of {total_pages}</p></section>'
-        body = f"{hero}\n<section class=\"timeline-section\"><div class=\"card-list\">{cards}</div>" \
+        body = f"{hero}{sort_html if page == 1 else ''}\n<section class=\"timeline-section\"><div class=\"card-list\">{cards}</div>" \
                f"{pagination(base.split('/')[-1], page, total_pages)}</section>"
         fname = f"{base}.html" if page == 1 else f"{base}-{page}.html"
         (SITE / fname).write_text(
@@ -425,7 +465,7 @@ def render(catalog, cfg, now):
     <p class="count">{len(t_items)} episode{'s' if len(t_items)!=1 else ''}</p>
   </section>"""
         write_paginated(t_items, f"topics/{t['id']}", hero, t["title"],
-                        site, sources, topics, now, colors, depth=1, active=t["id"])
+                        site, sources, topics, now, colors, depth=1, active=t["id"], sort_controls=True)
 
     # ---- Playlist pages + index (Esoterica's own curation) ----
     playlists = sorted(catalog.get("playlists", []), key=lambda p: -len(p.get("video_ids", [])))
@@ -589,6 +629,86 @@ def render(catalog, cfg, now):
   </script>"""
     (SITE / "search.html").write_text(
         shell(f"Search — {site['title']}", search_body, site, sources, topics, 0, "search"), encoding="utf-8")
+
+    # ---- browse.html (chronological timeline) ----
+    browse_body = """
+  <div class="hero hero--slim">
+    <h1>Browse by Date</h1>
+    <p class="hero__tagline">Explore all episodes in chronological order.</p>
+  </div>
+
+  <div class="browse-controls">
+    <label for="browse-source">Filter by source:</label>
+    <select id="browse-source" class="browse-filter">
+      <option value="">All Sources</option>""" + "".join(
+            f'<option value="{esc(s["id"])}">{esc(s["name"])}</option>'
+            for s in sources) + """
+    </select>
+    <label for="browse-topic">Filter by topic:</label>
+    <select id="browse-topic" class="browse-filter">
+      <option value="">All Topics</option>""" + "".join(
+            f'<option value="{esc(t["id"])}">{esc(t["title"])}</option>'
+            for t in topics) + """
+    </select>
+  </div>
+
+  <div class="browse-results">
+    <p id="browse-count" class="browse-count"></p>
+    <div id="browse-items" class="card-list"></div>
+  </div>
+
+  <script>
+  (async () => {
+    const data = await fetch('data.json').then(r => r.json());
+    const sourceFilter = document.getElementById('browse-source');
+    const topicFilter = document.getElementById('browse-topic');
+    const countDiv = document.getElementById('browse-count');
+    const itemsDiv = document.getElementById('browse-items');
+
+    function makeCard(item) {
+      const color = '#cf2e2e';
+      const thumb = item.thumb
+        ? `<img class="card__thumb" src="${item.thumb}" alt="" loading="lazy">`
+        : `<div class="card__thumb card__thumb--blank" style="--src:${color}">${item.source_name[0]}</div>`;
+      const kind = {'youtube': 'Video', 'podcast': 'Podcast', 'soundcloud': 'SoundCloud'}[item.kind] || '';
+      const topics = (item.topics || []).map(t => `<a class="pill" href="topics/${t}.html">${t}</a>`).join('');
+      return `
+        <article class="card">
+          <a class="card__media" href="${item.url}" target="_blank" rel="noopener">${thumb}</a>
+          <div class="card__body">
+            <div class="card__meta">
+              <span class="card__source">${item.source_name}</span>
+              <span class="card__kind">${kind}</span>
+              <span class="card__date">${item.published_iso ? new Date(item.published_iso).toLocaleDateString() : ''}</span>
+            </div>
+            <h3 class="card__title"><a href="${item.url}" target="_blank" rel="noopener">${item.title}</a></h3>
+            ${item.summary ? `<p class="card__excerpt">${item.summary}</p>` : ''}
+            <div class="card__pills">${topics}</div>
+          </div>
+        </article>`;
+    }
+
+    function browse() {
+      const s = sourceFilter.value;
+      const t = topicFilter.value;
+
+      let results = data.items.filter(item => {
+        if (s && item.source !== s) return false;
+        if (t && !(item.topics || []).includes(t)) return false;
+        return true;
+      });
+
+      countDiv.textContent = `${results.length} episode${results.length===1?'':'s'}`;
+      itemsDiv.innerHTML = results.length ? results.map(makeCard).join('') : '<p class="empty">No episodes found.</p>';
+    }
+
+    sourceFilter.addEventListener('change', browse);
+    topicFilter.addEventListener('change', browse);
+    browse();
+  })();
+  </script>"""
+    (SITE / "browse.html").write_text(
+        shell(f"Browse by Date — {site['title']}", browse_body, site, sources, topics, 0, "browse"), encoding="utf-8")
 
     # ---- data.json ----
     (SITE / "data.json").write_text(json.dumps({
