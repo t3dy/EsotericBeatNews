@@ -15,7 +15,7 @@
     {"id": "seekers", "name": "Seekers of Unity", "long_name": "Seekers of Unity", "kind": "youtube", "channel_id": "UCL9A83sJIYNAovCA92uaTRQ", "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ", "color": "#3ec7c2"},
     {"id": "esotericbeat", "name": "Esoteric Beat", "long_name": "Esoteric Beat (Ted Hand)", "kind": "youtube_playlist", "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "color": "#e0902f", "house": true},
     {"id": "tarotsoulless", "name": "Tarot for the Soulless Materialist", "tab": "Soulless Materialist", "long_name": "Tarot for the Soulless Materialist (Ted Hand)", "kind": "composite", "link": "https://soundcloud.com/faderanger93", "color": "#b05fd0", "house": true, "feeds": [{"type": "youtube_channel", "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg", "title_contains": "soulless materialist"}, {"type": "soundcloud", "url": "https://soundcloud.com/faderanger93/tracks", "title_contains": "soulless materialist"}]},
-    {"id": "glitchbottle", "name": "Glitch Bottle", "long_name": "Glitch Bottle Podcast (Alexander Eth)", "kind": "podcast_rss", "feed": "https://www.spreaker.com/show/glitch-bottle-podcast/episodes/feed", "link": "https://www.glitchbottle.com/podcast", "color": "#ff6b35"},
+    {"id": "glitchbottle", "name": "Glitch Bottle", "long_name": "Glitch Bottle Podcast (Alexander Eth)", "kind": "youtube", "channel_id": "UC6W6E0Iud_fbv_D_3Pzifpg", "link": "https://www.youtube.com/@glitchbottle", "color": "#ff6b35"},
     {"id": "religionforbreakfast", "name": "Religion for Breakfast", "long_name": "Religion for Breakfast (YouTube)", "kind": "youtube", "channel_id": "UCct9aR7HC79Cv2g-9oDOTLw", "link": "https://www.youtube.com/@religionforbreakfast", "color": "#d4a574"},
     {"id": "rejectedreligion", "name": "Rejected Religion", "long_name": "Rejected Religion (YouTube)", "kind": "youtube", "channel_id": "UC7BQC-iCBzMaFN0i6a-lgag", "link": "https://www.youtube.com/@RejectedReligion", "color": "#8e44ad"},
     {"id": "historyofalchemy", "name": "History of Alchemy", "long_name": "History of Alchemy Podcast (Travis J. Dow)", "kind": "podcast_rss", "feed": "https://rss.acast.com/historyofalchemy", "link": "https://shows.acast.com/historyofalchemy", "color": "#e67e22"},
@@ -36,6 +36,15 @@
     {"id": "ficino", "title": "Ficino", "nav": "Ficino", "blurb": "Marsilio Ficino and natural magic.", "keywords": ["ficino", "de vita", "platonic academy"]},
     {"id": "alchemy", "title": "Alchemy", "nav": "Alchemy", "blurb": "Transmutation and the great work.", "keywords": ["alchemy", "alchemical", "transmutation", "magnum opus", "paracelsus"]},
     {"id": "audiobooks", "title": "Audiobooks", "nav": "Audiobooks", "blurb": "Full-text esoteric audiobook readings.", "keywords": ["audiobook", "full reading", "narrated"]},
-    {"id": "conferences", "title": "Conferences", "nav": "Conferences", "blurb": "Academic conferences and symposia.", "keywords": ["conference", "symposium", "seminar"]}
+    {"id": "conferences", "title": "Conferences", "nav": "Conferences", "blurb": "Academic conferences and symposia.", "keywords": ["conference", "symposium", "seminar"]},
+    {"id": "history_of_magic", "title": "History of Magic", "nav": "History", "blurb": "Intellectual and social history of magical practices.", "keywords": ["history of magic", "medieval magic", "renaissance magic", "early modern"]},
+    {"id": "mysticism", "title": "Mysticism", "nav": "Mysticism", "blurb": "Mystical theology and direct experience of the divine.", "keywords": ["mysticism", "mystical", "mystic", "contemplative"]},
+    {"id": "hermeticism", "title": "Hermeticism", "nav": "Hermeticism", "blurb": "Hermetic philosophy and the Corpus Hermeticum.", "keywords": ["hermetic", "hermetica", "corpus hermeticum"]},
+    {"id": "occultism", "title": "Occultism", "nav": "Occultism", "blurb": "Occult sciences and hidden knowledge traditions.", "keywords": ["occult", "occultism", "hidden knowledge"]},
+    {"id": "wicca", "title": "Wicca", "nav": "Wicca", "blurb": "Wiccan religion, Craft practice, and modern paganism.", "keywords": ["wicca", "wiccan", "pagan religion", "craft"]},
+    {"id": "witchcraft", "title": "Witchcraft", "nav": "Witchcraft", "blurb": "Witchcraft traditions and witch trials.", "keywords": ["witchcraft", "witch trials", "cunning craft", "wise women"]},
+    {"id": "gnosticism", "title": "Gnosticism", "nav": "Gnosticism", "blurb": "Gnostic Christianity and Gnostic cosmologies.", "keywords": ["gnostic", "gnosticism", "sophia", "demiurge"]},
+    {"id": "demonology", "title": "Demonology", "nav": "Demonology", "blurb": "Demons, angels, and spirit hierarchies.", "keywords": ["demon", "demonology", "devil", "spirit", "goetia"]},
+    {"id": "astrology", "title": "Astrology", "nav": "Astrology", "blurb": "Astrological theory and practice.", "keywords": ["astrology", "astrological", "zodiac", "horoscope", "natal chart"]}
   ]
 }

@@ -291,6 +291,7 @@ def header_block(site, sources, topics, depth, active=""):
     # main site-features toolbar — "Latest Emanations" set off as the marquee landing
     features = (
         feat(f"✶ {fname}", "index.html", "feed", primary=True)
+        + feat("Search", "search.html", "search")
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
@@ -497,6 +498,97 @@ def render(catalog, cfg, now):
   </section>"""
     (SITE / "about.html").write_text(
         shell(f"About — {site['title']}", about_body, site, sources, topics, 0, "about"), encoding="utf-8")
+
+    # ---- search.html ----
+    search_body = """
+  <div class="hero hero--slim">
+    <h1>Search</h1>
+    <p class="hero__tagline">Filter by keyword, source, or topic across all episodes.</p>
+  </div>
+
+  <form class="search-form" id="search-form">
+    <div class="search-controls">
+      <input type="text" id="query" class="search-input" placeholder="Search titles & summaries..." autocomplete="off">
+      <select id="source" class="search-filter">
+        <option value="">All Sources</option>""" + "".join(
+            f'<option value="{esc(s["id"])}">{esc(s["name"])}</option>'
+            for s in sources) + """
+      </select>
+      <select id="topic" class="search-filter">
+        <option value="">All Topics</option>""" + "".join(
+            f'<option value="{esc(t["id"])}">{esc(t["title"])}</option>'
+            for t in topics) + """
+      </select>
+      <button type="button" class="search-clear" id="clear-btn">Clear</button>
+    </div>
+  </form>
+
+  <div class="search-results">
+    <p id="result-count" class="search-count"></p>
+    <div id="results" class="card-list"></div>
+  </div>
+
+  <script>
+  (async () => {
+    const data = await fetch('data.json').then(r => r.json());
+    const form = document.getElementById('search-form');
+    const query = document.getElementById('query');
+    const source = document.getElementById('source');
+    const topic = document.getElementById('topic');
+    const clearBtn = document.getElementById('clear-btn');
+    const resultsDiv = document.getElementById('results');
+    const countDiv = document.getElementById('result-count');
+
+    function makeCard(item) {
+      const color = source.value ? '#cf2e2e' : '#cf2e2e';
+      const thumb = item.thumb
+        ? `<img class="card__thumb" src="${item.thumb}" alt="" loading="lazy">`
+        : `<div class="card__thumb card__thumb--blank" style="--src:${color}">${item.source_name[0]}</div>`;
+      const kind = {'youtube': 'Video', 'podcast': 'Podcast', 'soundcloud': 'SoundCloud'}[item.kind] || '';
+      const topics = (item.topics || []).map(t => `<a class="pill" href="topics/${t}.html">${t}</a>`).join('');
+      return `
+        <article class="card">
+          <a class="card__media" href="${item.url}" target="_blank" rel="noopener">${thumb}</a>
+          <div class="card__body">
+            <div class="card__meta">
+              <span class="card__source">${item.source_name}</span>
+              <span class="card__kind">${kind}</span>
+            </div>
+            <h3 class="card__title"><a href="${item.url}" target="_blank" rel="noopener">${item.title}</a></h3>
+            ${item.summary ? `<p class="card__excerpt">${item.summary}</p>` : ''}
+            <div class="card__pills">${topics}</div>
+          </div>
+        </article>`;
+    }
+
+    function search() {
+      const q = query.value.toLowerCase();
+      const s = source.value;
+      const t = topic.value;
+
+      let results = data.items.filter(item => {
+        if (q && !item.title.toLowerCase().includes(q) && !item.summary.toLowerCase().includes(q)) return false;
+        if (s && item.source !== s) return false;
+        if (t && !(item.topics || []).includes(t)) return false;
+        return true;
+      });
+
+      countDiv.textContent = `${results.length} result${results.length===1?'':'s'}`;
+      resultsDiv.innerHTML = results.length ? results.map(makeCard).join('') : '<p class="empty">No results found.</p>';
+    }
+
+    form.addEventListener('change', search);
+    query.addEventListener('input', () => setTimeout(search, 100));
+    clearBtn.addEventListener('click', () => {
+      query.value = '';
+      source.value = '';
+      topic.value = '';
+      search();
+    });
+  })();
+  </script>"""
+    (SITE / "search.html").write_text(
+        shell(f"Search — {site['title']}", search_body, site, sources, topics, 0, "search"), encoding="utf-8")
 
     # ---- data.json ----
     (SITE / "data.json").write_text(json.dumps({
