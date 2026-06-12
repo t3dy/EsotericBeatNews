@@ -1,0 +1,68 @@
+{
+  "new_sources": [
+    {
+      "id": "glitchbottle",
+      "name": "Glitch Bottle",
+      "long_name": "Glitch Bottle Podcast (Alexander Eth)",
+      "kind": "podcast_rss",
+      "feed": "https://www.spreaker.com/show/glitch-bottle-podcast/episodes/feed",
+      "link": "https://www.glitchbottle.com/podcast",
+      "color": "#ff6b35"
+    },
+    {
+      "id": "religionforbreakfast",
+      "name": "Religion for Breakfast",
+      "long_name": "Religion for Breakfast (YouTube)",
+      "kind": "youtube",
+      "channel_id": "UCHlwB-M6sSxmVKxOXt8P_bA",
+      "link": "https://www.youtube.com/@religionforbreakfast",
+      "color": "#d4a574"
+    },
+    {
+      "id": "rejectedreligion",
+      "name": "Rejected Religion",
+      "long_name": "Rejected Religion (YouTube)",
+      "kind": "youtube",
+      "channel_id": "UCq_5UfHLcsLhYFqYDm0cluw",
+      "link": "https://www.youtube.com/@RejectedReligion",
+      "color": "#8e44ad"
+    },
+    {
+      "id": "historyofalchemy",
+      "name": "History of Alchemy",
+      "long_name": "History of Alchemy Podcast (Travis J. Dow)",
+      "kind": "podcast_rss",
+      "feed": "https://rss.acast.com/historyofalchemy",
+      "link": "https://shows.acast.com/historyofalchemy",
+      "color": "#e67e22"
+    },
+    {
+      "id": "angelasymposium",
+      "name": "Angela's Symposium",
+      "long_name": "Angela's Symposium: Academic Esotericism (Dr. Angela Puca)",
+      "kind": "youtube",
+      "channel_id": "UCPSbip_LX2AxbGeAQfLp-Ig",
+      "link": "https://www.youtube.com/channel/UCPSbip_LX2AxbGeAQfLp-Ig",
+      "color": "#9b59b6"
+    },
+    {
+      "id": "fraserbuilds_alchemy",
+      "name": "Fraser Builds (Alchemy)",
+      "long_name": "Fraser Builds — Alchemy Episodes",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UC3u0tF45PlBWw8CYiAGXzSw",
+      "filter_title": ["alchemy", "alchemical"],
+      "link": "https://www.youtube.com/@fraserbuilds",
+      "color": "#f39c12"
+    },
+    {
+      "id": "thand_esoplayl",
+      "name": "Ted Hand Esoteric Studies",
+      "long_name": "Ted Hand's Esoteric Studies Playlist",
+      "kind": "youtube_playlist",
+      "playlist_id": "PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
+      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
+      "color": "#16a085"
+    }
+  ]
+}

@@ -9,130 +9,33 @@
     "repo": "https://github.com/t3dy/EsotericBeatNews"
   },
   "sources": [
-    {
-      "id": "shwep",
-      "name": "SHWEP",
-      "long_name": "The Secret History of Western Esotericism Podcast",
-      "kind": "podcast",
-      "feed": "https://shwep.net/podcast/feed",
-      "link": "https://shwep.net",
-      "color": "#c4a44a"
-    },
-    {
-      "id": "esoterica",
-      "name": "Esoterica",
-      "long_name": "Esoterica (Dr. Justin Sledge)",
-      "kind": "youtube",
-      "channel_id": "UCoydhtfFSk1fZXNRnkGnneQ",
-      "link": "https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ",
-      "color": "#cf2e2e",
-      "fetch_playlists": true
-    },
-    {
-      "id": "modernhermeticist",
-      "name": "The Modern Hermeticist",
-      "long_name": "The Modern Hermeticist",
-      "kind": "youtube",
-      "channel_id": "UCcluftdk1tuDU71ZdGNpHTA",
-      "link": "https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA",
-      "color": "#6b3fa0"
-    },
-    {
-      "id": "seekers",
-      "name": "Seekers of Unity",
-      "long_name": "Seekers of Unity",
-      "kind": "youtube",
-      "channel_id": "UCL9A83sJIYNAovCA92uaTRQ",
-      "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ",
-      "color": "#3ec7c2"
-    },
-    {
-      "id": "esotericbeat",
-      "name": "Esoteric Beat",
-      "long_name": "Esoteric Beat — the podcast (Ted Hand)",
-      "kind": "youtube_playlist",
-      "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
-      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
-      "color": "#e0902f",
-      "house": true
-    },
-    {
-      "id": "tarotsoulless",
-      "name": "Tarot for the Soulless Materialist",
-      "tab": "Soulless Materialist",
-      "long_name": "Tarot for the Soulless Materialist (Ted Hand)",
-      "kind": "composite",
-      "link": "https://soundcloud.com/faderanger93",
-      "color": "#b05fd0",
-      "house": true,
-      "feeds": [
-        {"type": "youtube_channel", "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg", "title_contains": "soulless materialist"},
-        {"type": "soundcloud", "url": "https://soundcloud.com/faderanger93/tracks", "title_contains": "soulless materialist"}
-      ]
-    }
+    {"id": "shwep", "name": "SHWEP", "long_name": "The Secret History of Western Esotericism Podcast", "kind": "podcast", "feed": "https://shwep.net/podcast/feed", "link": "https://shwep.net", "color": "#c4a44a"},
+    {"id": "esoterica", "name": "Esoterica", "long_name": "Esoterica (Dr. Justin Sledge)", "kind": "youtube", "channel_id": "UCoydhtfFSk1fZXNRnkGnneQ", "link": "https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ", "color": "#cf2e2e", "fetch_playlists": true},
+    {"id": "modernhermeticist", "name": "The Modern Hermeticist", "long_name": "The Modern Hermeticist", "kind": "youtube", "channel_id": "UCcluftdk1tuDU71ZdGNpHTA", "link": "https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA", "color": "#6b3fa0"},
+    {"id": "seekers", "name": "Seekers of Unity", "long_name": "Seekers of Unity", "kind": "youtube", "channel_id": "UCL9A83sJIYNAovCA92uaTRQ", "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ", "color": "#3ec7c2"},
+    {"id": "esotericbeat", "name": "Esoteric Beat", "long_name": "Esoteric Beat (Ted Hand)", "kind": "youtube_playlist", "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "color": "#e0902f", "house": true},
+    {"id": "tarotsoulless", "name": "Tarot for the Soulless Materialist", "tab": "Soulless Materialist", "long_name": "Tarot for the Soulless Materialist (Ted Hand)", "kind": "composite", "link": "https://soundcloud.com/faderanger93", "color": "#b05fd0", "house": true, "feeds": [{"type": "youtube_channel", "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg", "title_contains": "soulless materialist"}, {"type": "soundcloud", "url": "https://soundcloud.com/faderanger93/tracks", "title_contains": "soulless materialist"}]},
+    {"id": "glitchbottle", "name": "Glitch Bottle", "long_name": "Glitch Bottle Podcast (Alexander Eth)", "kind": "podcast_rss", "feed": "https://www.spreaker.com/show/glitch-bottle-podcast/episodes/feed", "link": "https://www.glitchbottle.com/podcast", "color": "#ff6b35"},
+    {"id": "religionforbreakfast", "name": "Religion for Breakfast", "long_name": "Religion for Breakfast (YouTube)", "kind": "youtube", "channel_id": "UCct9aR7HC79Cv2g-9oDOTLw", "link": "https://www.youtube.com/@religionforbreakfast", "color": "#d4a574"},
+    {"id": "rejectedreligion", "name": "Rejected Religion", "long_name": "Rejected Religion (YouTube)", "kind": "youtube", "channel_id": "UC7BQC-iCBzMaFN0i6a-lgag", "link": "https://www.youtube.com/@RejectedReligion", "color": "#8e44ad"},
+    {"id": "historyofalchemy", "name": "History of Alchemy", "long_name": "History of Alchemy Podcast (Travis J. Dow)", "kind": "podcast_rss", "feed": "https://rss.acast.com/historyofalchemy", "link": "https://shows.acast.com/historyofalchemy", "color": "#e67e22"},
+    {"id": "angelasymposium", "name": "Angela's Symposium", "long_name": "Angela's Symposium: Academic Esotericism (Dr. Angela Puca)", "kind": "youtube", "channel_id": "UCPSbip_LX2AxbGeAQfLp-Ig", "link": "https://www.youtube.com/channel/UCPSbip_LX2AxbGeAQfLp-Ig", "color": "#9b59b6"},
+    {"id": "fraserbuilds_alchemy", "name": "Fraser Builds (Alchemy)", "long_name": "Fraser Builds — Alchemy Episodes", "kind": "youtube_channel_filtered", "channel_id": "UC11UNLQ4llwQawajUsCmneA", "filter_title": ["alchemy", "alchemical"], "link": "https://www.youtube.com/@fraserbuilds", "color": "#f39c12"},
+    {"id": "thand_esoplayl", "name": "Ted Hand Esoteric Studies", "long_name": "Ted Hand's Esoteric Studies Playlist", "kind": "youtube_playlist", "playlist_id": "PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe", "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe", "color": "#16a085"},
+    {"id": "michaelkuhlman", "name": "Michael Kuhlman (Yates)", "long_name": "Michael Kuhlman — Frances Yates Audiobooks", "kind": "youtube", "channel_id": "UC0QQdG7rE1e2cRxx7zWcMng", "link": "https://www.youtube.com/@MichaelKuhlman", "color": "#27ae60"},
+    {"id": "greshamhutton", "name": "Gresham College (Hutton)", "long_name": "Gresham College — Ronald Hutton Lectures", "kind": "youtube_channel_filtered", "channel_id": "UC1t6kKXoBvjdr8m9KJ2Fx7A", "filter_title": ["hutton"], "link": "https://www.youtube.com/@GreshamCollege", "color": "#2c3e50"}
   ],
   "topics": [
-    {
-      "id": "neoplatonism",
-      "title": "Neoplatonism",
-      "nav": "Neoplatonism",
-      "blurb": "Plotinus, Iamblichus, Proclus, and the ascent of the soul toward the One.",
-      "keywords": ["neoplaton", "plotinus", "iamblichus", "proclus", "porphyry", "theurgy", "theurgic", "enneads", "henosis", "the one", "middle-platon", "middle platon", "platonism", "plato ", "chaldean oracles", "plethon", "damascius"]
-    },
-    {
-      "id": "grimoires",
-      "title": "Grimoires",
-      "nav": "Grimoires",
-      "blurb": "The handbooks of practical magic — Picatrix, the Key of Solomon, the Goetia.",
-      "keywords": ["grimoire", "key of solomon", "lesser key", "lemegeton", "picatrix", "necronomicon", "abramelin", "sworn book", "honorius", "goetia", "heptameron", "ars notoria", "book of magic", "books of magic", "magical book", "clavicula"],
-      "playlists": ["books of magic", "solomonic magic"]
-    },
-    {
-      "id": "kabbalah",
-      "title": "Kabbalah",
-      "nav": "Kabbalah",
-      "blurb": "The Tree of Life, the Zohar, Merkavah ascent, and the currents of Jewish mysticism.",
-      "keywords": ["kabbalah", "kabbalist", "kabbalistic", "qabalah", "cabala", "zohar", "sefirot", "sephirot", "tree of life", "jewish mysticism", "jewish magic", "merkavah", "merkabah", "hekhalot", "lurianic", "luria", "ein sof", "gematria", "bahir", "scholem", "yanuka"],
-      "playlists": ["introduction to kabbalah and jewish mysticism - lecture series", "merkavah mysticism seminar", "live zohar text study and analysis - yanuka", "jewish magic and occultism", "kabbalah - cabala - hermetic qabbalah"]
-    },
-    {
-      "id": "renaissance",
-      "title": "Renaissance Magic",
-      "nav": "Renaissance",
-      "blurb": "Ficino, Pico, Agrippa, Bruno, Dee — the magic of the Renaissance synthesis.",
-      "keywords": ["ficino", "pico", "agrippa", "giordano bruno", "john dee", "enochian", "renaissance", "paracelsus", "trithemius", "della porta", "campanella", "occult philosophy", "de occulta", "mirandola", "reuchlin"],
-      "playlists": ["the occult philosophy of agrippa", "the occult philosophy of agrippa seminar", "agrippa", "john dee and enochian"]
-    },
-    {
-      "id": "ancient",
-      "title": "Ancient Magic",
-      "nav": "Ancient",
-      "blurb": "Greco-Egyptian papyri, curse tablets, and the magic of the ancient Near East.",
-      "keywords": ["ancient near east", "greek magical papyri", "pgm", "defixiones", "curse tablet", "ancient magic", "greco-egyptian", "graeco-egyptian", "egyptian magic", "mesopotam", "babylonian", "assyrian", "hellenistic magic", "sumerian", "akkadian", "papyri", "antiquity"],
-      "playlists": ["magic and esotericism in the ancient near east"]
-    },
-    {
-      "id": "medieval",
-      "title": "Medieval Magic",
-      "nav": "Medieval",
-      "blurb": "Solomonic magic, necromancy, image magic, and the medieval grimoire tradition.",
-      "keywords": ["medieval", "ars notoria", "solomonic", "necromancy", "munich manual", "scholastic magic", "image magic", "astral magic", "picatrix", "middle ages", "thirteenth century", "fourteenth century", "fifteenth century"],
-      "playlists": ["solomonic magic", "books of magic", "magic, the occult, and christianity"]
-    },
-    {
-      "id": "agrippa",
-      "title": "Agrippa",
-      "nav": "Agrippa",
-      "blurb": "Heinrich Cornelius Agrippa and the Three Books of Occult Philosophy.",
-      "keywords": ["agrippa", "occult philosophy", "three books of occult", "de occulta", "fourth book"],
-      "playlists": ["agrippa", "the occult philosophy of agrippa", "the occult philosophy of agrippa seminar"]
-    },
-    {
-      "id": "ficino",
-      "title": "Ficino",
-      "nav": "Ficino",
-      "blurb": "Marsilio Ficino, the Platonic Academy of Florence, and natural magic.",
-      "keywords": ["ficino", "marsilio", "three books on life", "de vita", "platonic theology", "florentine academy", "de amore"]
-    }
+    {"id": "neoplatonism", "title": "Neoplatonism", "nav": "Neoplatonism", "blurb": "Plotinus, Iamblichus, Proclus, and the ascent of the soul.", "keywords": ["neoplatonism", "plotinus", "iamblichus", "proclus", "porphyry", "theurgy", "theurgic"]},
+    {"id": "grimoires", "title": "Grimoires", "nav": "Grimoires", "blurb": "Practical magic handbooks.", "keywords": ["grimoire", "goetia", "key of solomon", "picatrix"]},
+    {"id": "kabbalah", "title": "Kabbalah", "nav": "Kabbalah", "blurb": "Jewish mysticism and the Tree of Life.", "keywords": ["kabbalah", "zohar", "tree of life", "merkavah"]},
+    {"id": "renaissance", "title": "Renaissance Magic", "nav": "Renaissance", "blurb": "Ficino, Pico, Agrippa, Bruno, Dee.", "keywords": ["ficino", "pico", "agrippa", "bruno", "dee", "enochian", "renaissance"]},
+    {"id": "ancient", "title": "Ancient Magic", "nav": "Ancient", "blurb": "Greco-Egyptian and ancient Near East.", "keywords": ["ancient", "greek magical papyri", "egyptian", "mesopotamian"]},
+    {"id": "medieval", "title": "Medieval Magic", "nav": "Medieval", "blurb": "Solomonic and grimoire traditions.", "keywords": ["medieval", "solomonic", "necromancy"]},
+    {"id": "agrippa", "title": "Agrippa", "nav": "Agrippa", "blurb": "Heinrich Cornelius Agrippa and Occult Philosophy.", "keywords": ["agrippa", "occult philosophy"]},
+    {"id": "ficino", "title": "Ficino", "nav": "Ficino", "blurb": "Marsilio Ficino and natural magic.", "keywords": ["ficino", "de vita", "platonic academy"]},
+    {"id": "alchemy", "title": "Alchemy", "nav": "Alchemy", "blurb": "Transmutation and the great work.", "keywords": ["alchemy", "alchemical", "transmutation", "magnum opus", "paracelsus"]},
+    {"id": "audiobooks", "title": "Audiobooks", "nav": "Audiobooks", "blurb": "Full-text esoteric audiobook readings.", "keywords": ["audiobook", "full reading", "narrated"]},
+    {"id": "conferences", "title": "Conferences", "nav": "Conferences", "blurb": "Academic conferences and symposia.", "keywords": ["conference", "symposium", "seminar"]}
   ]
 }

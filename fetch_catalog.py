@@ -148,6 +148,32 @@ def fetch_playlists(source: dict, use_cache: bool) -> list[dict]:
     return playlists
 
 
+def _fetch_youtube_filtered(source: dict, use_cache: bool) -> list[dict]:
+    """Fetch a YouTube channel's uploads, filtered by title keywords."""
+    cache = RAW / f"ytfilt_{source['id']}.json"
+    if use_cache and cache.exists():
+        raw = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        url = f"https://www.youtube.com/channel/{source['channel_id']}/videos"
+        print(f"  [yt-dlp] {source['name']} (filtered) ...", flush=True)
+        raw = ydl_json(url)
+        cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+    want_any = source.get("filter_title", [])
+    items = []
+    for e in raw.get("entries", []):
+        if not e.get("id"):
+            continue
+        if want_any:
+            title_lower = (e.get("title") or "").lower()
+            if not any(kw in title_lower for kw in want_any):
+                continue
+        items.append(entry_to_item(e, source))
+    items = [i for i in items if i["title"] and i["url"]]
+    print(f"           -> {len(items)} videos (filtered)")
+    return items
+
+
 def fetch_youtube_playlist(source: dict, use_cache: bool) -> list[dict]:
     cache = RAW / f"ytpl_{source['id']}.json"
     if use_cache and cache.exists():
@@ -250,7 +276,8 @@ def fetch_composite(source: dict, use_cache: bool) -> list[dict]:
     return items
 
 
-def fetch_shwep(source: dict, use_cache: bool) -> list[dict]:
+def fetch_rss_podcast(source: dict, use_cache: bool) -> list[dict]:
+    """RSS podcast feed (any format: RSS, Atom, Acast, etc.)."""
     cache = RAW / f"rss_{source['id']}.xml"
     if use_cache and cache.exists():
         data = cache.read_bytes()
@@ -272,6 +299,10 @@ def fetch_shwep(source: dict, use_cache: bool) -> list[dict]:
     return out
 
 
+# Alias for compatibility
+fetch_shwep = fetch_rss_podcast
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", action="store_true",
@@ -286,18 +317,23 @@ def main() -> None:
     print("Fetching full catalog (this is the slow, network half)\n")
     for src in cfg["sources"]:
         kind = src["kind"]
-        if kind == "youtube":
-            all_items += fetch_youtube_channel(src, args.cache)
-            if src.get("fetch_playlists"):
-                all_playlists += fetch_playlists(src, args.cache)
-        elif kind == "youtube_playlist":
-            all_items += fetch_youtube_playlist(src, args.cache)
-        elif kind == "composite":
-            all_items += fetch_composite(src, args.cache)
-        elif kind == "podcast":
-            all_items += fetch_shwep(src, args.cache)
-        else:
-            print(f"  ?? unknown source kind {kind!r} for {src['id']}")
+        try:
+            if kind == "youtube":
+                all_items += fetch_youtube_channel(src, args.cache)
+                if src.get("fetch_playlists"):
+                    all_playlists += fetch_playlists(src, args.cache)
+            elif kind == "youtube_playlist":
+                all_items += fetch_youtube_playlist(src, args.cache)
+            elif kind == "youtube_channel_filtered":
+                all_items += _fetch_youtube_filtered(src, args.cache)
+            elif kind == "composite":
+                all_items += fetch_composite(src, args.cache)
+            elif kind in ("podcast", "podcast_rss"):
+                all_items += fetch_rss_podcast(src, args.cache)
+            else:
+                print(f"  ?? unknown source kind {kind!r} for {src['id']}")
+        except Exception as exc:
+            print(f"  !! {src['id']} failed: {exc}")
 
     # de-dup by url, keep the richest (longest summary) copy
     by_url: dict[str, dict] = {}
