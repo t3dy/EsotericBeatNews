@@ -334,6 +334,16 @@
       "color": "#a23b72"
     },
     {
+      "id": "maeviuslynn",
+      "name": "Maevius Lynn",
+      "tab": "Maevius Lynn",
+      "long_name": "Maevius Lynn — Thelema, Crowley & Western Esotericism",
+      "kind": "youtube",
+      "channel_id": "UCDIvIMXJowcvADuSA0DDeYw",
+      "link": "https://www.youtube.com/@MaeviusLynn",
+      "color": "#704214"
+    },
+    {
       "id": "dzwiza",
       "name": "Kirsten Dzwiza",
       "long_name": "Kirsten Dzwiza — Featured Appearances (Ancient Magic & the Greek Magical Papyri)",
@@ -541,7 +551,10 @@
       "keywords": [
         "occult",
         "occultism",
-        "hidden knowledge"
+        "hidden knowledge",
+        "thelema",
+        "thelemic",
+        "thelemite"
       ]
     },
     {
@@ -680,7 +693,15 @@
       "color": "#cf2e2e",
       "keywords": [
         "crowley",
-        "aleister"
+        "aleister",
+        "book of the law",
+        "liber al vel legis",
+        "liber al",
+        "konx om pax",
+        "aiwass",
+        "to mega therion",
+        "the great beast",
+        "mega therion"
       ]
     },
     {

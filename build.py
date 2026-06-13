@@ -301,7 +301,7 @@ def pagination(base, page, total_pages):
 
 def featured_sources(sources):
     """Return only the featured podcasts for the toolbar."""
-    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt", "arcanvm"}
+    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt", "arcanvm", "maeviuslynn"}
     return [s for s in sources if s["id"] in featured_ids]
 
 
