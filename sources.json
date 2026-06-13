@@ -303,6 +303,15 @@
       ],
       "link": "https://www.youtube.com/@MatteoMartelli",
       "color": "#8b5a3c"
+    },
+    {
+      "id": "adam_mclean",
+      "name": "Adam McLean",
+      "long_name": "Adam McLean — Alchemy, Tarot, Hermetic Studies",
+      "kind": "youtube",
+      "channel_id": "UCHHYioCYXoHG6N50ND18tiA",
+      "link": "https://www.youtube.com/@AdamMcLean",
+      "color": "#d4af37"
     }
   ],
   "topics": [
@@ -417,7 +426,17 @@
         "paracelsus",
         "chymistry",
         "mercury",
-        "martelli"
+        "martelli",
+        "alchemical manuscript",
+        "alchemical emblem",
+        "alchemical painting",
+        "rosicrucian",
+        "hermetic",
+        "philosopher's stone",
+        "emblematic",
+        "ruland",
+        "tarot",
+        "arcana"
       ]
     },
     {
