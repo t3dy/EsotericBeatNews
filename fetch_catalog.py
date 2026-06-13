@@ -182,6 +182,47 @@ def _fetch_youtube_filtered(source: dict, use_cache: bool) -> list[dict]:
     return items
 
 
+def fetch_youtube_videos(source: dict, use_cache: bool) -> list[dict]:
+    """Fetch an explicit, hand-curated list of individual YouTube videos.
+
+    Used for collecting a single person's scattered guest appearances across
+    many channels we don't index in full. Each video is fully extracted so its
+    description lands in `summary` — that powers both scholar keyword matching
+    and topic auto-tagging downstream.
+    """
+    cache = RAW / f"ytvids_{source['id']}.json"
+    if use_cache and cache.exists():
+        raw = json.loads(cache.read_text(encoding="utf-8"))
+    else:
+        entries = []
+        for v in source.get("videos", []):
+            vid = v.get("id") if isinstance(v, dict) else v
+            url = vid if str(vid).startswith("http") else f"https://www.youtube.com/watch?v={vid}"
+            print(f"  [yt-dlp] {source['name']} video {vid} ...", flush=True)
+            try:
+                entries.append(ydl_full(url))
+            except Exception as exc:  # noqa: BLE001
+                print(f"           !! {vid} failed ({exc})")
+        raw = {"entries": entries}
+        cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    items = []
+    for info in raw.get("entries", []):
+        vid = info.get("id", "")
+        items.append({
+            "source": source["id"], "source_name": source["name"], "kind": "youtube",
+            "title": (info.get("title") or "").strip(),
+            "url": info.get("webpage_url") or (f"https://www.youtube.com/watch?v={vid}" if vid else ""),
+            "video_id": vid,
+            "published_iso": iso(info.get("timestamp")),
+            "summary": _clip(info.get("description", "")),
+            "thumb": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg" if vid else info.get("thumbnail", ""),
+            "duration": int(info["duration"]) if info.get("duration") else None,
+        })
+    items = [i for i in items if i["title"] and i["url"]]
+    print(f"           -> {len(items)} videos (curated)")
+    return items
+
+
 def fetch_youtube_playlist(source: dict, use_cache: bool) -> list[dict]:
     cache = RAW / f"ytpl_{source['id']}.json"
     if use_cache and cache.exists():
@@ -332,6 +373,8 @@ def main() -> None:
                     all_playlists += fetch_playlists(src, args.cache)
             elif kind == "youtube_playlist":
                 all_items += fetch_youtube_playlist(src, args.cache)
+            elif kind == "youtube_videos":
+                all_items += fetch_youtube_videos(src, args.cache)
             elif kind == "youtube_channel_filtered":
                 all_items += _fetch_youtube_filtered(src, args.cache)
             elif kind == "composite":

@@ -276,14 +276,14 @@ def pagination(base, page, total_pages):
 
 
 def featured_sources(sources):
-    """Return only the 5 featured podcasts for the toolbar."""
-    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat"}
+    """Return only the featured podcasts for the toolbar."""
+    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt"}
     return [s for s in sources if s["id"] in featured_ids]
 
 
 def featured_scholars(scholars):
     """Return only the 5 featured scholars for the toolbar."""
-    featured_ids = {"newman", "principe", "forshaw", "hutton", "yates"}
+    featured_ids = {"newman", "principe", "forshaw", "hutton", "yates", "dzwiza"}
     return [s for s in scholars if s["id"] in featured_ids]
 
 

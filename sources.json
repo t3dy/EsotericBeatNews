@@ -312,6 +312,31 @@
       "channel_id": "UCHHYioCYXoHG6N50ND18tiA",
       "link": "https://www.youtube.com/@AdamMcLean",
       "color": "#d4af37"
+    },
+    {
+      "id": "wabt",
+      "name": "We Are Being Transformed",
+      "tab": "WABT",
+      "long_name": "We Are Being Transformed (WABT Podcast)",
+      "kind": "youtube",
+      "channel_id": "UCOa6ywt-4TbUKyvJZcY1pxA",
+      "link": "https://www.youtube.com/@WABTpodcast",
+      "color": "#5b8c5a"
+    },
+    {
+      "id": "dzwiza",
+      "name": "Kirsten Dzwiza",
+      "long_name": "Kirsten Dzwiza — Featured Appearances (Ancient Magic & the Greek Magical Papyri)",
+      "kind": "youtube_videos",
+      "link": "https://antikemagie.com",
+      "color": "#9b6a4f",
+      "videos": [
+        "y4iIFDh1puk",
+        "N8_idhNwsQs",
+        "owhYIZgSI-Q",
+        "7DxPBOVeDfk",
+        "byzQeFvWzFo"
+      ]
     }
   ],
   "topics": [
@@ -378,7 +403,9 @@
         "ancient",
         "greek magical papyri",
         "egyptian",
-        "mesopotamian"
+        "mesopotamian",
+        "apuleius",
+        "golden ass"
       ]
     },
     {
@@ -540,7 +567,9 @@
         "gnostic",
         "gnosticism",
         "sophia",
-        "demiurge"
+        "demiurge",
+        "nag hammadi",
+        "valentinus"
       ]
     },
     {
@@ -553,7 +582,8 @@
         "demonology",
         "devil",
         "spirit",
-        "goetia"
+        "goetia",
+        "lilith"
       ]
     },
     {
@@ -620,6 +650,16 @@
         "lawrence m. principe"
       ],
       "count": 3
+    },
+    {
+      "id": "dzwiza",
+      "name": "Kirsten Dzwiza",
+      "blurb": "Archaeologist of Graeco-Egyptian magic, the Greek Magical Papyri, and ancient ritual practice (charaktêres).",
+      "keywords": [
+        "dzwiza",
+        "kirsten dzwiza"
+      ],
+      "count": 8
     }
   ]
 }
