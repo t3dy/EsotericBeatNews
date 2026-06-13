@@ -42,6 +42,7 @@ TAGS_FILE = ROOT / "tags.json"
 CATALOG = ROOT / "data" / "catalog.json"
 
 PER_PAGE = 60
+ASSET_VER = "0"  # cache-busting token, set in main() from CSS content hash
 NS = {
     "atom": "http://www.w3.org/2005/Atom",
     "yt": "http://www.youtube.com/xml/schemas/2015",
@@ -367,8 +368,8 @@ def shell(title, body, site, sources, topics, depth, active="", scholars=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(site['tagline'])}">
-<link rel="stylesheet" href="{prefix}assets/style.css">
-<link rel="stylesheet" href="{prefix}assets/aggregator.css">
+<link rel="stylesheet" href="{prefix}assets/style.css?v={ASSET_VER}">
+<link rel="stylesheet" href="{prefix}assets/aggregator.css?v={ASSET_VER}">
 </head>
 <body>
 {header_block(site, sources, topics, depth, active, scholars)}
@@ -861,8 +862,14 @@ def main():
     SITE.mkdir(exist_ok=True)
     dst = SITE / "assets"
     dst.mkdir(exist_ok=True)
+    import hashlib
+    hasher = hashlib.sha1()
     for css in (ROOT / "assets").glob("*.css"):
+        data = css.read_bytes()
+        hasher.update(data)
         shutil.copy2(css, dst / css.name)
+    global ASSET_VER
+    ASSET_VER = hasher.hexdigest()[:8]
 
     vid_topics = build_membership_topics(catalog.get("playlists", []), cfg["topics"])
     auto_tag(catalog["items"], cfg["topics"], overrides, vid_topics)
