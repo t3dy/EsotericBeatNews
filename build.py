@@ -293,6 +293,7 @@ def header_block(site, sources, topics, depth, active=""):
         feat(f"✶ {fname}", "index.html", "feed", primary=True)
         + feat("Search", "search.html", "search")
         + feat("Browse", "browse.html", "browse")
+        + feat("Scholars", "scholars.html", "scholars")
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
@@ -422,6 +423,7 @@ def render(catalog, cfg, now):
     by_vid = {i["video_id"]: i for i in items if i.get("video_id")}
 
     (SITE / "topics").mkdir(parents=True, exist_ok=True)
+    (SITE / "scholars").mkdir(parents=True, exist_ok=True)
     (SITE / "playlists").mkdir(parents=True, exist_ok=True)
 
     # ---- News feed (index) ----
@@ -466,6 +468,25 @@ def render(catalog, cfg, now):
   </section>"""
         write_paginated(t_items, f"topics/{t['id']}", hero, t["title"],
                         site, sources, topics, now, colors, depth=1, active=t["id"], sort_controls=True)
+
+    # ---- Scholar pages ----
+    scholars = cfg.get("scholars", [])
+    for sch in scholars:
+        sch_items = []
+        keywords = sch.get("keywords", [])
+        for item in items:
+            text = (item.get("title", "") + " " + item.get("summary", "")).lower()
+            if any(kw in text for kw in keywords):
+                sch_items.append(item)
+        hero = f"""
+  <section class="hero hero--topic">
+    <p class="crumb"><a href="../index.html">{esc(site['feed_name'])}</a> / Scholars</p>
+    <h1>{esc(sch['name'])}</h1>
+    <p class="hero__tagline">{esc(sch.get('blurb',''))}</p>
+    <p class="count">{len(sch_items)} episode{'s' if len(sch_items)!=1 else ''}</p>
+  </section>"""
+        write_paginated(sch_items, f"scholars/{sch['id']}", hero, sch["name"],
+                        site, sources, topics, now, colors, depth=1, active=f"sch:{sch['id']}", sort_controls=True)
 
     # ---- Playlist pages + index (Esoterica's own curation) ----
     playlists = sorted(catalog.get("playlists", []), key=lambda p: -len(p.get("video_ids", [])))
@@ -512,6 +533,26 @@ def render(catalog, cfg, now):
   <section class="pl-grid">{''.join(pl_cards)}</section>"""
     (SITE / "playlists.html").write_text(
         shell(f"Curated Playlists — {site['title']}", pl_index_body, site, sources, topics, 0, "playlists"),
+        encoding="utf-8")
+
+    # ---- scholars.html (featured scholars index) ----
+    sch_cards = []
+    for sch in scholars:
+        sch_count = sch.get("count", 0)
+        sch_cards.append(f"""
+      <a class="pl-card" href="scholars/{esc(sch['id'])}.html">
+        <span class="pl-card__count">{sch_count}</span>
+        <span class="pl-card__title">{esc(sch['name'])}</span>
+        <span class="pl-card__src">{esc(sch.get('blurb','')[:60])}</span>
+      </a>""")
+    sch_index_body = f"""
+  <section class="hero">
+    <h1>Featured Scholars</h1>
+    <p class="hero__tagline">Luminaries of Western esotericism and Renaissance philosophy — {len(scholars)} scholars featured.</p>
+  </section>
+  <section class="pl-grid">{''.join(sch_cards)}</section>"""
+    (SITE / "scholars.html").write_text(
+        shell(f"Featured Scholars — {site['title']}", sch_index_body, site, sources, topics, 0, "scholars"),
         encoding="utf-8")
 
     # ---- About ----
