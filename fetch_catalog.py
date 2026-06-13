@@ -93,7 +93,11 @@ def fetch_youtube_channel(source: dict, use_cache: bool) -> list[dict]:
     if use_cache and cache.exists():
         raw = json.loads(cache.read_text(encoding="utf-8"))
     else:
-        url = f"https://www.youtube.com/channel/{source['channel_id']}/videos"
+        # Use channel_url if available (for custom URLs), else construct from channel_id
+        if 'channel_url' in source:
+            url = source['channel_url']
+        else:
+            url = f"https://www.youtube.com/channel/{source['channel_id']}/videos"
         print(f"  [yt-dlp] {source['name']} uploads ...", flush=True)
         raw = ydl_json(url)
         cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
@@ -154,7 +158,11 @@ def _fetch_youtube_filtered(source: dict, use_cache: bool) -> list[dict]:
     if use_cache and cache.exists():
         raw = json.loads(cache.read_text(encoding="utf-8"))
     else:
-        url = f"https://www.youtube.com/channel/{source['channel_id']}/videos"
+        # Use channel_url if available, else construct from channel_id
+        if 'channel_url' in source:
+            url = source['channel_url']
+        else:
+            url = f"https://www.youtube.com/channel/{source['channel_id']}/videos"
         print(f"  [yt-dlp] {source['name']} (filtered) ...", flush=True)
         raw = ydl_json(url)
         cache.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
