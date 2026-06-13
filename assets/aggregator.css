@@ -173,10 +173,13 @@
   box-shadow: 0 0 0 2px var(--accent-gold), 0 2px 12px rgba(196,164,74,0.35);
 }
 
-/* === Featured Podcasts toolbar === */
+/* === Featured Podcasts & Scholars toolbars === */
 .podbar {
   border-top: 1px solid var(--border-subtle);
   background: #1d1d1d;
+}
+.podbar--scholars {
+  background: #1a1714;
 }
 .podbar__inner {
   max-width: 1200px;

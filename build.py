@@ -280,7 +280,13 @@ def featured_sources(sources):
     return [s for s in sources if s["id"] in featured_ids]
 
 
-def header_block(site, sources, topics, depth, active=""):
+def featured_scholars(scholars):
+    """Return only the 5 featured scholars for the toolbar."""
+    featured_ids = {"newman", "principe", "forshaw", "hutton", "yates"}
+    return [s for s in scholars if s["id"] in featured_ids]
+
+
+def header_block(site, sources, topics, depth, active="", scholars=None):
     prefix = "../" * depth
     fname = site.get("feed_name", "Latest Emanations")
 
@@ -318,6 +324,22 @@ def header_block(site, sources, topics, depth, active=""):
             s["tab"] = "Ted Hand"
 
     tabs = "".join(podtab(s) for s in featured)
+    # featured-scholars toolbar — a tab per scholar, each to their own page
+    def schol_tab(s):
+        cls = "podtab podtab--active" if active == "sch:" + s["id"] else "podtab"
+        color = s.get("color", "#8b7355")
+        label = esc(s.get("tab", s["name"]))
+        return (f'<a class="{cls}" style="--src:{color}" '
+                f'href="{prefix}scholars/{s["id"]}.html">{label}</a>')
+
+    schol_tabs = ""
+    if scholars:
+        featured_schol = featured_scholars(scholars)
+        schol_tabs = "".join(schol_tab(s) for s in featured_schol)
+        schol_bar = f'<div class="podbar podbar--scholars"><div class="podbar__inner"><span class="podbar__label"><span>Featured</span><span>Scholars</span></span>{schol_tabs}</div></div>'
+    else:
+        schol_bar = ""
+
     # topics toolbar — the thematic currents, their own bar
     chips = "".join(
         f'<a class="chip{" chip--active" if active==t["id"] else ""}" '
@@ -331,11 +353,12 @@ def header_block(site, sources, topics, depth, active=""):
     <nav class="feature-bar" aria-label="Site features">{features}</nav>
   </div>
   <div class="podbar"><div class="podbar__inner"><span class="podbar__label"><span>Featured</span><span>Podcasts</span></span>{tabs}</div></div>
+  {schol_bar}
   <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Topics</span>{chips}</div></div>
 </header>"""
 
 
-def shell(title, body, site, sources, topics, depth, active=""):
+def shell(title, body, site, sources, topics, depth, active="", scholars=None):
     prefix = "../" * depth
     return f"""<!doctype html>
 <html lang="en">
@@ -348,7 +371,7 @@ def shell(title, body, site, sources, topics, depth, active=""):
 <link rel="stylesheet" href="{prefix}assets/aggregator.css">
 </head>
 <body>
-{header_block(site, sources, topics, depth, active)}
+{header_block(site, sources, topics, depth, active, scholars)}
 <main class="container">
 {body}
 </main>
@@ -567,7 +590,7 @@ def render(catalog, cfg, now):
     ted_hand_body += """
   </section>"""
     (SITE / "ted-hand.html").write_text(
-        shell(f"Ted Hand — {site['title']}", ted_hand_body, site, sources, topics, 0, "src:esotericbeat"),
+        shell(f"Ted Hand — {site['title']}", ted_hand_body, site, sources, topics, 0, "src:esotericbeat", scholars),
         encoding="utf-8")
 
     # ---- scholars.html (featured scholars aggregated) ----
@@ -593,8 +616,28 @@ def render(catalog, cfg, now):
     sch_body += """
   </section>"""
     (SITE / "scholars.html").write_text(
-        shell(f"Featured Scholars — {site['title']}", sch_body, site, sources, topics, 0, "scholars"),
+        shell(f"Featured Scholars — {site['title']}", sch_body, site, sources, topics, 0, "scholars", scholars),
         encoding="utf-8")
+
+    # ---- Individual scholar pages (scholars/[id].html) ----
+    (SITE / "scholars").mkdir(exist_ok=True)
+    for sch in scholars:
+        sch_items = []
+        keywords = sch.get("keywords", [])
+        for item in items:
+            text = (item.get("title", "") + " " + item.get("summary", "")).lower()
+            if any(kw in text for kw in keywords):
+                sch_items.append(item)
+        sch_item_cards = "".join(card(i, now, colors, 1) for i in sch_items) or '<p class="empty">Nothing here.</p>'
+        sch_page_body = f"""
+  <section class="hero hero--slim">
+    <h1>{esc(sch['name'])}</h1>
+    <p class="hero__tagline">{len(sch_items)} episodes</p>
+  </section>
+  <section class="card-list">{sch_item_cards}</section>"""
+        (SITE / "scholars" / f"{sch['id']}.html").write_text(
+            shell(f"{sch['name']} — {site['title']}", sch_page_body, site, sources, topics, 1, f"sch:{sch['id']}", scholars),
+            encoding="utf-8")
 
     # ---- About ----
     src_rows = "".join(
