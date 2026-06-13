@@ -1,6 +1,6 @@
 {
- "generated": "2026-06-13T05:06:08.345403+00:00",
- "count": 2623,
+ "generated": "2026-06-13T05:15:39.938939+00:00",
+ "count": 2632,
  "playlist_count": 28,
  "items": [
   {
@@ -1585,6 +1585,102 @@
    "duration": 661
   },
   {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | Timothy Young: ‘The Origins and Afterlives of Visconti Tarocchi’",
+   "url": "https://www.youtube.com/watch?v=gooaNLuI9AE",
+   "video_id": "gooaNLuI9AE",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/gooaNLuI9AE/hqdefault.jpg",
+   "duration": 1838
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | Paolo Plebani: ‘The Court at Play: A Review of the Colleoni Tarot’",
+   "url": "https://www.youtube.com/watch?v=XQPuwDIrgDo",
+   "video_id": "XQPuwDIrgDo",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/XQPuwDIrgDo/hqdefault.jpg",
+   "duration": 1650
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | The Divine Man: From the ‘Mantegna Tarocchi’ to the Sola Busca Tarot",
+   "url": "https://www.youtube.com/watch?v=yuFq8IZ8VWM",
+   "video_id": "yuFq8IZ8VWM",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/yuFq8IZ8VWM/hqdefault.jpg",
+   "duration": 1903
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | Peter Forshaw: ‘Eliphas Levi and the Occult Tarot’",
+   "url": "https://www.youtube.com/watch?v=ghzs5ncJYoA",
+   "video_id": "ghzs5ncJYoA",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/ghzs5ncJYoA/hqdefault.jpg",
+   "duration": 2079
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | Deja Whitehouse: ‘Manifesting the Magick of the Magus’",
+   "url": "https://www.youtube.com/watch?v=_yH2MqgwbfY",
+   "video_id": "_yH2MqgwbfY",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/_yH2MqgwbfY/hqdefault.jpg",
+   "duration": 1696
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | ‘There is no future, let us predict it’: Surrealism and the Tarot’",
+   "url": "https://www.youtube.com/watch?v=JYQTijVby5Y",
+   "video_id": "JYQTijVby5Y",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/JYQTijVby5Y/hqdefault.jpg",
+   "duration": 1484
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | ‘Aby Warburg, the tarocchi and the survival of the pagan gods'",
+   "url": "https://www.youtube.com/watch?v=adHapzztNNk",
+   "video_id": "adHapzztNNk",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/adHapzztNNk/hqdefault.jpg",
+   "duration": 1697
+  },
+  {
+   "source": "warburgalchemy",
+   "source_name": "Warburg Institute (Alchemy & Esotericism)",
+   "kind": "youtube",
+   "title": "Tarot - Origins & Afterlives | ‘The Queer Potentiality of Ernst Tristan Kurtzahn’s Weimar Tarot’",
+   "url": "https://www.youtube.com/watch?v=uVPzEjskpSw",
+   "video_id": "uVPzEjskpSw",
+   "published_iso": "2025-08-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/uVPzEjskpSw/hqdefault.jpg",
+   "duration": 1781
+  },
+  {
    "source": "religionforbreakfast",
    "source_name": "Religion for Breakfast",
    "kind": "youtube",
@@ -1921,6 +2017,18 @@
    "summary": "",
    "thumb": "https://i.ytimg.com/vi/GaXByMT3Wio/hqdefault.jpg",
    "duration": 5079
+  },
+  {
+   "source": "kazrowe",
+   "source_name": "Kaz Rowe",
+   "kind": "youtube",
+   "title": "The Misunderstood History of Alchemy",
+   "url": "https://www.youtube.com/watch?v=yDVF_GTMCoY",
+   "video_id": "yDVF_GTMCoY",
+   "published_iso": "2025-06-13T00:00:00+00:00",
+   "summary": "",
+   "thumb": "https://i.ytimg.com/vi/yDVF_GTMCoY/hqdefault.jpg",
+   "duration": 2157
   },
   {
    "source": "glitchbottle",
