@@ -10,9 +10,13 @@ handful of esoteric-studies podcasts and YouTube channels into one place:
   the main **site-features toolbar**, set off from the other features.
 - **Featured Podcasts toolbar** — a tab per show; each opens a landing page with
   only that podcast's episodes.
-- **Topics toolbar** — its own bar of curated cross-channel currents:
+- **Topics toolbar** — its own bar of 20 curated cross-channel currents:
   Neoplatonism, Grimoires, Kabbalah, Renaissance Magic, Ancient Magic, Medieval
-  Magic, Agrippa, Ficino.
+  Magic, Agrippa, Ficino, Alchemy, Audiobooks, Conferences, History of Magic,
+  Mysticism, Hermeticism, Occultism, Wicca, Witchcraft, Gnosticism, Demonology,
+  Astrology. Every episode is auto-sorted into these tabs at build time.
+- **Featured Scholars toolbar** — a tab per featured scholar (Hutton, Yates,
+  Forshaw, Newman, Principe, Dzwiza), each linking to a page of their episodes.
 - **Curated Playlists** — a section for each of Esoterica's own 28 thematic
   playlists (Kabbalah, Solomonic Magic, Ancient Near East, Gnosticism, …).
 
@@ -20,6 +24,10 @@ Every card links out to the creator's own page. Nothing is rehosted — all
 content belongs to its makers; please subscribe to and support them directly.
 
 ## Sources
+
+**25 sources** are defined in `sources.json` (≈3,000 episodes total) — podcasts,
+full YouTube channels, title-filtered channels, playlists, and one-off video
+lists. A representative sample:
 
 | Source | Type | Episodes |
 |---|---|---|
@@ -30,11 +38,24 @@ content belongs to its makers; please subscribe to and support them directly.
 | [Esoteric Beat](https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk) (Ted Hand) | YouTube playlist | ~8 |
 | [Tarot for the Soulless Materialist](https://soundcloud.com/faderanger93) (Ted Hand) | YouTube + SoundCloud | ~5 |
 
-YouTube channels are pulled in full via `yt-dlp`; **playlist** sources (Esoteric
-Beat) pull one playlist; **composite** sources (Tarot for the Soulless
-Materialist) merge a title-filtered slice of a channel's uploads with SoundCloud
-tracks, de-duplicating the same episode across platforms. SoundCloud is also
-fetched via `yt-dlp` (install `curl_cffi` for full listings).
+…plus channels for alchemy and esoteric studies from Angela's Symposium,
+Religion for Breakfast, Glitch Bottle, Hermitix, Adam McLean, Matteo Martelli,
+the Warburg Institute, and the Newman/Principe alchemy lecture channels, among
+others. The full list lives in `sources.json`.
+
+Each source declares a `kind` that controls how it is fetched:
+
+| `kind` | Pulls |
+|---|---|
+| `podcast` / `podcast_rss` | a podcast RSS/Atom feed |
+| `youtube` | a channel's complete uploads (`channel_id` / `channel_url`) |
+| `youtube_channel_filtered` | only uploads whose title matches `filter_title[]` — for mixed channels where you want just the on-topic videos |
+| `youtube_playlist` | a single playlist |
+| `youtube_videos` | an explicit `videos[]` id list — for one-off / featured appearances |
+| `composite` | merges multiple feeds (channel + SoundCloud), de-duplicating the same episode across platforms |
+
+YouTube is scraped via `yt-dlp` (no API key); SoundCloud also uses `yt-dlp`
+(install `curl_cffi` for full listings).
 
 ## Tech stack
 
@@ -60,7 +81,7 @@ render. Refreshing the catalog = re-run the fetcher and push.
 ## Repository layout
 
 ```
-sources.json          # sources, the 8 curated topics (keywords + playlist maps), branding
+sources.json          # sources, the 20 curated topics (keywords + playlist maps), scholars, branding
 fetch_catalog.py      # yt-dlp + RSS  -> data/catalog.json   (slow, network, run locally)
 build.py              # data/catalog.json -> site/           (fast, offline, runs in CI)
 tags.json             # optional manual tag overrides per episode URL
@@ -86,16 +107,36 @@ python build.py                    # writes site/
 python -m http.server 8099 --directory site   # http://localhost:8099
 ```
 
+## Adding episodes & sorting into tabs
+
+Every episode that enters the catalog is **automatically sorted into its topic
+tabs** by `build.py` — keyword matches on its title + summary, Esoterica
+playlist membership, and any manual `tags.json` overrides. You never assign tabs
+by hand; you only refresh and rebuild.
+
+- **New episode from a source already listed** — just refresh:
+  `python fetch_catalog.py` → `python build.py` → commit `data/catalog.json` →
+  push. The new upload is pulled, auto-tagged, and appears in the feed and its
+  topic tabs.
+- **Add a whole new source** — add an entry to `sources` in `sources.json` with
+  the right `kind` (table above), then refresh as above. YouTube needs only the
+  `UC…` channel id; set `"fetch_playlists": true` to pull its playlists.
+- **Add a single one-off video** — use a `youtube_videos` source with a
+  `videos: [<id>]` list (see the `dzwiza` entry), then refresh.
+
 ## Customizing
 
-- **Add a source** — add an entry to `sources` in `sources.json` (YouTube needs
-  only the `UC…` channel id; set `"fetch_playlists": true` to pull its playlists).
-- **Add / edit a curated topic** — edit `topics` in `sources.json`. Each topic
-  has a `keywords` list (matched against episode titles) and an optional
-  `playlists` list (Esoterica playlist titles whose members are auto-tagged into
-  the topic — using the channel's own curation as a strong signal).
-- **Hand-tune tagging** — add an entry to `tags.json` keyed by the episode URL
-  (copy it from `site/data.json`) with `add` / `remove` topic ids.
+- **Add / edit a curated topic (tab)** — edit `topics` in `sources.json`. Each
+  topic has a `keywords` list (matched against episode title + summary) and an
+  optional `playlists` list (Esoterica playlist titles whose members are
+  auto-tagged into the topic — using the channel's own curation as a strong
+  signal).
+- **Fix a mis-sorted episode** — if an episode lands in the wrong tab (or none),
+  add/adjust a topic `keyword`, or add an entry to `tags.json` keyed by the
+  episode URL (copy it from `site/data.json`) with `add` / `remove` topic ids.
+  Overrides win. Then re-run `build.py`. **Never edit `data/catalog.json` by
+  hand** — it is regenerated by the fetcher.
+- **Add / edit a featured scholar** — edit `scholars` in `sources.json`.
 - **Rebrand / rename the feed** — edit the `site` block in `sources.json`
   (`title`, `feed_name`, etc.).
 
