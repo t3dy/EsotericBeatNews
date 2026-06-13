@@ -9,67 +9,578 @@
     "repo": "https://github.com/t3dy/EsotericBeatNews"
   },
   "sources": [
-    {"id": "shwep", "name": "SHWEP", "long_name": "The Secret History of Western Esotericism Podcast", "kind": "podcast", "feed": "https://shwep.net/podcast/feed", "link": "https://shwep.net", "color": "#c4a44a"},
-    {"id": "esoterica", "name": "Esoterica", "long_name": "Esoterica (Dr. Justin Sledge)", "kind": "youtube", "channel_id": "UCoydhtfFSk1fZXNRnkGnneQ", "link": "https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ", "color": "#cf2e2e", "fetch_playlists": true},
-    {"id": "modernhermeticist", "name": "The Modern Hermeticist", "long_name": "The Modern Hermeticist", "kind": "youtube", "channel_id": "UCcluftdk1tuDU71ZdGNpHTA", "link": "https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA", "color": "#6b3fa0"},
-    {"id": "seekers", "name": "Seekers of Unity", "long_name": "Seekers of Unity", "kind": "youtube", "channel_id": "UCL9A83sJIYNAovCA92uaTRQ", "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ", "color": "#3ec7c2"},
-    {"id": "esotericbeat", "name": "Esoteric Beat", "long_name": "Esoteric Beat (Ted Hand)", "kind": "youtube_playlist", "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk", "color": "#e0902f", "house": true},
-    {"id": "tarotsoulless", "name": "Tarot for the Soulless Materialist", "tab": "Soulless Materialist", "long_name": "Tarot for the Soulless Materialist (Ted Hand)", "kind": "composite", "link": "https://soundcloud.com/faderanger93", "color": "#b05fd0", "house": true, "feeds": [{"type": "youtube_channel", "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg", "title_contains": "soulless materialist"}, {"type": "soundcloud", "url": "https://soundcloud.com/faderanger93/tracks", "title_contains": "soulless materialist"}]},
-    {"id": "glitchbottle", "name": "Glitch Bottle", "long_name": "Glitch Bottle Podcast (Alexander Eth)", "kind": "youtube", "channel_id": "UC6W6E0Iud_fbv_D_3Pzifpg", "link": "https://www.youtube.com/@glitchbottle", "color": "#ff6b35"},
-    {"id": "religionforbreakfast", "name": "Religion for Breakfast", "long_name": "Religion for Breakfast (YouTube)", "kind": "youtube", "channel_id": "UCct9aR7HC79Cv2g-9oDOTLw", "link": "https://www.youtube.com/@religionforbreakfast", "color": "#d4a574"},
-    {"id": "rejectedreligion", "name": "Rejected Religion", "long_name": "Rejected Religion (YouTube)", "kind": "youtube", "channel_id": "UC7BQC-iCBzMaFN0i6a-lgag", "link": "https://www.youtube.com/@RejectedReligion", "color": "#8e44ad"},
-    {"id": "historyofalchemy", "name": "History of Alchemy", "long_name": "History of Alchemy Podcast (Travis J. Dow)", "kind": "podcast_rss", "feed": "https://rss.acast.com/historyofalchemy", "link": "https://shows.acast.com/historyofalchemy", "color": "#e67e22"},
-    {"id": "angelasymposium", "name": "Angela's Symposium", "long_name": "Angela's Symposium: Academic Esotericism (Dr. Angela Puca)", "kind": "youtube", "channel_id": "UCPSbip_LX2AxbGeAQfLp-Ig", "link": "https://www.youtube.com/channel/UCPSbip_LX2AxbGeAQfLp-Ig", "color": "#9b59b6"},
-    {"id": "fraserbuilds_alchemy", "name": "Fraser Builds (Alchemy)", "long_name": "Fraser Builds — Alchemy Episodes", "kind": "youtube_channel_filtered", "channel_id": "UC11UNLQ4llwQawajUsCmneA", "filter_title": ["alchemy", "alchemical"], "link": "https://www.youtube.com/@fraserbuilds", "color": "#f39c12"},
-    {"id": "thand_esoplayl", "name": "Ted Hand Esoteric Studies", "long_name": "Ted Hand's Esoteric Studies Playlist", "kind": "youtube_playlist", "playlist_id": "PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe", "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe", "color": "#16a085"},
-    {"id": "michaelkuhlman", "name": "Michael Kuhlman (Yates)", "long_name": "Michael Kuhlman — Frances Yates Audiobooks", "kind": "youtube", "channel_id": "UC0QQdG7rE1e2cRxx7zWcMng", "link": "https://www.youtube.com/@MichaelKuhlman", "color": "#27ae60"},
-    {"id": "greshamhutton", "name": "Gresham College (Hutton)", "long_name": "Gresham College — Ronald Hutton Lectures", "kind": "youtube_channel_filtered", "channel_id": "UC1t6kKXoBvjdr8m9KJ2Fx7A", "filter_title": ["hutton"], "link": "https://www.youtube.com/@GreshamCollege", "color": "#2c3e50"},
-    {"id": "shac", "name": "SHAC", "long_name": "Society for the History of Alchemy and Chemistry — Alchemy Episodes", "kind": "youtube_channel_filtered", "channel_url": "https://www.youtube.com/SocietyforHistoryofAlchemyandChemistry", "filter_title": ["alchemy", "alchemical", "alchem"], "link": "https://www.youtube.com/SocietyforHistoryofAlchemyandChemistry", "color": "#c0504d"},
-    {"id": "hermitixpodcast", "name": "Hermitix", "long_name": "Hermitix Podcast — Hermeticism & Western Esotericism", "kind": "youtube", "channel_url": "https://www.youtube.com/@hermitixpodcast", "link": "https://www.youtube.com/@hermitixpodcast", "color": "#4472c4"},
-    {"id": "joekiernan", "name": "Joe Kiernan (Yates & Philosophy)", "long_name": "Joe Kiernan — Yates, Hermeticism & Renaissance Philosophy", "kind": "youtube_channel_filtered", "channel_id": "UCYS_irLajkGTUa6h9RgqVug", "filter_title": ["ficino", "pico", "philo", "bruno", "giordano", "yates", "hermeticism", "hermes"], "link": "https://www.youtube.com/@JoeKiernan", "color": "#70ad47"},
-    {"id": "kazrowe", "name": "Kaz Rowe", "long_name": "Kaz Rowe — Alchemy, History, and Esotericism", "kind": "youtube_channel_filtered", "channel_id": "UCSwwoUNvQWgZDC8a_O6Qs_A", "filter_title": ["alchemy", "esoteric", "forshaw", "hermeticism", "rosicrucian"], "link": "https://www.youtube.com/@kazrowe", "color": "#8b4513"},
-    {"id": "warburgalchemy", "name": "Warburg Institute (Alchemy & Esotericism)", "long_name": "Warburg Institute — Alchemy, Tarot, and Esoteric Studies", "kind": "youtube_channel_filtered", "channel_id": "UCZCLQYEF--VkHsO1GzmE6iw", "filter_title": ["alchemy", "esoteric", "forshaw", "tarot", "rosicrucian", "hermeticism"], "link": "https://www.youtube.com/@WarburgInstitute", "color": "#1a472a"},
-    {"id": "bytesizescience", "name": "BytesizeScience", "long_name": "BytesizeScience — Alchemy, History of Science, and Chemistry", "kind": "youtube_channel_filtered", "channel_id": "UCeYmwVIKjh29F5WBdhbEZiQ", "filter_title": ["alchemy", "alchemist", "principe", "history of science", "chemistry"], "link": "https://www.youtube.com/@BytesizeScience", "color": "#0066cc"},
-    {"id": "cafeneaua_newman", "name": "Cafeneaua Filosofica (William R. Newman)", "long_name": "Cafeneaua Filosofica — Newton the Alchemist with William R. Newman", "kind": "youtube_channel_filtered", "channel_id": "UChIiBJQDTHe9o-E285RSl3g", "filter_title": ["newman", "newton alchemist", "alchemy", "newton"], "link": "https://www.youtube.com/@CafeneauaFilosofica", "color": "#4a90e2"},
-    {"id": "spiritus_mundi_newman", "name": "Spiritus Mundi (William R. Newman)", "long_name": "Spiritus Mundi — Alchemy and Transmutation with William R. Newman", "kind": "youtube_channel_filtered", "channel_id": "UClWlA_dyOVv605ZlpcE2-1Q", "filter_title": ["newman", "alchemy", "transmutation", "newton"], "link": "https://www.youtube.com/@SpiritusUniversalis", "color": "#7b68ee"}
+    {
+      "id": "shwep",
+      "name": "SHWEP",
+      "long_name": "The Secret History of Western Esotericism Podcast",
+      "kind": "podcast",
+      "feed": "https://shwep.net/podcast/feed",
+      "link": "https://shwep.net",
+      "color": "#c4a44a"
+    },
+    {
+      "id": "esoterica",
+      "name": "Esoterica",
+      "long_name": "Esoterica (Dr. Justin Sledge)",
+      "kind": "youtube",
+      "channel_id": "UCoydhtfFSk1fZXNRnkGnneQ",
+      "link": "https://www.youtube.com/channel/UCoydhtfFSk1fZXNRnkGnneQ",
+      "color": "#cf2e2e",
+      "fetch_playlists": true
+    },
+    {
+      "id": "modernhermeticist",
+      "name": "The Modern Hermeticist",
+      "long_name": "The Modern Hermeticist",
+      "kind": "youtube",
+      "channel_id": "UCcluftdk1tuDU71ZdGNpHTA",
+      "link": "https://www.youtube.com/channel/UCcluftdk1tuDU71ZdGNpHTA",
+      "color": "#6b3fa0"
+    },
+    {
+      "id": "seekers",
+      "name": "Seekers of Unity",
+      "long_name": "Seekers of Unity",
+      "kind": "youtube",
+      "channel_id": "UCL9A83sJIYNAovCA92uaTRQ",
+      "link": "https://www.youtube.com/channel/UCL9A83sJIYNAovCA92uaTRQ",
+      "color": "#3ec7c2"
+    },
+    {
+      "id": "esotericbeat",
+      "name": "Esoteric Beat",
+      "long_name": "Esoteric Beat (Ted Hand)",
+      "kind": "youtube_playlist",
+      "playlist_id": "PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
+      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkFRSHcia1KNP0OJoUpd8Jk",
+      "color": "#e0902f",
+      "house": true
+    },
+    {
+      "id": "tarotsoulless",
+      "name": "Tarot for the Soulless Materialist",
+      "tab": "Soulless Materialist",
+      "long_name": "Tarot for the Soulless Materialist (Ted Hand)",
+      "kind": "composite",
+      "link": "https://soundcloud.com/faderanger93",
+      "color": "#b05fd0",
+      "house": true,
+      "feeds": [
+        {
+          "type": "youtube_channel",
+          "channel_id": "UCf99Ajbi-HwFCsomdgXAdhg",
+          "title_contains": "soulless materialist"
+        },
+        {
+          "type": "soundcloud",
+          "url": "https://soundcloud.com/faderanger93/tracks",
+          "title_contains": "soulless materialist"
+        }
+      ]
+    },
+    {
+      "id": "glitchbottle",
+      "name": "Glitch Bottle",
+      "long_name": "Glitch Bottle Podcast (Alexander Eth)",
+      "kind": "youtube",
+      "channel_id": "UC6W6E0Iud_fbv_D_3Pzifpg",
+      "link": "https://www.youtube.com/@glitchbottle",
+      "color": "#ff6b35"
+    },
+    {
+      "id": "religionforbreakfast",
+      "name": "Religion for Breakfast",
+      "long_name": "Religion for Breakfast (YouTube)",
+      "kind": "youtube",
+      "channel_id": "UCct9aR7HC79Cv2g-9oDOTLw",
+      "link": "https://www.youtube.com/@religionforbreakfast",
+      "color": "#d4a574"
+    },
+    {
+      "id": "rejectedreligion",
+      "name": "Rejected Religion",
+      "long_name": "Rejected Religion (YouTube)",
+      "kind": "youtube",
+      "channel_id": "UC7BQC-iCBzMaFN0i6a-lgag",
+      "link": "https://www.youtube.com/@RejectedReligion",
+      "color": "#8e44ad"
+    },
+    {
+      "id": "historyofalchemy",
+      "name": "History of Alchemy",
+      "long_name": "History of Alchemy Podcast (Travis J. Dow)",
+      "kind": "podcast_rss",
+      "feed": "https://rss.acast.com/historyofalchemy",
+      "link": "https://shows.acast.com/historyofalchemy",
+      "color": "#e67e22"
+    },
+    {
+      "id": "angelasymposium",
+      "name": "Angela's Symposium",
+      "long_name": "Angela's Symposium: Academic Esotericism (Dr. Angela Puca)",
+      "kind": "youtube",
+      "channel_id": "UCPSbip_LX2AxbGeAQfLp-Ig",
+      "link": "https://www.youtube.com/channel/UCPSbip_LX2AxbGeAQfLp-Ig",
+      "color": "#9b59b6"
+    },
+    {
+      "id": "fraserbuilds_alchemy",
+      "name": "Fraser Builds (Alchemy)",
+      "long_name": "Fraser Builds — Alchemy Episodes",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UC11UNLQ4llwQawajUsCmneA",
+      "filter_title": [
+        "alchemy",
+        "alchemical"
+      ],
+      "link": "https://www.youtube.com/@fraserbuilds",
+      "color": "#f39c12"
+    },
+    {
+      "id": "thand_esoplayl",
+      "name": "Ted Hand Esoteric Studies",
+      "long_name": "Ted Hand's Esoteric Studies Playlist",
+      "kind": "youtube_playlist",
+      "playlist_id": "PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
+      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
+      "color": "#16a085"
+    },
+    {
+      "id": "michaelkuhlman",
+      "name": "Michael Kuhlman (Yates)",
+      "long_name": "Michael Kuhlman — Frances Yates Audiobooks",
+      "kind": "youtube",
+      "channel_id": "UC0QQdG7rE1e2cRxx7zWcMng",
+      "link": "https://www.youtube.com/@MichaelKuhlman",
+      "color": "#27ae60"
+    },
+    {
+      "id": "greshamhutton",
+      "name": "Gresham College (Hutton)",
+      "long_name": "Gresham College — Ronald Hutton Lectures",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UC1t6kKXoBvjdr8m9KJ2Fx7A",
+      "filter_title": [
+        "hutton"
+      ],
+      "link": "https://www.youtube.com/@GreshamCollege",
+      "color": "#2c3e50"
+    },
+    {
+      "id": "shac",
+      "name": "SHAC",
+      "long_name": "Society for the History of Alchemy and Chemistry — Alchemy Episodes",
+      "kind": "youtube_channel_filtered",
+      "channel_url": "https://www.youtube.com/SocietyforHistoryofAlchemyandChemistry",
+      "filter_title": [
+        "alchemy",
+        "alchemical",
+        "alchem"
+      ],
+      "link": "https://www.youtube.com/SocietyforHistoryofAlchemyandChemistry",
+      "color": "#c0504d"
+    },
+    {
+      "id": "hermitixpodcast",
+      "name": "Hermitix",
+      "long_name": "Hermitix Podcast — Hermeticism & Western Esotericism",
+      "kind": "youtube",
+      "channel_url": "https://www.youtube.com/@hermitixpodcast",
+      "link": "https://www.youtube.com/@hermitixpodcast",
+      "color": "#4472c4"
+    },
+    {
+      "id": "joekiernan",
+      "name": "Joe Kiernan (Yates & Philosophy)",
+      "long_name": "Joe Kiernan — Yates, Hermeticism & Renaissance Philosophy",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UCYS_irLajkGTUa6h9RgqVug",
+      "filter_title": [
+        "ficino",
+        "pico",
+        "philo",
+        "bruno",
+        "giordano",
+        "yates",
+        "hermeticism",
+        "hermes"
+      ],
+      "link": "https://www.youtube.com/@JoeKiernan",
+      "color": "#70ad47"
+    },
+    {
+      "id": "kazrowe",
+      "name": "Kaz Rowe",
+      "long_name": "Kaz Rowe — Alchemy, History, and Esotericism",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UCSwwoUNvQWgZDC8a_O6Qs_A",
+      "filter_title": [
+        "alchemy",
+        "esoteric",
+        "forshaw",
+        "hermeticism",
+        "rosicrucian"
+      ],
+      "link": "https://www.youtube.com/@kazrowe",
+      "color": "#8b4513"
+    },
+    {
+      "id": "warburgalchemy",
+      "name": "Warburg Institute (Alchemy & Esotericism)",
+      "long_name": "Warburg Institute — Alchemy, Tarot, and Esoteric Studies",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UCZCLQYEF--VkHsO1GzmE6iw",
+      "filter_title": [
+        "alchemy",
+        "esoteric",
+        "forshaw",
+        "tarot",
+        "rosicrucian",
+        "hermeticism"
+      ],
+      "link": "https://www.youtube.com/@WarburgInstitute",
+      "color": "#1a472a"
+    },
+    {
+      "id": "bytesizescience",
+      "name": "BytesizeScience",
+      "long_name": "BytesizeScience — Alchemy, History of Science, and Chemistry",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UCeYmwVIKjh29F5WBdhbEZiQ",
+      "filter_title": [
+        "alchemy",
+        "alchemist",
+        "principe",
+        "history of science",
+        "chemistry"
+      ],
+      "link": "https://www.youtube.com/@BytesizeScience",
+      "color": "#0066cc"
+    },
+    {
+      "id": "cafeneaua_newman",
+      "name": "Cafeneaua Filosofica (William R. Newman)",
+      "long_name": "Cafeneaua Filosofica — Newton the Alchemist with William R. Newman",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UChIiBJQDTHe9o-E285RSl3g",
+      "filter_title": [
+        "newman",
+        "newton alchemist",
+        "alchemy",
+        "newton"
+      ],
+      "link": "https://www.youtube.com/@CafeneauaFilosofica",
+      "color": "#4a90e2"
+    },
+    {
+      "id": "spiritus_mundi_newman",
+      "name": "Spiritus Mundi (William R. Newman)",
+      "long_name": "Spiritus Mundi — Alchemy and Transmutation with William R. Newman",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UClWlA_dyOVv605ZlpcE2-1Q",
+      "filter_title": [
+        "newman",
+        "alchemy",
+        "transmutation",
+        "newton"
+      ],
+      "link": "https://www.youtube.com/@SpiritusUniversalis",
+      "color": "#7b68ee"
+    }
   ],
   "topics": [
-    {"id": "neoplatonism", "title": "Neoplatonism", "nav": "Neoplatonism", "blurb": "Plotinus, Iamblichus, Proclus, and the ascent of the soul.", "keywords": ["neoplatonism", "plotinus", "iamblichus", "proclus", "porphyry", "theurgy", "theurgic"]},
-    {"id": "grimoires", "title": "Grimoires", "nav": "Grimoires", "blurb": "Practical magic handbooks.", "keywords": ["grimoire", "goetia", "key of solomon", "picatrix"]},
-    {"id": "kabbalah", "title": "Kabbalah", "nav": "Kabbalah", "blurb": "Jewish mysticism and the Tree of Life.", "keywords": ["kabbalah", "zohar", "tree of life", "merkavah"]},
-    {"id": "renaissance", "title": "Renaissance Magic", "nav": "Renaissance", "blurb": "Ficino, Pico, Agrippa, Bruno, Dee.", "keywords": ["ficino", "pico", "agrippa", "bruno", "dee", "enochian", "renaissance"]},
-    {"id": "ancient", "title": "Ancient Magic", "nav": "Ancient", "blurb": "Greco-Egyptian and ancient Near East.", "keywords": ["ancient", "greek magical papyri", "egyptian", "mesopotamian"]},
-    {"id": "medieval", "title": "Medieval Magic", "nav": "Medieval", "blurb": "Solomonic and grimoire traditions.", "keywords": ["medieval", "solomonic", "necromancy"]},
-    {"id": "agrippa", "title": "Agrippa", "nav": "Agrippa", "blurb": "Heinrich Cornelius Agrippa and Occult Philosophy.", "keywords": ["agrippa", "occult philosophy"]},
-    {"id": "ficino", "title": "Ficino", "nav": "Ficino", "blurb": "Marsilio Ficino and natural magic.", "keywords": ["ficino", "de vita", "platonic academy"]},
-    {"id": "alchemy", "title": "Alchemy", "nav": "Alchemy", "blurb": "Transmutation and the great work.", "keywords": ["alchemy", "alchemical", "transmutation", "magnum opus", "paracelsus"]},
-    {"id": "audiobooks", "title": "Audiobooks", "nav": "Audiobooks", "blurb": "Full-text esoteric audiobook readings.", "keywords": ["audiobook", "full reading", "narrated"]},
-    {"id": "conferences", "title": "Conferences", "nav": "Conferences", "blurb": "Academic conferences and symposia.", "keywords": ["conference", "symposium", "seminar"]},
-    {"id": "history_of_magic", "title": "History of Magic", "nav": "History", "blurb": "Intellectual and social history of magical practices.", "keywords": ["history of magic", "medieval magic", "renaissance magic", "early modern"]},
-    {"id": "mysticism", "title": "Mysticism", "nav": "Mysticism", "blurb": "Mystical theology and direct experience of the divine.", "keywords": ["mysticism", "mystical", "mystic", "contemplative"]},
-    {"id": "hermeticism", "title": "Hermeticism", "nav": "Hermeticism", "blurb": "Hermetic philosophy and the Corpus Hermeticum.", "keywords": ["hermetic", "hermetica", "corpus hermeticum"]},
-    {"id": "occultism", "title": "Occultism", "nav": "Occultism", "blurb": "Occult sciences and hidden knowledge traditions.", "keywords": ["occult", "occultism", "hidden knowledge"]},
-    {"id": "wicca", "title": "Wicca", "nav": "Wicca", "blurb": "Wiccan religion, Craft practice, and modern paganism.", "keywords": ["wicca", "wiccan", "pagan religion", "craft"]},
-    {"id": "witchcraft", "title": "Witchcraft", "nav": "Witchcraft", "blurb": "Witchcraft traditions and witch trials.", "keywords": ["witchcraft", "witch trials", "cunning craft", "wise women"]},
-    {"id": "gnosticism", "title": "Gnosticism", "nav": "Gnosticism", "blurb": "Gnostic Christianity and Gnostic cosmologies.", "keywords": ["gnostic", "gnosticism", "sophia", "demiurge"]},
-    {"id": "demonology", "title": "Demonology", "nav": "Demonology", "blurb": "Demons, angels, and spirit hierarchies.", "keywords": ["demon", "demonology", "devil", "spirit", "goetia"]},
-    {"id": "astrology", "title": "Astrology", "nav": "Astrology", "blurb": "Astrological theory and practice.", "keywords": ["astrology", "astrological", "zodiac", "horoscope", "natal chart"]}
+    {
+      "id": "neoplatonism",
+      "title": "Neoplatonism",
+      "nav": "Neoplatonism",
+      "blurb": "Plotinus, Iamblichus, Proclus, and the ascent of the soul.",
+      "keywords": [
+        "neoplatonism",
+        "plotinus",
+        "iamblichus",
+        "proclus",
+        "porphyry",
+        "theurgy",
+        "theurgic"
+      ]
+    },
+    {
+      "id": "grimoires",
+      "title": "Grimoires",
+      "nav": "Grimoires",
+      "blurb": "Practical magic handbooks.",
+      "keywords": [
+        "grimoire",
+        "goetia",
+        "key of solomon",
+        "picatrix"
+      ]
+    },
+    {
+      "id": "kabbalah",
+      "title": "Kabbalah",
+      "nav": "Kabbalah",
+      "blurb": "Jewish mysticism and the Tree of Life.",
+      "keywords": [
+        "kabbalah",
+        "zohar",
+        "tree of life",
+        "merkavah"
+      ]
+    },
+    {
+      "id": "renaissance",
+      "title": "Renaissance Magic",
+      "nav": "Renaissance",
+      "blurb": "Ficino, Pico, Agrippa, Bruno, Dee.",
+      "keywords": [
+        "ficino",
+        "pico",
+        "agrippa",
+        "bruno",
+        "dee",
+        "enochian",
+        "renaissance"
+      ]
+    },
+    {
+      "id": "ancient",
+      "title": "Ancient Magic",
+      "nav": "Ancient",
+      "blurb": "Greco-Egyptian and ancient Near East.",
+      "keywords": [
+        "ancient",
+        "greek magical papyri",
+        "egyptian",
+        "mesopotamian"
+      ]
+    },
+    {
+      "id": "medieval",
+      "title": "Medieval Magic",
+      "nav": "Medieval",
+      "blurb": "Solomonic and grimoire traditions.",
+      "keywords": [
+        "medieval",
+        "solomonic",
+        "necromancy"
+      ]
+    },
+    {
+      "id": "agrippa",
+      "title": "Agrippa",
+      "nav": "Agrippa",
+      "blurb": "Heinrich Cornelius Agrippa and Occult Philosophy.",
+      "keywords": [
+        "agrippa",
+        "occult philosophy"
+      ]
+    },
+    {
+      "id": "ficino",
+      "title": "Ficino",
+      "nav": "Ficino",
+      "blurb": "Marsilio Ficino and natural magic.",
+      "keywords": [
+        "ficino",
+        "de vita",
+        "platonic academy"
+      ]
+    },
+    {
+      "id": "alchemy",
+      "title": "Alchemy",
+      "nav": "Alchemy",
+      "blurb": "Transmutation and the great work.",
+      "keywords": [
+        "alchemy",
+        "alchemical",
+        "transmutation",
+        "magnum opus",
+        "paracelsus"
+      ]
+    },
+    {
+      "id": "audiobooks",
+      "title": "Audiobooks",
+      "nav": "Audiobooks",
+      "blurb": "Full-text esoteric audiobook readings.",
+      "keywords": [
+        "audiobook",
+        "full reading",
+        "narrated"
+      ]
+    },
+    {
+      "id": "conferences",
+      "title": "Conferences",
+      "nav": "Conferences",
+      "blurb": "Academic conferences and symposia.",
+      "keywords": [
+        "conference",
+        "symposium",
+        "seminar"
+      ]
+    },
+    {
+      "id": "history_of_magic",
+      "title": "History of Magic",
+      "nav": "History",
+      "blurb": "Intellectual and social history of magical practices.",
+      "keywords": [
+        "history of magic",
+        "medieval magic",
+        "renaissance magic",
+        "early modern"
+      ]
+    },
+    {
+      "id": "mysticism",
+      "title": "Mysticism",
+      "nav": "Mysticism",
+      "blurb": "Mystical theology and direct experience of the divine.",
+      "keywords": [
+        "mysticism",
+        "mystical",
+        "mystic",
+        "contemplative"
+      ]
+    },
+    {
+      "id": "hermeticism",
+      "title": "Hermeticism",
+      "nav": "Hermeticism",
+      "blurb": "Hermetic philosophy and the Corpus Hermeticum.",
+      "keywords": [
+        "hermetic",
+        "hermetica",
+        "corpus hermeticum"
+      ]
+    },
+    {
+      "id": "occultism",
+      "title": "Occultism",
+      "nav": "Occultism",
+      "blurb": "Occult sciences and hidden knowledge traditions.",
+      "keywords": [
+        "occult",
+        "occultism",
+        "hidden knowledge"
+      ]
+    },
+    {
+      "id": "wicca",
+      "title": "Wicca",
+      "nav": "Wicca",
+      "blurb": "Wiccan religion, Craft practice, and modern paganism.",
+      "keywords": [
+        "wicca",
+        "wiccan",
+        "pagan religion",
+        "craft"
+      ]
+    },
+    {
+      "id": "witchcraft",
+      "title": "Witchcraft",
+      "nav": "Witchcraft",
+      "blurb": "Witchcraft traditions and witch trials.",
+      "keywords": [
+        "witchcraft",
+        "witch trials",
+        "cunning craft",
+        "wise women"
+      ]
+    },
+    {
+      "id": "gnosticism",
+      "title": "Gnosticism",
+      "nav": "Gnosticism",
+      "blurb": "Gnostic Christianity and Gnostic cosmologies.",
+      "keywords": [
+        "gnostic",
+        "gnosticism",
+        "sophia",
+        "demiurge"
+      ]
+    },
+    {
+      "id": "demonology",
+      "title": "Demonology",
+      "nav": "Demonology",
+      "blurb": "Demons, angels, and spirit hierarchies.",
+      "keywords": [
+        "demon",
+        "demonology",
+        "devil",
+        "spirit",
+        "goetia"
+      ]
+    },
+    {
+      "id": "astrology",
+      "title": "Astrology",
+      "nav": "Astrology",
+      "blurb": "Astrological theory and practice.",
+      "keywords": [
+        "astrology",
+        "astrological",
+        "zodiac",
+        "horoscope",
+        "natal chart"
+      ]
+    }
   ],
   "scholars": [
-    {"id": "ficino", "name": "Marsilio Ficino", "blurb": "Renaissance Platonist philosopher and founder of the Platonic Academy.", "keywords": ["ficino", "marsilio ficino"], "count": 58},
-    {"id": "dee", "name": "John Dee", "blurb": "Elizabethan mathematician, astronomer, and occultist.", "keywords": ["john dee", "dee"], "count": 40},
-    {"id": "agrippa", "name": "Heinrich Cornelius Agrippa", "blurb": "German polymath and author of the Three Books of Occult Philosophy.", "keywords": ["agrippa", "heinrich cornelius agrippa"], "count": 32},
-    {"id": "crowley", "name": "Aleister Crowley", "blurb": "Occultist, ceremonial magick pioneer, and founder of Thelema.", "keywords": ["aleister crowley", "crowley"], "count": 27},
-    {"id": "bruno", "name": "Giordano Bruno", "blurb": "Renaissance philosopher, cosmologist, and proponent of heliocentrism.", "keywords": ["giordano bruno", "bruno"], "count": 25},
-    {"id": "plotinus", "name": "Plotinus", "blurb": "Founder of Neoplatonism and the most influential ancient mystical philosopher.", "keywords": ["plotinus"], "count": 23},
-    {"id": "iamblichus", "name": "Iamblichus", "blurb": "Neoplatonist philosopher and systematizer of theurgic practice.", "keywords": ["iamblichus"], "count": 18},
-    {"id": "pico", "name": "Giovanni Pico della Mirandola", "blurb": "Renaissance humanist and synthesizer of Christian Kabbalah.", "keywords": ["pico", "giovanni pico"], "count": 11},
-    {"id": "proclus", "name": "Proclus", "blurb": "Neoplatonist philosopher and metaphysical systematizer.", "keywords": ["proclus"], "count": 11},
-    {"id": "yates", "name": "Frances Yates", "blurb": "Historian of Renaissance esotericism and the Hermetic tradition.", "keywords": ["yates", "frances yates"], "count": 9},
-    {"id": "forshaw", "name": "Peter Forshaw", "blurb": "Scholar of alchemy, laboratory practices, and transmutation.", "keywords": ["forshaw", "peter forshaw"], "count": 8},
-    {"id": "paracelsus", "name": "Paracelsus", "blurb": "Swiss physician, alchemist, and pioneer of medical alchemy.", "keywords": ["paracelsus"], "count": 7},
-    {"id": "bohme", "name": "Jacob Böhme", "blurb": "German mystic, theosophist, and visionary Christian philosopher.", "keywords": ["böhme", "jacob bohme", "boehme"], "count": 7},
-    {"id": "newman", "name": "William R. Newman", "blurb": "Historian of alchemy and early modern chemistry.", "keywords": ["newman", "william r. newman"], "count": 3},
-    {"id": "principe", "name": "Lawrence M. Principe", "blurb": "Historian of alchemy and early science.", "keywords": ["principe", "lawrence m. principe"], "count": 3}
+    {
+      "id": "hutton",
+      "name": "Ronald Hutton",
+      "blurb": "Historian of witchcraft, paganism, and early modern esotericism.",
+      "keywords": [
+        "hutton",
+        "ronald hutton"
+      ],
+      "count": 23
+    },
+    {
+      "id": "yates",
+      "name": "Frances Yates",
+      "blurb": "Historian of Renaissance esotericism and the Hermetic tradition.",
+      "keywords": [
+        "yates",
+        "frances yates"
+      ],
+      "count": 9
+    },
+    {
+      "id": "forshaw",
+      "name": "Peter Forshaw",
+      "blurb": "Scholar of alchemy, laboratory practices, and transmutation.",
+      "keywords": [
+        "forshaw",
+        "peter forshaw"
+      ],
+      "count": 8
+    },
+    {
+      "id": "newman",
+      "name": "William R. Newman",
+      "blurb": "Historian of alchemy and early modern chemistry.",
+      "keywords": [
+        "newman",
+        "william r. newman"
+      ],
+      "count": 3
+    },
+    {
+      "id": "principe",
+      "name": "Lawrence M. Principe",
+      "blurb": "Historian of alchemy and early science.",
+      "keywords": [
+        "principe",
+        "lawrence m. principe"
+      ],
+      "count": 3
+    }
   ]
 }
