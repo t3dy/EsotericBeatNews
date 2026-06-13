@@ -67,7 +67,6 @@
     {"id": "proclus", "name": "Proclus", "blurb": "Neoplatonist philosopher and metaphysical systematizer.", "keywords": ["proclus"], "count": 11},
     {"id": "yates", "name": "Frances Yates", "blurb": "Historian of Renaissance esotericism and the Hermetic tradition.", "keywords": ["yates", "frances yates"], "count": 9},
     {"id": "forshaw", "name": "Peter Forshaw", "blurb": "Scholar of alchemy, laboratory practices, and transmutation.", "keywords": ["forshaw", "peter forshaw"], "count": 8},
-    {"id": "greer", "name": "John Michael Greer", "blurb": "Druid, occultist, and author on esoteric history and practice.", "keywords": ["john michael greer", "greer"], "count": 7},
     {"id": "paracelsus", "name": "Paracelsus", "blurb": "Swiss physician, alchemist, and pioneer of medical alchemy.", "keywords": ["paracelsus"], "count": 7},
     {"id": "bohme", "name": "Jacob Böhme", "blurb": "German mystic, theosophist, and visionary Christian philosopher.", "keywords": ["böhme", "jacob bohme", "boehme"], "count": 7},
     {"id": "newman", "name": "William R. Newman", "blurb": "Historian of alchemy and early modern chemistry.", "keywords": ["newman", "william r. newman"], "count": 3},
