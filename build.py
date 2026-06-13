@@ -275,7 +275,9 @@ def pagination(base, page, total_pages):
 
 
 def featured_sources(sources):
-    return [s for s in sources if s.get("featured", True)]
+    """Return only the 5 featured podcasts for the toolbar."""
+    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat"}
+    return [s for s in sources if s["id"] in featured_ids]
 
 
 def header_block(site, sources, topics, depth, active=""):
@@ -302,10 +304,20 @@ def header_block(site, sources, topics, depth, active=""):
         cls = "podtab podtab--active" if active == "src:" + s["id"] else "podtab"
         color = s.get("color", "#cf2e2e")
         label = esc(s.get("tab", s["name"]))
+        # Ted Hand combines Esoteric Beat and Tarot
+        href = "ted-hand.html" if s["id"] == "esotericbeat" else f"sources/{s['id']}.html"
         return (f'<a class="{cls}" style="--src:{color}" '
-                f'href="{prefix}sources/{s["id"]}.html">{label}</a>')
+                f'href="{prefix}{href}">{label}</a>')
 
-    tabs = "".join(podtab(s) for s in featured_sources(sources))
+    # Filter featured sources, but rename Esoteric Beat to Ted Hand
+    featured = featured_sources(sources)
+    for s in featured:
+        if s["id"] == "esotericbeat":
+            s = dict(s)  # make a copy
+            s["name"] = "Ted Hand"
+            s["tab"] = "Ted Hand"
+
+    tabs = "".join(podtab(s) for s in featured)
     # topics toolbar — the thematic currents, their own bar
     chips = "".join(
         f'<a class="chip{" chip--active" if active==t["id"] else ""}" '
@@ -318,7 +330,7 @@ def header_block(site, sources, topics, depth, active=""):
     <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
     <nav class="feature-bar" aria-label="Site features">{features}</nav>
   </div>
-  <div class="podbar"><div class="podbar__inner"><span class="podbar__label">Featured Podcasts</span>{tabs}</div></div>
+  <div class="podbar"><div class="podbar__inner"><span class="podbar__label"><span>Featured</span><span>Podcasts</span></span>{tabs}</div></div>
   <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Topics</span>{chips}</div></div>
 </header>"""
 
@@ -535,24 +547,53 @@ def render(catalog, cfg, now):
         shell(f"Curated Playlists — {site['title']}", pl_index_body, site, sources, topics, 0, "playlists"),
         encoding="utf-8")
 
-    # ---- scholars.html (featured scholars index) ----
-    sch_cards = []
-    for sch in scholars:
-        sch_count = sch.get("count", 0)
-        sch_cards.append(f"""
-      <a class="pl-card" href="scholars/{esc(sch['id'])}.html">
-        <span class="pl-card__count">{sch_count}</span>
-        <span class="pl-card__title">{esc(sch['name'])}</span>
-        <span class="pl-card__src">{esc(sch.get('blurb','')[:60])}</span>
-      </a>""")
-    sch_index_body = f"""
-  <section class="hero">
-    <h1>Featured Scholars</h1>
-    <p class="hero__tagline">Luminaries of Western esotericism and Renaissance philosophy — {len(scholars)} scholars featured.</p>
+    # ---- ted-hand.html (combined Esoteric Beat + Tarot for Soulless Materialist) ----
+    ted_hand_items = [i for i in items if i["source"] in ("esotericbeat", "tarotsoulless")]
+    ted_hand_body = """
+  <section class="hero hero--slim">
+    <h1>Ted Hand</h1>
+    <p class="hero__tagline">Esoteric studies and tarot from Ted Hand's projects.</p>
   </section>
-  <section class="pl-grid">{''.join(sch_cards)}</section>"""
+  <section class="source-sections">"""
+    for src_id in ("esotericbeat", "tarotsoulless"):
+        src = src_by_id.get(src_id, {})
+        src_items = [i for i in ted_hand_items if i["source"] == src_id]
+        cards = "".join(card(i, now, colors, 0) for i in src_items) or '<p class="empty">Nothing here.</p>'
+        ted_hand_body += f"""
+    <div class="source-section">
+      <h2>{esc(src.get('name', ''))}</h2>
+      <div class="card-list">{cards}</div>
+    </div>"""
+    ted_hand_body += """
+  </section>"""
+    (SITE / "ted-hand.html").write_text(
+        shell(f"Ted Hand — {site['title']}", ted_hand_body, site, sources, topics, 0, "src:esotericbeat"),
+        encoding="utf-8")
+
+    # ---- scholars.html (featured scholars aggregated) ----
+    sch_body = """
+  <section class="hero hero--slim">
+    <h1>Featured Scholars</h1>
+    <p class="hero__tagline">Luminaries of Western esotericism and Renaissance philosophy.</p>
+  </section>
+  <section class="source-sections">"""
+    for sch in scholars:
+        sch_items = []
+        keywords = sch.get("keywords", [])
+        for item in items:
+            text = (item.get("title", "") + " " + item.get("summary", "")).lower()
+            if any(kw in text for kw in keywords):
+                sch_items.append(item)
+        cards = "".join(card(i, now, colors, 0) for i in sch_items) or '<p class="empty">Nothing here.</p>'
+        sch_body += f"""
+    <div class="source-section">
+      <h2>{esc(sch['name'])} <span class="section-count">({len(sch_items)} episodes)</span></h2>
+      <div class="card-list">{cards}</div>
+    </div>"""
+    sch_body += """
+  </section>"""
     (SITE / "scholars.html").write_text(
-        shell(f"Featured Scholars — {site['title']}", sch_index_body, site, sources, topics, 0, "scholars"),
+        shell(f"Featured Scholars — {site['title']}", sch_body, site, sources, topics, 0, "scholars"),
         encoding="utf-8")
 
     # ---- About ----

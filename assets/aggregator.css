@@ -188,11 +188,19 @@
   flex-wrap: wrap;
 }
 .podbar__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--text-dim);
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
+  line-height: 1.2;
+}
+.podbar__label span {
+  display: block;
 }
 .podtab {
   font-size: var(--text-sm);
@@ -411,6 +419,28 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
   margin: 0;
+}
+
+/* === Source/Scholar Sections === */
+.source-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+.source-section {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 2rem;
+}
+.source-section h2 {
+  font-size: var(--text-lg);
+  margin-bottom: 1.5rem;
+  color: var(--text-heading);
+}
+.section-count {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: normal;
 }
 
 /* === Responsive === */
