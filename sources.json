@@ -324,6 +324,16 @@
       "color": "#5b8c5a"
     },
     {
+      "id": "arcanvm",
+      "name": "Arcanvm",
+      "tab": "Arcanvm",
+      "long_name": "Arcanvm — Esoteric & Hermetic Conversations",
+      "kind": "youtube",
+      "channel_id": "UCNTK70AOAOi9zMqOZFdvjeA",
+      "link": "https://www.youtube.com/@arcanvm",
+      "color": "#a23b72"
+    },
+    {
       "id": "dzwiza",
       "name": "Kirsten Dzwiza",
       "long_name": "Kirsten Dzwiza — Featured Appearances (Ancient Magic & the Greek Magical Papyri)",
@@ -660,6 +670,361 @@
         "kirsten dzwiza"
       ],
       "count": 8
+    }
+  ],
+  "esotericists":   [
+    {
+      "id": "crowley",
+      "name": "Aleister Crowley",
+      "blurb": "English occultist, ceremonial magician, and founder of Thelema.",
+      "color": "#cf2e2e",
+      "keywords": [
+        "crowley",
+        "aleister"
+      ]
+    },
+    {
+      "id": "ficino",
+      "name": "Marsilio Ficino",
+      "blurb": "Renaissance Platonist who translated Hermes and Plato and revived natural magic.",
+      "color": "#c4a44a",
+      "keywords": [
+        "ficino"
+      ]
+    },
+    {
+      "id": "agrippa",
+      "name": "Heinrich Cornelius Agrippa",
+      "blurb": "Author of the Three Books of Occult Philosophy.",
+      "color": "#6b3fa0",
+      "keywords": [
+        "agrippa"
+      ]
+    },
+    {
+      "id": "dee",
+      "name": "John Dee",
+      "blurb": "Elizabethan magus, mathematician, and angelic (Enochian) seer.",
+      "color": "#3ec7c2",
+      "keywords": [
+        "john dee",
+        "dr dee",
+        "dr. dee",
+        "john dee's",
+        "dee and kelley",
+        "dee & kelley",
+        "edward kelley"
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Giordano Bruno",
+      "blurb": "Hermetic philosopher of infinite worlds and the art of memory.",
+      "color": "#e0902f",
+      "keywords": [
+        "giordano bruno",
+        "giordano"
+      ]
+    },
+    {
+      "id": "plotinus",
+      "name": "Plotinus",
+      "blurb": "Founder of Neoplatonism and author of the Enneads.",
+      "color": "#b05fd0",
+      "keywords": [
+        "plotinus"
+      ]
+    },
+    {
+      "id": "iamblichus",
+      "name": "Iamblichus",
+      "blurb": "Neoplatonist theurgist, author of On the Mysteries.",
+      "color": "#ff6b35",
+      "keywords": [
+        "iamblichus"
+      ]
+    },
+    {
+      "id": "pythagoras",
+      "name": "Pythagoras",
+      "blurb": "Sage of sacred number, harmony, and the transmigration of souls.",
+      "color": "#d4a574",
+      "keywords": [
+        "pythagoras",
+        "pythagorean"
+      ]
+    },
+    {
+      "id": "porphyry",
+      "name": "Porphyry",
+      "blurb": "Neoplatonist, pupil of Plotinus, and editor of the Enneads.",
+      "color": "#8e44ad",
+      "keywords": [
+        "porphyry"
+      ]
+    },
+    {
+      "id": "paracelsus",
+      "name": "Paracelsus",
+      "blurb": "Renaissance physician-alchemist and father of spagyric medicine.",
+      "color": "#e67e22",
+      "keywords": [
+        "paracelsus"
+      ]
+    },
+    {
+      "id": "trismegistus",
+      "name": "Hermes Trismegistus",
+      "blurb": "Legendary author of the Hermetic corpus and the Emerald Tablet.",
+      "color": "#9b59b6",
+      "keywords": [
+        "hermes trismegistus",
+        "trismegistus"
+      ]
+    },
+    {
+      "id": "pico",
+      "name": "Pico della Mirandola",
+      "blurb": "Renaissance humanist who married Kabbalah to Christian Platonism.",
+      "color": "#f39c12",
+      "keywords": [
+        "pico della mirandola",
+        "mirandola",
+        "pico"
+      ]
+    },
+    {
+      "id": "proclus",
+      "name": "Proclus",
+      "blurb": "Late Neoplatonist systematiser and theurgist.",
+      "color": "#16a085",
+      "keywords": [
+        "proclus"
+      ]
+    },
+    {
+      "id": "jung",
+      "name": "Carl Jung",
+      "blurb": "Depth psychologist of alchemy, archetypes, and the collective unconscious.",
+      "color": "#27ae60",
+      "keywords": [
+        "carl jung",
+        "c.g. jung",
+        "jung"
+      ]
+    },
+    {
+      "id": "flamel",
+      "name": "Nicolas Flamel",
+      "blurb": "Legendary medieval alchemist said to have made the Philosophers' Stone.",
+      "color": "#2c3e50",
+      "keywords": [
+        "flamel"
+      ]
+    },
+    {
+      "id": "newton",
+      "name": "Isaac Newton",
+      "blurb": "Natural philosopher whose secret alchemical work filled thousands of pages.",
+      "color": "#c0504d",
+      "keywords": [
+        "isaac newton",
+        "newton the alchemist",
+        "newton"
+      ]
+    },
+    {
+      "id": "manlyhall",
+      "name": "Manly P. Hall",
+      "blurb": "20th-century author of The Secret Teachings of All Ages.",
+      "color": "#4472c4",
+      "keywords": [
+        "manly p. hall",
+        "manly hall",
+        "manly p hall"
+      ]
+    },
+    {
+      "id": "boehme",
+      "name": "Jacob Boehme",
+      "blurb": "German theosopher of the divine ground and spiritual alchemy.",
+      "color": "#70ad47",
+      "keywords": [
+        "jacob boehme",
+        "boehme",
+        "böhme",
+        "behmen"
+      ]
+    },
+    {
+      "id": "rogerbacon",
+      "name": "Roger Bacon",
+      "blurb": "Medieval friar, natural philosopher, and reputed alchemist.",
+      "color": "#8b4513",
+      "keywords": [
+        "roger bacon"
+      ]
+    },
+    {
+      "id": "zosimos",
+      "name": "Zosimos of Panopolis",
+      "blurb": "Earliest named alchemical author, of visionary fame.",
+      "color": "#1a472a",
+      "keywords": [
+        "zosimos"
+      ]
+    },
+    {
+      "id": "dionysius",
+      "name": "Pseudo-Dionysius",
+      "blurb": "Author of the Mystical Theology and the celestial hierarchies.",
+      "color": "#0066cc",
+      "keywords": [
+        "pseudo-dionysius",
+        "pseudo dionysius"
+      ]
+    },
+    {
+      "id": "swedenborg",
+      "name": "Emanuel Swedenborg",
+      "blurb": "Scientist-turned-visionary of heaven, hell, and correspondences.",
+      "color": "#4a90e2",
+      "keywords": [
+        "swedenborg"
+      ]
+    },
+    {
+      "id": "fludd",
+      "name": "Robert Fludd",
+      "blurb": "English Paracelsian, defender of the Rosicrucians, macrocosm-microcosm.",
+      "color": "#7b68ee",
+      "keywords": [
+        "robert fludd",
+        "fludd"
+      ]
+    },
+    {
+      "id": "hypatia",
+      "name": "Hypatia of Alexandria",
+      "blurb": "Neoplatonist philosopher and mathematician of Alexandria.",
+      "color": "#8b5a3c",
+      "keywords": [
+        "hypatia"
+      ]
+    },
+    {
+      "id": "fortune",
+      "name": "Dion Fortune",
+      "blurb": "20th-century British occultist and author of The Mystical Qabalah.",
+      "color": "#d4af37",
+      "keywords": [
+        "dion fortune"
+      ]
+    },
+    {
+      "id": "gurdjieff",
+      "name": "G. I. Gurdjieff",
+      "blurb": "Teacher of the Fourth Way and the Work.",
+      "color": "#5b8c5a",
+      "keywords": [
+        "gurdjieff"
+      ]
+    },
+    {
+      "id": "levi",
+      "name": "Eliphas Levi",
+      "blurb": "19th-century French magus who shaped modern occultism.",
+      "color": "#a23b72",
+      "keywords": [
+        "eliphas levi",
+        "eliphas",
+        "éliphas"
+      ]
+    },
+    {
+      "id": "bardon",
+      "name": "Franz Bardon",
+      "blurb": "20th-century Hermetic magician, author of Initiation into Hermetics.",
+      "color": "#b8860b",
+      "keywords": [
+        "franz bardon",
+        "bardon"
+      ]
+    },
+    {
+      "id": "regardie",
+      "name": "Israel Regardie",
+      "blurb": "Chronicler of the Golden Dawn and ceremonial magic.",
+      "color": "#556b2f",
+      "keywords": [
+        "regardie"
+      ]
+    },
+    {
+      "id": "steiner",
+      "name": "Rudolf Steiner",
+      "blurb": "Founder of Anthroposophy and esoteric Christianity.",
+      "color": "#8b008b",
+      "keywords": [
+        "steiner"
+      ]
+    },
+    {
+      "id": "trithemius",
+      "name": "Johannes Trithemius",
+      "blurb": "Abbot, cryptographer, and author of the Steganographia.",
+      "color": "#2e8b57",
+      "keywords": [
+        "trithemius"
+      ]
+    },
+    {
+      "id": "blavatsky",
+      "name": "Helena Blavatsky",
+      "blurb": "Co-founder of the Theosophical Society and author of The Secret Doctrine.",
+      "color": "#9932cc",
+      "keywords": [
+        "blavatsky"
+      ]
+    },
+    {
+      "id": "llull",
+      "name": "Ramon Llull",
+      "blurb": "Medieval Majorcan mystic and combinatorial Art.",
+      "color": "#cd5c5c",
+      "keywords": [
+        "ramon llull",
+        "ramon lull",
+        "llull"
+      ]
+    },
+    {
+      "id": "apollonius",
+      "name": "Apollonius of Tyana",
+      "blurb": "Neo-Pythagorean sage and wonder-worker.",
+      "color": "#daa520",
+      "keywords": [
+        "apollonius"
+      ]
+    },
+    {
+      "id": "simonmagus",
+      "name": "Simon Magus",
+      "blurb": "Gnostic archetype of the magician.",
+      "color": "#483d8b",
+      "keywords": [
+        "simon magus"
+      ]
+    },
+    {
+      "id": "valentinus",
+      "name": "Valentinus",
+      "blurb": "Gnostic teacher of the Pleroma and Sophia.",
+      "color": "#a0522d",
+      "keywords": [
+        "valentinus",
+        "valentinian"
+      ]
     }
   ]
 }

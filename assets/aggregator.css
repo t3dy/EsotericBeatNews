@@ -299,6 +299,25 @@
 .chip:hover { color: var(--text-heading); border-color: var(--text-dim); }
 .chip--active { color: var(--accent-gold); border-color: var(--accent-gold); }
 
+/* Esotericists toolbar — figures, each with their own accent colour */
+.subnav--figures { background: #13110f; }
+.chip--eso::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--src, #8b7355);
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+.chip--eso:hover { color: var(--text-heading); border-color: var(--src, var(--text-dim)); }
+.chip--eso.chip--active { color: var(--src, var(--accent-gold)); border-color: var(--src, var(--accent-gold)); }
+
+/* esotericist pills on cards — distinguished from topic pills by the gold tone */
+.pill--eso { color: var(--accent-gold); border-color: var(--accent-gold); }
+.pill--eso:hover { background: var(--accent-gold); color: #1a1a1a; }
+
 /* === Card media badges === */
 .card__media { position: relative; }
 .card__dur {
@@ -373,6 +392,39 @@
   letter-spacing: 0.5px;
   color: var(--src);
 }
+
+/* === Esotericist figure grid (esotericists.html) === */
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.figure-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--src, var(--accent-tertiary));
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  transition: border-color 0.2s, transform 0.15s, background 0.2s;
+}
+.figure-card:hover { background: var(--bg-hover); transform: translateY(-2px); }
+.figure-card__count {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--accent-gold);
+  line-height: 1;
+}
+.figure-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--text-heading);
+  line-height: 1.25;
+}
+.figure-card__blurb { font-size: var(--text-xs); color: var(--text-muted); }
 
 /* === Prose (about) === */
 .prose { margin: 2rem auto; }

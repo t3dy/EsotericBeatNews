@@ -43,6 +43,8 @@ CATALOG = ROOT / "data" / "catalog.json"
 
 PER_PAGE = 60
 ASSET_VER = "0"  # cache-busting token, set in main() from CSS content hash
+ESO_TABS: list[dict] = []   # top-N esotericist figures (id/name/color) for the toolbar — set in render()
+ESO_NAMES: dict[str, str] = {}  # esotericist id -> display name, for card pills — set in render()
 NS = {
     "atom": "http://www.w3.org/2005/Atom",
     "yt": "http://www.youtube.com/xml/schemas/2015",
@@ -163,6 +165,24 @@ def build_membership_topics(playlists, topics):
     return vid_topics
 
 
+def eso_tag(items, esotericists):
+    """Mark each item with the esoteric figures it deals with.
+
+    Matches figure keywords against title + summary with WORD BOUNDARIES — vital
+    for short names like "Dee" or "Pico" that would otherwise match inside other
+    words. Sets it["esotericists"] = sorted list of figure ids.
+    """
+    compiled = [
+        (e["id"], [re.compile(r"\b" + re.escape(kw.lower()) + r"\b") for kw in e.get("keywords", [])])
+        for e in esotericists
+    ]
+    for it in items:
+        hay = f"{it['title']} {it.get('summary','')}".lower()
+        it["esotericists"] = sorted(
+            eid for eid, pats in compiled if any(p.search(hay) for p in pats)
+        )
+
+
 def auto_tag(items, topics, overrides, vid_topics):
     for it in items:
         hay = f"{it['title']} {it.get('summary','')}".lower()
@@ -233,6 +253,10 @@ def card(it, now, colors, depth):
         f'<a class="pill" href="{prefix}topics/{esc(t)}.html">{esc(t)}</a>'
         for t in it.get("topics", [])
     )
+    pills += "".join(
+        f'<a class="pill pill--eso" href="{prefix}esotericists/{esc(e)}.html">{esc(ESO_NAMES.get(e, e))}</a>'
+        for e in it.get("esotericists", [])
+    )
     return f"""
     <article class="card">
       <a class="card__media" href="{esc(it['url'])}" target="_blank" rel="noopener">{thumb_html}{dur_html}</a>
@@ -277,7 +301,7 @@ def pagination(base, page, total_pages):
 
 def featured_sources(sources):
     """Return only the featured podcasts for the toolbar."""
-    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt"}
+    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt", "arcanvm"}
     return [s for s in sources if s["id"] in featured_ids]
 
 
@@ -303,6 +327,7 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
         + feat("Search", "search.html", "search")
         + feat("Browse", "browse.html", "browse")
         + feat("Scholars", "scholars.html", "scholars")
+        + feat("Figures", "esotericists.html", "esotericists")
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
@@ -347,6 +372,18 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
         f'href="{prefix}topics/{t["id"]}.html">{esc(t.get("nav", t["title"]))}</a>'
         for t in topics
     )
+    # esotericists toolbar — the top figures by episode count (set in render())
+    eso_chips = "".join(
+        f'<a class="chip chip--eso{" chip--active" if active=="eso:"+e["id"] else ""}" '
+        f'style="--src:{e.get("color", "#8b7355")}" '
+        f'href="{prefix}esotericists/{e["id"]}.html">{esc(e["name"])}</a>'
+        for e in ESO_TABS
+    )
+    eso_bar = (
+        f'<div class="subnav subnav--figures"><div class="subnav__inner">'
+        f'<span class="subnav__label">Esotericists</span>{eso_chips}</div></div>'
+        if ESO_TABS else ""
+    )
     return f"""
 <header class="site-header">
   <div class="donate-bar">
@@ -359,6 +396,7 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
   <div class="podbar"><div class="podbar__inner"><span class="podbar__label"><span>Featured</span><span>Podcasts</span></span>{tabs}</div></div>
   {schol_bar}
   <div class="subnav"><div class="subnav__inner"><span class="subnav__label">Topics</span>{chips}</div></div>
+  {eso_bar}
 </header>"""
 
 
@@ -461,8 +499,24 @@ def render(catalog, cfg, now):
     items.sort(key=lambda x: x["published"] or EPOCH, reverse=True)
     by_vid = {i["video_id"]: i for i in items if i.get("video_id")}
 
+    # ---- Esotericists: count episodes per figure, pick the top 10 for the toolbar ----
+    esotericists = cfg.get("esotericists", [])
+    eso_by_id = {e["id"]: e for e in esotericists}
+    eso_counts = {e["id"]: 0 for e in esotericists}
+    for it in items:
+        for eid in it.get("esotericists", []):
+            if eid in eso_counts:
+                eso_counts[eid] += 1
+    eso_ranked = sorted((e for e in esotericists if eso_counts[e["id"]] > 0),
+                        key=lambda e: (-eso_counts[e["id"]], e["name"]))
+    global ESO_TABS, ESO_NAMES
+    ESO_TABS = [{"id": e["id"], "name": e["name"], "color": e.get("color", "#8b7355")}
+                for e in eso_ranked[:10]]
+    ESO_NAMES = {e["id"]: e["name"] for e in esotericists}
+
     (SITE / "topics").mkdir(parents=True, exist_ok=True)
     (SITE / "scholars").mkdir(parents=True, exist_ok=True)
+    (SITE / "esotericists").mkdir(parents=True, exist_ok=True)
     (SITE / "playlists").mkdir(parents=True, exist_ok=True)
 
     # ---- News feed (index) ----
@@ -526,6 +580,45 @@ def render(catalog, cfg, now):
   </section>"""
         write_paginated(sch_items, f"scholars/{sch['id']}", hero, sch["name"],
                         site, sources, topics, now, colors, depth=1, active=f"sch:{sch['id']}", sort_controls=True)
+
+    # ---- Esotericist figure pages (one per figure that appears in the catalog) ----
+    eso_lists = {e["id"]: [i for i in items if e["id"] in i.get("esotericists", [])]
+                 for e in esotericists}
+    for e in eso_ranked:
+        e_items = eso_lists[e["id"]]
+        rank = next((n for n, t in enumerate(ESO_TABS, 1) if t["id"] == e["id"]), None)
+        rank_note = f" &nbsp;·&nbsp; #{rank} most-discussed figure" if rank else ""
+        hero = f"""
+  <section class="hero hero--topic" style="--src:{e.get('color', '#8b7355')}">
+    <p class="crumb"><a href="../index.html">{esc(site['feed_name'])}</a> /
+      <a href="../esotericists.html">Esotericists</a></p>
+    <h1>{esc(e['name'])}</h1>
+    <p class="hero__tagline">{esc(e.get('blurb', ''))}</p>
+    <p class="count">{len(e_items)} episode{'s' if len(e_items)!=1 else ''}{rank_note}</p>
+  </section>"""
+        write_paginated(e_items, f"esotericists/{e['id']}", hero, e["name"],
+                        site, sources, topics, now, colors, depth=1,
+                        active=f"eso:{e['id']}", sort_controls=True)
+
+    # ---- esotericists.html (all figures, ranked, with episode counts) ----
+    eso_cards = "".join(
+        f"""
+      <a class="figure-card" href="esotericists/{esc(e['id'])}.html" style="--src:{e.get('color', '#8b7355')}">
+        <span class="figure-card__count">{eso_counts[e['id']]}</span>
+        <span class="figure-card__name">{esc(e['name'])}</span>
+        <span class="figure-card__blurb">{esc(e.get('blurb', ''))}</span>
+      </a>""" for e in eso_ranked)
+    eso_index_body = f"""
+  <section class="hero hero--slim">
+    <h1>Esotericists</h1>
+    <p class="hero__tagline">The figures of Western esotericism — magi, mystics, alchemists, and
+      Hermetic philosophers — ranked by how many episodes across the catalogue discuss them.
+      The top ten ride in the toolbar above; every figure below has their own page.</p>
+  </section>
+  <section class="figure-grid">{eso_cards}</section>"""
+    (SITE / "esotericists.html").write_text(
+        shell(f"Esotericists — {site['title']}", eso_index_body, site, sources, topics, 0, "esotericists", scholars),
+        encoding="utf-8")
 
     # ---- Playlist pages + index (Esoterica's own curation) ----
     playlists = sorted(catalog.get("playlists", []), key=lambda p: -len(p.get("video_ids", [])))
@@ -876,6 +969,7 @@ def main():
 
     vid_topics = build_membership_topics(catalog.get("playlists", []), cfg["topics"])
     auto_tag(catalog["items"], cfg["topics"], overrides, vid_topics)
+    eso_tag(catalog["items"], cfg.get("esotericists", []))
     now = dt.datetime.now(dt.timezone.utc)
     n, nt, npl, fp = render(catalog, cfg, now)
     print(f"Rendered {n} items · {nt} topic pages · {npl} playlist pages · "
