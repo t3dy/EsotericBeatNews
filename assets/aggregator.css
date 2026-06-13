@@ -1,7 +1,49 @@
 /* ============================================
-   ESOFEED — aggregator components
+   Esoteric Beat News — aggregator components
    Layers on top of the SHWEP design system (style.css)
    ============================================ */
+
+/* === Donate Bar === */
+.donate-bar {
+  background: linear-gradient(to right, rgba(196, 164, 74, 0.1), rgba(212, 175, 55, 0.05));
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.75rem 0;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.donate-bar__text {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.donate-btn {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.donate-btn--patreon {
+  background-color: #ff424d;
+  color: white;
+}
+.donate-btn--patreon:hover {
+  background-color: #e63946;
+  text-decoration: none;
+}
+.donate-btn--paypal {
+  background-color: #0070ba;
+  color: white;
+}
+.donate-btn--paypal:hover {
+  background-color: #005a94;
+  text-decoration: none;
+}
 
 .site-footer {
   border-top: 1px solid var(--border-subtle);

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ESOFEED catalog fetcher.
+Esoteric Beat News catalog fetcher.
 
 Pulls the COMPLETE back catalog for every source into data/catalog.json:
 

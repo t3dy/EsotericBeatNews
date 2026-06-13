@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ESOFEED renderer.
+Esoteric Beat News renderer.
 
 Reads data/catalog.json (produced by fetch_catalog.py) and renders the static
 SHWEP-styled site. This half is OFFLINE — no network — so it runs reliably in
@@ -10,7 +10,7 @@ CI even though the catalog itself is gathered by yt-dlp elsewhere.
 
 Outputs:
     site/index.html, site/index-N.html   -- "Emanations" news feed (paginated)
-    site/topics/<id>.html (+ -N.html)     -- 8 curated cross-channel topics
+    site/topics/<id>.html (+ -N.html)     -- 20 curated cross-channel topics
     site/playlists.html                   -- index of Esoterica's curated playlists
     site/playlists/<id>.html              -- one page per playlist
     site/about.html
@@ -49,7 +49,7 @@ NS = {
     "media": "http://search.yahoo.com/mrss/",
     "itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd",
 }
-USER_AGENT = "ESOFEED/1.0 feed aggregator"
+USER_AGENT = "EsotericBeatNews/1.0 feed aggregator"
 EPOCH = dt.datetime.min.replace(tzinfo=dt.timezone.utc)
 
 
@@ -349,6 +349,9 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
     )
     return f"""
 <header class="site-header">
+  <div class="donate-bar">
+    <p class="donate-bar__text">Support this research: <a href="https://patreon.com/esotericbeatnews" class="donate-btn donate-btn--patreon" target="_blank" rel="noopener">Patreon</a> <a href="https://paypal.me/tedhand" class="donate-btn donate-btn--paypal" target="_blank" rel="noopener">PayPal</a></p>
+  </div>
   <div class="header__container">
     <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
     <nav class="feature-bar" aria-label="Site features">{features}</nav>
