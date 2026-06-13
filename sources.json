@@ -286,6 +286,23 @@
       ],
       "link": "https://www.youtube.com/@SpiritusUniversalis",
       "color": "#7b68ee"
+    },
+    {
+      "id": "matteo_martelli",
+      "name": "Matteo Martelli",
+      "long_name": "Matteo Martelli (Alchemy & Ancient Chemistry)",
+      "kind": "youtube_channel_filtered",
+      "channel_id": "UCR3vLlSHuWUGb8qY9gFNZEg",
+      "filter_title": [
+        "martelli",
+        "alchemy",
+        "chemistry",
+        "ancient chemistry",
+        "graeco roman",
+        "mercury"
+      ],
+      "link": "https://www.youtube.com/@MatteoMartelli",
+      "color": "#8b5a3c"
     }
   ],
   "topics": [
@@ -397,7 +414,10 @@
         "alchemical",
         "transmutation",
         "magnum opus",
-        "paracelsus"
+        "paracelsus",
+        "chymistry",
+        "mercury",
+        "martelli"
       ]
     },
     {
