@@ -674,6 +674,26 @@
         "kirsten dzwiza"
       ],
       "count": 8
+    },
+    {
+      "id": "hanegraaff",
+      "name": "Wouter Hanegraaff",
+      "blurb": "Leading scholar of Western esotericism; theorist of rejected knowledge and Hermetic spirituality.",
+      "keywords": [
+        "hanegraaff",
+        "hanegraaf"
+      ],
+      "count": 8
+    },
+    {
+      "id": "kaczynski",
+      "name": "Richard Kaczynski",
+      "blurb": "Historian of Aleister Crowley and Thelema; author of the biography Perdurabo.",
+      "keywords": [
+        "kaczynski",
+        "perdurabo"
+      ],
+      "count": 6
     }
   ],
   "esotericists":   [

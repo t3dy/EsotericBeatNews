@@ -45,6 +45,8 @@ PER_PAGE = 60
 ASSET_VER = "0"  # cache-busting token, set in main() from CSS content hash
 ESO_TABS: list[dict] = []   # top-N esotericist figures (id/name/color) for the toolbar — set in render()
 ESO_NAMES: dict[str, str] = {}  # esotericist id -> display name, for card pills — set in render()
+FEATURED_SRC_IDS: set[str] = set()  # source ids shown in the Featured Podcasts toolbar — set in render()
+SCHOLAR_TABS: list[dict] = []   # featured scholars for the toolbar (site-wide) — set in render()
 NS = {
     "atom": "http://www.w3.org/2005/Atom",
     "yt": "http://www.youtube.com/xml/schemas/2015",
@@ -300,14 +302,21 @@ def pagination(base, page, total_pages):
 
 
 def featured_sources(sources):
-    """Return only the featured podcasts for the toolbar."""
-    featured_ids = {"esoterica", "modernhermeticist", "religionforbreakfast", "seekers", "esotericbeat", "wabt", "arcanvm", "maeviuslynn"}
-    return [s for s in sources if s["id"] in featured_ids]
+    """Featured-podcasts toolbar = every real podcast source with episodes.
+
+    The id set is computed in render() (FEATURED_SRC_IDS): all sources that
+    have at least one episode, minus the ones folded into another tab
+    (tarotsoulless → the combined Ted Hand tab) or that aren't podcasts
+    (dzwiza → a scholar's guest appearances, surfaced via her scholar tab).
+    Order follows sources.json.
+    """
+    return [s for s in sources if s["id"] in FEATURED_SRC_IDS]
 
 
 def featured_scholars(scholars):
-    """Return only the 5 featured scholars for the toolbar."""
-    featured_ids = {"newman", "principe", "forshaw", "hutton", "yates", "dzwiza"}
+    """Return the featured scholars for the toolbar."""
+    featured_ids = {"newman", "principe", "forshaw", "hutton", "yates", "dzwiza",
+                    "hanegraaff", "kaczynski"}
     return [s for s in scholars if s["id"] in featured_ids]
 
 
@@ -335,22 +344,17 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
     def podtab(s):
         cls = "podtab podtab--active" if active == "src:" + s["id"] else "podtab"
         color = s.get("color", "#cf2e2e")
-        label = esc(s.get("tab", s["name"]))
-        # Ted Hand combines Esoteric Beat and Tarot
-        href = "ted-hand.html" if s["id"] == "esotericbeat" else f"sources/{s['id']}.html"
-        return (f'<a class="{cls}" style="--src:{color}" '
-                f'href="{prefix}{href}">{label}</a>')
-
-    # Filter featured sources, but rename Esoteric Beat to Ted Hand
-    featured = featured_sources(sources)
-    for s in featured:
+        # Esoteric Beat + Tarot for the Soulless Materialist share the combined Ted Hand page
         if s["id"] == "esotericbeat":
-            s = dict(s)  # make a copy
-            s["name"] = "Ted Hand"
-            s["tab"] = "Ted Hand"
+            label, href = "Ted Hand", "ted-hand.html"
+        else:
+            label, href = s.get("tab", s["name"]), f"sources/{s['id']}.html"
+        return (f'<a class="{cls}" style="--src:{color}" '
+                f'href="{prefix}{href}">{esc(label)}</a>')
 
-    tabs = "".join(podtab(s) for s in featured)
-    # featured-scholars toolbar — a tab per scholar, each to their own page
+    tabs = "".join(podtab(s) for s in featured_sources(sources))
+
+    # featured-scholars toolbar — a tab per scholar, site-wide (reads SCHOLAR_TABS global)
     def schol_tab(s):
         cls = "podtab podtab--active" if active == "sch:" + s["id"] else "podtab"
         color = s.get("color", "#8b7355")
@@ -358,13 +362,13 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
         return (f'<a class="{cls}" style="--src:{color}" '
                 f'href="{prefix}scholars/{s["id"]}.html">{label}</a>')
 
-    schol_tabs = ""
-    if scholars:
-        featured_schol = featured_scholars(scholars)
-        schol_tabs = "".join(schol_tab(s) for s in featured_schol)
-        schol_bar = f'<div class="podbar podbar--scholars"><div class="podbar__inner"><span class="podbar__label"><span>Featured</span><span>Scholars</span></span>{schol_tabs}</div></div>'
-    else:
-        schol_bar = ""
+    schol_tabs = "".join(schol_tab(s) for s in SCHOLAR_TABS)
+    schol_bar = (
+        f'<div class="podbar podbar--scholars"><div class="podbar__inner">'
+        f'<span class="podbar__label"><span>Featured</span><span>Scholars</span></span>'
+        f'{schol_tabs}</div></div>'
+        if SCHOLAR_TABS else ""
+    )
 
     # topics toolbar — the thematic currents, their own bar
     chips = "".join(
@@ -498,6 +502,19 @@ def render(catalog, cfg, now):
         it["published"] = _parse_date(it.get("published_iso", ""))
     items.sort(key=lambda x: x["published"] or EPOCH, reverse=True)
     by_vid = {i["video_id"]: i for i in items if i.get("video_id")}
+
+    # ---- Featured Podcasts toolbar: every source with episodes (order = sources.json) ----
+    src_counts = {s["id"]: 0 for s in sources}
+    for it in items:
+        if it["source"] in src_counts:
+            src_counts[it["source"]] += 1
+    # tarotsoulless rides inside the combined Ted Hand tab; dzwiza is a scholar's
+    # appearances (shown via her scholar tab), not a standalone podcast.
+    not_a_podcast = {"tarotsoulless", "dzwiza"}
+    global FEATURED_SRC_IDS, SCHOLAR_TABS
+    FEATURED_SRC_IDS = {s["id"] for s in sources
+                        if src_counts.get(s["id"], 0) > 0 and s["id"] not in not_a_podcast}
+    SCHOLAR_TABS = featured_scholars(cfg.get("scholars", []))
 
     # ---- Esotericists: count episodes per figure, pick the top 10 for the toolbar ----
     esotericists = cfg.get("esotericists", [])
