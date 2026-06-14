@@ -137,15 +137,6 @@
       "color": "#f39c12"
     },
     {
-      "id": "thand_esoplayl",
-      "name": "Ted Hand Esoteric Studies",
-      "long_name": "Ted Hand's Esoteric Studies Playlist",
-      "kind": "youtube_playlist",
-      "playlist_id": "PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
-      "link": "https://www.youtube.com/playlist?list=PL44vk5wOpZBkkPbkySMh_bV85LfIcptXe",
-      "color": "#16a085"
-    },
-    {
       "id": "michaelkuhlman",
       "name": "Michael Kuhlman (Yates)",
       "long_name": "Michael Kuhlman — Frances Yates Audiobooks",
