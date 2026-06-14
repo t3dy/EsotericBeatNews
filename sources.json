@@ -379,6 +379,17 @@
         "7DxPBOVeDfk",
         "byzQeFvWzFo"
       ]
+    },
+    {
+      "id": "sas_lectures",
+      "name": "Society of Antiquaries of Scotland",
+      "long_name": "Society of Antiquaries of Scotland — Academic Lectures",
+      "kind": "youtube_videos",
+      "link": "https://www.socantscot.org",
+      "color": "#4a6741",
+      "videos": [
+        "JoJEn9GqFeo"
+      ]
     }
   ],
   "topics": [
