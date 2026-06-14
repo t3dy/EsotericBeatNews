@@ -335,6 +335,37 @@
       "color": "#704214"
     },
     {
+      "id": "infinitefire",
+      "name": "Infinite Fire",
+      "tab": "Infinite Fire",
+      "long_name": "The Infinite Fire Webinar Series (Embassy of the Free Mind / Ritman Library)",
+      "kind": "youtube_videos",
+      "link": "https://www.youtube.com/@EmbassyoftheFreeMind",
+      "color": "#b8410f",
+      "videos": [
+        "slS3CDlfp2o",
+        "SOWOSELjeOY",
+        "pGzBpqfF-HI",
+        "s2HCOuY-EiE",
+        "gdLTDzFogzs",
+        "93TrDJv8-_I",
+        "WIcAok0HqL8",
+        "SPj3QOg8YXA",
+        "_K7c4nLjZDY",
+        "WDdFZlodBm8",
+        "RipM5g5JeJA",
+        "Q2IkdJUmIGc",
+        "aBtLO1ZzOuA",
+        "i8KtN1_exr8",
+        "Hus8qAFGR-g",
+        "qitlxOt2kxY",
+        "wRqe-a1kx9E",
+        "O_Idu6_zEe0",
+        "15IZVUXqMvg",
+        "vTNMyzZ9hl0"
+      ]
+    },
+    {
       "id": "dzwiza",
       "name": "Kirsten Dzwiza",
       "long_name": "Kirsten Dzwiza — Featured Appearances (Ancient Magic & the Greek Magical Papyri)",

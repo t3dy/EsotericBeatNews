@@ -509,11 +509,16 @@ def render(catalog, cfg, now):
     for it in items:
         if it["source"] in src_counts:
             src_counts[it["source"]] += 1
-    # tarotsoulless rides inside the combined Ted Hand tab; dzwiza is a scholar's
-    # appearances (shown via her scholar tab), not a standalone podcast. kazrowe
-    # and bytesizescience are general-interest channels (not esoteric-themed), so
-    # they stay in the catalog/topics but are kept out of the Featured Podcasts bar.
-    not_a_podcast = {"tarotsoulless", "dzwiza", "kazrowe", "bytesizescience"}
+    # Sources kept OUT of the Featured Podcasts toolbar (their episodes still live
+    # in the feed, topics, search, and scholar pages — only the tab is dropped):
+    #   tarotsoulless        -> folded into the combined Ted Hand tab
+    #   dzwiza               -> a scholar's appearances, shown via her scholar tab
+    #   kazrowe/bytesize...  -> general-interest channels, not esoteric-themed
+    #   michaelkuhlman, greshamhutton, joekiernan, cafeneaua_newman,
+    #   spiritus_mundi_newman -> trimmed for toolbar space (verbose niche tabs)
+    not_a_podcast = {"tarotsoulless", "dzwiza", "kazrowe", "bytesizescience",
+                     "michaelkuhlman", "greshamhutton", "joekiernan",
+                     "cafeneaua_newman", "spiritus_mundi_newman"}
     global FEATURED_SRC_IDS, SCHOLAR_TABS
     FEATURED_SRC_IDS = {s["id"] for s in sources
                         if src_counts.get(s["id"], 0) > 0 and s["id"] not in not_a_podcast}
