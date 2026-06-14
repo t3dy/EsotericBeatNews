@@ -224,9 +224,9 @@
   background: #1a1714;
 }
 .podbar__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.5rem 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.5rem 2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -274,9 +274,9 @@
   background: #161616;
 }
 .subnav__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.5rem 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.5rem 2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;

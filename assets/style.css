@@ -98,9 +98,9 @@ img {
 
 /* === Layout === */
 .container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .content-narrow {
@@ -131,9 +131,9 @@ img {
 .header__container {
   display: flex;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.75rem 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem 2rem;
 }
 
 .header__logo {
