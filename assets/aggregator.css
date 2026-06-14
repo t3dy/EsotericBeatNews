@@ -28,12 +28,12 @@
   font-weight: 500;
   transition: all 0.2s ease;
 }
-.donate-btn--patreon {
-  background-color: #ff424d;
+.donate-btn--venmo {
+  background-color: #008cff;
   color: white;
 }
-.donate-btn--patreon:hover {
-  background-color: #e63946;
+.donate-btn--venmo:hover {
+  background-color: #0074d4;
   text-decoration: none;
 }
 .donate-btn--paypal {
