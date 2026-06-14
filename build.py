@@ -316,7 +316,7 @@ def featured_sources(sources):
 def featured_scholars(scholars):
     """Return the featured scholars for the toolbar."""
     featured_ids = {"newman", "principe", "forshaw", "hutton", "yates", "dzwiza",
-                    "hanegraaff", "kaczynski", "martelli"}
+                    "hanegraaff", "kaczynski", "martelli", "maeviuslynn", "adam_mclean"}
     return [s for s in scholars if s["id"] in featured_ids]
 
 

@@ -737,6 +737,28 @@
         "martelli"
       ],
       "count": 2
+    },
+    {
+      "id": "maeviuslynn",
+      "name": "Maevius Lynn",
+      "blurb": "Scholar of Thelema, Aleister Crowley, and Western esotericism.",
+      "color": "#704214",
+      "keywords": [
+        "maevius lynn",
+        "maeviuslynn"
+      ],
+      "count": 0
+    },
+    {
+      "id": "adam_mclean",
+      "name": "Adam McLean",
+      "blurb": "Scholar of alchemy, tarot, and Hermetic philosophy.",
+      "color": "#d4af37",
+      "keywords": [
+        "adam mclean",
+        "mclean"
+      ],
+      "count": 0
     }
   ],
   "esotericists":   [
