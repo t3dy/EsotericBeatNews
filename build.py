@@ -337,6 +337,7 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
         + feat("Browse", "browse.html", "browse")
         + feat("Scholars", "scholars.html", "scholars")
         + feat("Figures", "esotericists.html", "esotericists")
+        + feat("Audiobooks", "topics/audiobooks.html", "audiobooks")
         + feat("Playlists", "playlists.html", "playlists")
         + feat("About", "about.html", "about")
     )
