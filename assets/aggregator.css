@@ -230,7 +230,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 .podbar__label {
   display: flex;
@@ -243,7 +244,15 @@
   color: var(--text-dim);
   margin-right: 0.75rem;
   line-height: 1.2;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  flex: 0 0 auto;
+  align-self: stretch;
+  padding-right: 0.6rem;
+  background: #1d1d1d;
 }
+.podbar--scholars .podbar__label { background: #1a1714; }
 .podbar__label span {
   display: block;
 }
@@ -255,6 +264,8 @@
   border: 1px solid var(--border-subtle);
   border-bottom: 2px solid var(--src);
   transition: background 0.2s, color 0.2s;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .podtab:hover { background: var(--bg-hover); color: var(--text-heading); }
 .podtab--active {
@@ -280,7 +291,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 .subnav__label {
   font-size: var(--text-xs);
@@ -288,6 +300,15 @@
   letter-spacing: 1.5px;
   color: var(--text-dim);
   margin-right: 0.5rem;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  flex: 0 0 auto;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding-right: 0.6rem;
+  background: #161616;
 }
 .chip {
   font-size: var(--text-xs);
@@ -295,6 +316,8 @@
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
   padding: 0.1rem 0.7rem;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .chip:hover { color: var(--text-heading); border-color: var(--text-dim); }
 .chip--active { color: var(--accent-gold); border-color: var(--accent-gold); }
