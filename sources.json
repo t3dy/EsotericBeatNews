@@ -127,6 +127,7 @@
       "id": "fraserbuilds_alchemy",
       "name": "Fraser Builds (Alchemy)",
       "long_name": "Fraser Builds — Alchemy Episodes",
+      "tab": "Fraser Builds",
       "kind": "youtube_channel_filtered",
       "channel_id": "UC11UNLQ4llwQawajUsCmneA",
       "filter_title": [
