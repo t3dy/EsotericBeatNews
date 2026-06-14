@@ -387,7 +387,7 @@ def header_block(site, sources, topics, depth, active="", scholars=None):
     return f"""
 <header class="site-header">
   <div class="donate-bar">
-    <p class="donate-bar__text">Support this research: <a href="https://venmo.com/?txn=pay&amp;recipients=ted.hand@gmail.com&amp;note=Esoteric%20Beat%20News" class="donate-btn donate-btn--venmo" target="_blank" rel="noopener">Venmo</a> <a href="https://paypal.me/tedhand" class="donate-btn donate-btn--paypal" target="_blank" rel="noopener">PayPal</a></p>
+    <p class="donate-bar__text">Support this research: <a href="https://venmo.com/u/T3dyhand" class="donate-btn donate-btn--venmo" target="_blank" rel="noopener">Venmo</a> <a href="https://paypal.me/tedhand" class="donate-btn donate-btn--paypal" target="_blank" rel="noopener">PayPal</a></p>
   </div>
   <div class="header__container">
     <a class="header__logo" href="{prefix}index.html">✶ {esc(site['title'])}</a>
