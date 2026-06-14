@@ -694,6 +694,16 @@
         "perdurabo"
       ],
       "count": 6
+    },
+    {
+      "id": "martelli",
+      "name": "Matteo Martelli",
+      "blurb": "Historian of Graeco-Egyptian and Byzantine alchemy and ancient chemistry.",
+      "color": "#8b5a3c",
+      "keywords": [
+        "martelli"
+      ],
+      "count": 2
     }
   ],
   "esotericists":   [
