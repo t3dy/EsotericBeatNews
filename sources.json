@@ -425,6 +425,22 @@
         "JiuQkcNu-8Q",
         "HtKW1h5z-l4"
       ]
+    },
+    {
+      "id": "dylan_burns",
+      "name": "Dylan Burns",
+      "long_name": "Dr. Dylan Burns — Sethian Gnosticism & Platonism",
+      "kind": "youtube_videos",
+      "link": "https://www.youtube.com/@dylan_burns",
+      "color": "#6b4c9a",
+      "videos": [
+        "FSprzPSw5YY",
+        "dHVInJzOat4",
+        "X9pVcFtaSNk",
+        "O8U8EoNWuFw",
+        "0GntXFTu5X8",
+        "1x_klY9H2ak"
+      ]
     }
   ],
   "topics": [
@@ -814,6 +830,17 @@
       "keywords": [
         "david litwa",
         "litwa"
+      ],
+      "count": 0
+    },
+    {
+      "id": "dylan_burns",
+      "name": "Dylan Burns",
+      "blurb": "Scholar of Sethian Gnosticism, Platonism, and late antique esotericism.",
+      "color": "#6b4c9a",
+      "keywords": [
+        "dylan burns",
+        "burns"
       ],
       "count": 0
     }
