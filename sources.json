@@ -405,6 +405,25 @@
         "ihLucnWiZZo",
         "B0Dfi7xuXnk"
       ]
+    },
+    {
+      "id": "david_litwa",
+      "name": "David Litwa",
+      "long_name": "Dr. M. David Litwa — Hermeticism & Gnosticism",
+      "kind": "youtube_videos",
+      "link": "https://www.youtube.com/@m.davidlitwa",
+      "color": "#c77dba",
+      "videos": [
+        "SiabVKkJh20",
+        "dUTyycLoyjw",
+        "LoiCKJ9TXt8",
+        "HAURjH71ZjY",
+        "dY5TNxV5KHc",
+        "ie3VC6O_hy4",
+        "lVIq8iTwiVY",
+        "JiuQkcNu-8Q",
+        "HtKW1h5z-l4"
+      ]
     }
   ],
   "topics": [
@@ -783,6 +802,17 @@
       "keywords": [
         "adam mclean",
         "mclean"
+      ],
+      "count": 0
+    },
+    {
+      "id": "david_litwa",
+      "name": "David Litwa",
+      "blurb": "Scholar of ancient Hermeticism, Gnosticism, and early Christianity.",
+      "color": "#c77dba",
+      "keywords": [
+        "david litwa",
+        "litwa"
       ],
       "count": 0
     }
