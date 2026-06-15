@@ -523,7 +523,8 @@ def render(catalog, cfg, now):
                      "michaelkuhlman", "greshamhutton", "joekiernan",
                      "cafeneaua_newman", "spiritus_mundi_newman", "adam_mclean",
                      "fraserbuilds_alchemy", "wabt", "maeviuslynn", "historyofalchemy",
-                     "arcanvm", "sas_lectures", "lawrence_principe", "robert_fludd"}
+                     "arcanvm", "sas_lectures", "lawrence_principe", "robert_fludd",
+                     "david_litwa"}
     global FEATURED_SRC_IDS, SCHOLAR_TABS
     FEATURED_SRC_IDS = {s["id"] for s in sources
                         if src_counts.get(s["id"], 0) > 0 and s["id"] not in not_a_podcast}
