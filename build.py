@@ -523,7 +523,7 @@ def render(catalog, cfg, now):
                      "michaelkuhlman", "greshamhutton", "joekiernan",
                      "cafeneaua_newman", "spiritus_mundi_newman", "adam_mclean",
                      "fraserbuilds_alchemy", "wabt", "maeviuslynn", "historyofalchemy",
-                     "arcanvm", "sas_lectures", "lawrence_principe"}
+                     "arcanvm", "sas_lectures", "lawrence_principe", "robert_fludd"}
     global FEATURED_SRC_IDS, SCHOLAR_TABS
     FEATURED_SRC_IDS = {s["id"] for s in sources
                         if src_counts.get(s["id"], 0) > 0 and s["id"] not in not_a_podcast}
@@ -540,8 +540,10 @@ def render(catalog, cfg, now):
     eso_ranked = sorted((e for e in esotericists if eso_counts[e["id"]] > 0),
                         key=lambda e: (-eso_counts[e["id"]], e["name"]))
     global ESO_TABS, ESO_NAMES
+    pinned = [e for e in esotericists if e.get("featured")]
+    top10 = [e for e in eso_ranked[:10] if not e.get("featured")]
     ESO_TABS = [{"id": e["id"], "name": e["name"], "color": e.get("color", "#8b7355")}
-                for e in eso_ranked[:10]]
+                for e in pinned + top10]
     ESO_NAMES = {e["id"]: e["name"] for e in esotericists}
 
     (SITE / "topics").mkdir(parents=True, exist_ok=True)

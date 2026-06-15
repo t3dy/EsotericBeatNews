@@ -1073,6 +1073,7 @@
       "name": "Robert Fludd",
       "blurb": "English Paracelsian, defender of the Rosicrucians, macrocosm-microcosm.",
       "color": "#7b68ee",
+      "featured": true,
       "keywords": [
         "robert fludd",
         "fludd"
