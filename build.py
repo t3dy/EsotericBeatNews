@@ -550,12 +550,10 @@ def render(catalog, cfg, now):
 
     # ---- News feed (index) ----
     counts = {s["id"]: sum(1 for i in items if i["source"] == s["id"]) for s in sources}
-    stat = " · ".join(f'{esc(src_by_id[sid]["name"])} {n}' for sid, n in counts.items())
     feed_hero = f"""
   <section class="hero">
     <h1>{esc(site['feed_name'])}</h1>
     <p class="hero__tagline">{esc(site['feed_blurb'])}</p>
-    <p class="count">{len(items)} episodes &nbsp;·&nbsp; {stat}</p>
   </section>"""
     feed_pages = write_paginated(items, "index", feed_hero, site["feed_name"],
                                  site, sources, topics, now, colors, depth=0, active="feed")
