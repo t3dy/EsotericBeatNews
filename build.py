@@ -518,9 +518,11 @@ def render(catalog, cfg, now):
     #   michaelkuhlman, greshamhutton, joekiernan, cafeneaua_newman,
     #   spiritus_mundi_newman -> trimmed for toolbar space (verbose niche tabs)
     #   adam_mclean          -> shown via featured scholars toolbar instead
+    #   fraserbuilds_alchemy, wabt -> trimmed for toolbar space
     not_a_podcast = {"tarotsoulless", "dzwiza", "kazrowe", "bytesizescience",
                      "michaelkuhlman", "greshamhutton", "joekiernan",
-                     "cafeneaua_newman", "spiritus_mundi_newman", "adam_mclean"}
+                     "cafeneaua_newman", "spiritus_mundi_newman", "adam_mclean",
+                     "fraserbuilds_alchemy", "wabt"}
     global FEATURED_SRC_IDS, SCHOLAR_TABS
     FEATURED_SRC_IDS = {s["id"] for s in sources
                         if src_counts.get(s["id"], 0) > 0 and s["id"] not in not_a_podcast}
