@@ -72,6 +72,16 @@ def iso(ts) -> str:
     return dt.datetime.fromtimestamp(ts, dt.timezone.utc).isoformat()
 
 
+def _parse_upload_date(d) -> str:
+    """Parse yt-dlp upload_date string 'YYYYMMDD' into an ISO timestamp."""
+    if not d or len(d) != 8:
+        return ""
+    try:
+        return dt.datetime(int(d[:4]), int(d[4:6]), int(d[6:8]), tzinfo=dt.timezone.utc).isoformat()
+    except ValueError:
+        return ""
+
+
 def entry_to_item(e: dict, source: dict) -> dict:
     vid = e.get("id", "")
     return {
@@ -81,7 +91,7 @@ def entry_to_item(e: dict, source: dict) -> dict:
         "title": (e.get("title") or "").strip(),
         "url": e.get("url") or (f"https://www.youtube.com/watch?v={vid}" if vid else ""),
         "video_id": vid,
-        "published_iso": iso(e.get("timestamp")),
+        "published_iso": iso(e.get("timestamp")) or _parse_upload_date(e.get("upload_date")),
         "summary": "",  # flat extraction has no description; titles drive tagging
         "thumb": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg" if vid else "",
         "duration": int(e["duration"]) if e.get("duration") else None,
