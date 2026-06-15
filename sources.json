@@ -219,6 +219,7 @@
     {
       "id": "warburgalchemy",
       "name": "Warburg Institute",
+      "tab": "Warburg Institute",
       "long_name": "Warburg Institute — Alchemy, Tarot, and Esoteric Studies",
       "kind": "youtube_channel_filtered",
       "channel_id": "UCZCLQYEF--VkHsO1GzmE6iw",
