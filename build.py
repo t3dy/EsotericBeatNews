@@ -553,7 +553,6 @@ def render(catalog, cfg, now):
     feed_hero = f"""
   <section class="hero">
     <h1>{esc(site['feed_name'])} <span class="subtitle">(No algorithm! Just the most recent episodes.)</span></h1>
-    <p class="hero__tagline">{esc(site['feed_blurb'])}</p>
   </section>"""
     feed_pages = write_paginated(items, "index", feed_hero, site["feed_name"],
                                  site, sources, topics, now, colors, depth=0, active="feed")
